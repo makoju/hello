@@ -40,6 +40,7 @@ public class TAFSelenium {
 
         String browserName = TAFProperties.getBrowserType().toUpperCase();
         driverURL = new URL(TAFProperties.getGridHost() + ":" + TAFProperties.getGridPort() + "/wd/hub");
+
         switch (browserName) {
             case "CHROME":
                 if (OSDetection.isWindows()) {
@@ -89,35 +90,6 @@ public class TAFSelenium {
                 break;
 
             case "FIREFOX":
-                //File file = new File("firebug-1.7.3-fx.xpi");
-                FirefoxProfile m_driverProfile = new FirefoxProfile();
-
-                // if-block for an enabling modify header
-                if (TAFProperties.getModifyHeader().toUpperCase().equals("ON")) {
-                    m_driverProfile = initModifyHeadersWithParamFF(m_driverProfile, TAFProperties.getHeaderParameterName(),
-                            defineWJAloginWhenModifyHeaders());
-                }
-
-                if (TAFProperties.isFirebugProfileAttach()) {
-                    File fileFireBug = new File("Plugins/firebug-1.13.0a6.xpi");
-                    File fileAddOn = new File("Plugins/firepath-0.9.7-fx.xpi");
-                    m_driverProfile.addExtension(fileFireBug);
-                    m_driverProfile.setPreference("extensions.firebug.currentVersion", "1.13.0a6.xpi"); // Avoid startup screen
-                    m_driverProfile.addExtension(fileAddOn);
-                }
-                m_driverProfile.setEnableNativeEvents(true);
-
-                //Trying to set network.http.phishy-userpass-length to 255 to disable FF prmts while http auth
-                try {
-                    m_driverProfile.setPreference("network.http.phishy-userpass-length", Integer.parseInt("255"));
-
-                } catch (Exception e) {
-                    TAFLogger.error("Couldn't set network.http.phishy-userpass-length");
-                    TAFLogger.info(e.getMessage());
-                }
-                m_driverProfile.setPreference("dom.max_script_run_time", MAX_SCRIPT_RUN_TIME);
-                m_driverProfile.setPreference("dom.max_chrome_script_run_time", MAX_SCRIPT_RUN_TIME);
-
                 File geckoDriver;
                 if (OSDetection.isWindows()) {
                     geckoDriver = new File("C:\\drivers\\geckodriver.exe");
@@ -125,21 +97,20 @@ public class TAFSelenium {
                     geckoDriver = new File("/home/pstuser/drivers/geckodriver");
                 }
 
-                TAFLogger.info(geckoDriver.getAbsolutePath());
                 System.setProperty("webdriver.gecko.driver", geckoDriver.getAbsolutePath());
                 capability = DesiredCapabilities.firefox();
                 capability.setBrowserName("firefox");
                 capability.setPlatform(Platform.ANY);
                 capability.setCapability(FirefoxDriver.MARIONETTE, true);
                 capability.setJavascriptEnabled(true);
-                capability.setCapability(FirefoxDriver.PROFILE, m_driverProfile);
-                TAFLogger.info("Firefox browser");
+                TAFLogger.info("Firefox browser and Gecko driver loaded " + geckoDriver.getAbsolutePath());
                 break;
             default:
                 throw new Exception("Choose browserType in taf.properties file!");
         }
 
         RemoteWebDriver driver = new RemoteWebDriver(driverURL, capability);
+        TAFLogger.info("TAFSelenium initialized!");
         m_driver.set(driver);
         m_driver.get().manage().deleteAllCookies();
         m_driver.get().manage().window().maximize();

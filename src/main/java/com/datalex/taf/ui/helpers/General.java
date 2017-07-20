@@ -62,7 +62,7 @@ public class General {
             }
 
         } else {
-            TAFLogger.debug("Airport Name specified");
+            TAFLogger.info("Airport Name specified");
             airportNameToInject = airportName;
         }
 
@@ -95,7 +95,6 @@ public class General {
             String scriptExecute;
 
             scriptExecute = getJSLocator(locator) + ".value = '" + value + "';";
-            TAFLogger.error("Executing: " + scriptExecute);
             jse.executeScript(scriptExecute);
 
             return true;
@@ -116,10 +115,8 @@ public class General {
 
     public static String getJSLocator(WebElement loc) throws Exception {
         String scriptExecute = "Null";
-        TAFLogger.error(loc);
         scriptExecute = "document.getElementById('" + loc.getAttribute("id") + "')";
         TAFLogger.error(scriptExecute);
-
         return scriptExecute;
     }
 }

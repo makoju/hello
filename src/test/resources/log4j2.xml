@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Configuration status="WARN" monitorInterval="30">
+    <properties>
+        <property name="pattern">[%d{HH:mm:ss}] %-5p (%F:%L) - %m%n</property>
+    </properties>
+
+    <Appenders>
+        <Console
+                name="ConsoleAppender"
+                target="SYSTEM_OUT">
+            <PatternLayout pattern="[%d{yyyy-MM-dd HH:mm:ss,SSS}] [%t] %p (%F:%L) - %m%n"/>
+        </Console>
+
+        <ReportPortalLog4j2Appender name="ReportPortalAppender">
+            <PatternLayout pattern="${pattern}"/>
+        </ReportPortalLog4j2Appender>
+
+        <!-- Basic appender for logging to file -->
+        <File name="FileAppender" fileName="logs/taf.log">
+            <PatternLayout pattern="[%d{yyyy-MM-dd HH:mm:ss,SSS}] [%t] %p (%F:%L) - %m%n"/>
+        </File>
+
+        <!-- Routing appender to allow logging different threads to different files -->
+        <Routing name="Routing">
+            <Routes pattern="$${ctx:ROUTINGKEY}">
+                <Route>
+                    <File name="taf-${ctx:ROUTINGKEY}"
+                          fileName="logs/taf-${ctx:ROUTINGKEY}.log">
+                        <PatternLayout>
+                            <pattern>[%d{yyyy-MM-dd HH:mm:ss,SSS}] [%t] %p (%F:%L) - %m%n</pattern>
+                        </PatternLayout>
+                    </File>
+                </Route>
+            </Routes>
+        </Routing>
+    </Appenders>
+
+    <Loggers>
+        <Root level="info">
+            <AppenderRef ref="RollingFile" level="debug"/>
+            <AppenderRef ref="Routing" level="debug"/>
+            <AppenderRef ref="ConsoleAppender" level="debug"/>
+            <appender-ref ref="ReportPortalAppender" level="error"/>
+        </Root>
+
+        <Logger name="com.datalex" level="debug" additivity="false">
+            <AppenderRef ref="Routing" level="debug"/>
+            <AppenderRef ref="ConsoleAppender" level="debug"/>
+            <AppenderRef ref="ReportPortalAppender" level="debug"/>
+        </Logger>
+    </Loggers>
+
+</Configuration>
