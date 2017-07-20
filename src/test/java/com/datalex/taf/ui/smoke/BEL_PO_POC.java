@@ -4,6 +4,7 @@ import com.datalex.taf.ui.base.TAFSelenium;
 import com.datalex.taf.ui.data.TestData;
 import com.datalex.taf.ui.helpers.ScreenshotHelper;
 import com.datalex.taf.ui.po.searchpage.SearchPage;
+import com.datalex.taf.ui.po.selectionpage.SelectionPage;
 import org.openqa.selenium.WebDriver;
 import org.testng.ITestResult;
 import org.testng.annotations.AfterMethod;
@@ -38,5 +39,6 @@ public class BEL_PO_POC {
         searchPage.setSearchType(testData.getTripType());
         searchPage.setDestinationLocation(testData.getInputFrom());
         searchPage.setOriginLocation(testData.getInputTo());
+        SelectionPage selectionPage = searchPage.doSearch();
     }
 }

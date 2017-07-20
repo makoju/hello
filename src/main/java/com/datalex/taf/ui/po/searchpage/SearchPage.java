@@ -1,6 +1,7 @@
 package com.datalex.taf.ui.po.searchpage;
 
 import com.datalex.taf.core.readers.property.TAFProperties;
+import com.datalex.taf.ui.helpers.ElementHelper;
 import com.datalex.taf.ui.helpers.General;
 import com.datalex.taf.ui.po.selectionpage.SelectionPage;
 import org.openqa.selenium.WebDriver;
@@ -64,6 +65,7 @@ public class SearchPage implements ISearchPage {
     }
 
     public SelectionPage doSearch() {
+        new ElementHelper().waitForElementDisplayed(buttonSearch);
         buttonSearch.click();
         return new SelectionPage(driver);
     }

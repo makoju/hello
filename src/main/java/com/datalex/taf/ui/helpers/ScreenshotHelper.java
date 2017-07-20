@@ -3,6 +3,7 @@ package com.datalex.taf.ui.helpers;
 import com.datalex.taf.core.loggers.TAFLogger;
 import org.apache.commons.io.FileUtils;
 import org.apache.commons.lang3.exception.ExceptionUtils;
+import org.apache.logging.log4j.LogManager;
 import org.openqa.selenium.WebDriver;
 import org.testng.ITestResult;
 import ru.yandex.qatools.ashot.AShot;
@@ -20,6 +21,8 @@ import java.util.Date;
  * @author Aleksandar Vulovic
  */
 public class ScreenshotHelper {
+
+    private static org.apache.logging.log4j.Logger TAFLogger = LogManager.getLogger(ScreenshotHelper.class);
     private static final String WORK_DIR = "./work/";
 
     public void takeScreenshot(WebDriver driver, ITestResult result) throws Exception {

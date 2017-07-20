@@ -1,7 +1,6 @@
 package com.datalex.taf.ui.helpers;
 
-import com.datalex.taf.core.loggers.TAFLogger;
-import org.openqa.selenium.By;
+import org.apache.logging.log4j.LogManager;
 import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
@@ -16,6 +15,8 @@ import java.io.InputStreamReader;
  */
 public class General {
 
+    private static final org.apache.logging.log4j.Logger TAFLogger = LogManager.getLogger(General.class);
+
     /**
      * Function to type airport code and select airport name item to form element direct using JS
      *
@@ -26,9 +27,6 @@ public class General {
      * @throws Exception if error occurs
      */
     public void typeFlight(final WebDriver driver, WebElement controlNameHidden, WebElement controlName, final String airportCode, final String airportName) throws Exception {
-
-        WebElement webElement = null;
-        By ajaxElement;
         TAFLogger.info("Inject " + airportCode + " Location into search field {" + airportCode + "}");
 
         String airportCodeToInject = airportCode;
