@@ -11,8 +11,6 @@ import java.io.DataInputStream;
 import java.io.FileInputStream;
 import java.io.InputStreamReader;
 
-import static com.datalex.taf.core.helpers.PathConstants.DATA_FOLDER;
-
 /**
  * GeneralHelper class
  */
@@ -108,7 +106,7 @@ public class General {
     /**
      * Function to get locator for scriptExecute
      *
-     * @param loc    name of element
+     * @param loc name of element
      * @return String JSlocator
      * @throws Exception if occurs
      */
