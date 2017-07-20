@@ -38,13 +38,11 @@
     <Loggers>
         <Root level="info">
             <AppenderRef ref="RollingFile" level="debug"/>
-            <AppenderRef ref="Routing" level="debug"/>
             <AppenderRef ref="ConsoleAppender" level="debug"/>
             <appender-ref ref="ReportPortalAppender" level="error"/>
         </Root>
 
         <Logger name="com.datalex" level="debug" additivity="false">
-            <AppenderRef ref="Routing" level="debug"/>
             <AppenderRef ref="ConsoleAppender" level="debug"/>
             <AppenderRef ref="ReportPortalAppender" level="debug"/>
         </Logger>

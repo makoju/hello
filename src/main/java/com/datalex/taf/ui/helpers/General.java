@@ -114,7 +114,6 @@ public class General {
     public static String getJSLocator(WebElement loc) throws Exception {
         String scriptExecute = "Null";
         scriptExecute = "document.getElementById('" + loc.getAttribute("id") + "')";
-        TAFLogger.error(scriptExecute);
         return scriptExecute;
     }
 }
