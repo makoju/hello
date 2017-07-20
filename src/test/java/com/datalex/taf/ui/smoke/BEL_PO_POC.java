@@ -1,6 +1,5 @@
 package com.datalex.taf.ui.smoke;
 
-import com.datalex.taf.core.readers.property.LoadProperties;
 import com.datalex.taf.ui.base.TAFSelenium;
 import com.datalex.taf.ui.data.TestData;
 import com.datalex.taf.ui.helpers.ScreenshotHelper;

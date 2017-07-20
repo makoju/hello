@@ -18,8 +18,7 @@ public class SearchPage implements ISearchPage {
     public SearchPage(WebDriver driver) {
         this.driver = driver;
         PageFactory.initElements(driver, this);
-        String dynUrl = TAFProperties.getPROJECTIP() + "/BEL/ApplicationStartAction.do?" + TAFProperties.getPOS();
-        driver.get(dynUrl);
+        driver.get(TAFProperties.getPROJECTIP() + "/BEL/ApplicationStartAction.do?" + TAFProperties.getPOS());
     }
 
     @FindBy(id = "outboundOption.originLocationName")

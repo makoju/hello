@@ -1,14 +1,10 @@
 package com.datalex.taf.ui.base;
 
 import com.datalex.taf.core.helpers.PathConstants;
-import com.datalex.taf.core.loggers.TAFLogger;
 import com.datalex.taf.core.readers.property.LoadProperties;
 import com.datalex.taf.core.readers.property.TAFProperties;
 import com.datalex.taf.core.utilities.OSDetection;
-import org.joda.time.DateTime;
-import org.joda.time.DateTimeZone;
-import org.joda.time.format.DateTimeFormat;
-import org.joda.time.format.DateTimeFormatter;
+import org.apache.logging.log4j.LogManager;
 import org.openqa.selenium.Platform;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeOptions;
@@ -26,32 +22,25 @@ import java.util.HashMap;
 import java.util.Map;
 
 /**
- * Created by avulovic on 7/20/2017.
+ * TAFSelenium class
+ *
+ * @author Aleksandar Vulovic
  */
 public class TAFSelenium {
 
-    public static ThreadLocal<RemoteWebDriver> m_driver = new ThreadLocal<RemoteWebDriver>();
-    private FirefoxProfile m_driverProfile;
-    private String testCaseIdUni;
+    private static final org.apache.logging.log4j.Logger TAFLogger = LogManager.getLogger(TAFSelenium.class);
+    private static ThreadLocal<RemoteWebDriver> m_driver = new ThreadLocal<RemoteWebDriver>();
     private static final int MAX_SCRIPT_RUN_TIME = 600;
+    private String testCaseIdUni;
 
     public TAFSelenium() throws Exception {
+        LoadProperties.propertyLoader();
         DesiredCapabilities capability;
         URL driverURL;
 
-        LoadProperties.propertyLoader();
         String browserName = TAFProperties.getBrowserType().toUpperCase();
-
-        TAFLogger.info("TAF Selenium");
-        TAFLogger.info("Version ST: release");
-
-        DateTime dateOnChange = new DateTime().withZone(DateTimeZone.forID("Europe/London"));
-        DateTimeFormatter formatter = DateTimeFormat.forPattern("yyyy-MM-dd HH:mm:ss");
-        TAFLogger.setRunStartDateTime(formatter.print(dateOnChange));
-
         driverURL = new URL(TAFProperties.getGridHost() + ":" + TAFProperties.getGridPort() + "/wd/hub");
         switch (browserName) {
-
             case "CHROME":
                 if (OSDetection.isWindows()) {
                     TAFLogger.debug("Initiating Chrome Driver @ WINDOWS");
@@ -101,7 +90,7 @@ public class TAFSelenium {
 
             case "FIREFOX":
                 //File file = new File("firebug-1.7.3-fx.xpi");
-                m_driverProfile = new FirefoxProfile();
+                FirefoxProfile m_driverProfile = new FirefoxProfile();
 
                 // if-block for an enabling modify header
                 if (TAFProperties.getModifyHeader().toUpperCase().equals("ON")) {
@@ -149,6 +138,7 @@ public class TAFSelenium {
             default:
                 throw new Exception("Choose browserType in taf.properties file!");
         }
+
         RemoteWebDriver driver = new RemoteWebDriver(driverURL, capability);
         m_driver.set(driver);
         m_driver.get().manage().deleteAllCookies();
@@ -173,7 +163,7 @@ public class TAFSelenium {
      * @return FirefoxProfile with modified header or null in case of failure
      */
 
-    public static FirefoxProfile initModifyHeadersWithParamFF(FirefoxProfile ffProfile, String name, String value) {
+    private static FirefoxProfile initModifyHeadersWithParamFF(FirefoxProfile ffProfile, String name, String value) {
         try {
             TAFLogger.debug("FFProfile modification");
 
