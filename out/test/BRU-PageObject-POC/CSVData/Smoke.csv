@@ -1,3 +1,0 @@
-tripType,outboundPOS,inputFrom,inputTo,departOn,returnon,fromMC1,toMC1,fromMC2,toMC2,fromMC3,toMC3,departOnMC3,ADT,CHD,INF,cabinClass,fareFamily,insuranceSummaryPage,baggage,delayedPayment,meals,seats,pwd,paymentType,Loop Profile,frequentFlierProgram,age,insurancEconomynfirmationPage,baggagEconomynfirmationPage
-RT,BEL,BRU,LHR,42,46,,,,,,,,1,0,0,Economy,Check&Go,no,no,no,no,Yes,11111,PAYPAL,Signed out,LOOP,24,no,Yes,
-MC,BEL,LHR,BEL,41,46,BRU,LHR,LHR,FRA,FRA,BRU,51,1,1,0,Economy,Economy,Yes,Yes,no,VLML,no,11111,KBC,Signed out,LOOP,19,no,no,
