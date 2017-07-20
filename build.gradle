@@ -1,0 +1,86 @@
+group = 'taf'
+version = '0.0.1'
+description = "BRU_PageObject-POC"
+
+apply plugin: 'java'
+apply plugin: 'maven'
+
+repositories {
+    mavenCentral()
+    maven { url 'https://dub-artifactory.datalex.com/artifactory/taf' }
+    maven { url "https://oss.sonatype.org/content/repositories/releases" }
+    maven { url 'http://repo.maven.apache.org/maven2' }
+}
+
+dependencies {
+    compile group: 'taf', name: 'taf-core', version: 'release'
+    compile group: 'org.seleniumhq.selenium', name: 'selenium-java', version: '3.4.0'
+    compile group: 'org.seleniumhq.selenium', name: 'selenium-server', version: '3.4.0'
+    compile group: 'org.seleniumhq.selenium', name: 'selenium-firefox-driver', version: '3.4.0'
+    compile group: 'org.seleniumhq.selenium', name: 'selenium-support', version: '3.4.0'
+    compile group: 'org.seleniumhq.selenium', name: 'selenium-chrome-driver', version: '3.4.0'
+    compile group: 'org.seleniumhq.selenium', name: 'selenium-ie-driver', version: '3.4.0'
+    compile group: 'ru.yandex.qatools.ashot', name: 'ashot', version: '1.5.2'
+    compile group: 'org.apache.directory.studio', name: 'org.apache.commons.lang', version: '2.6'
+    testCompile group: 'org.testng', name: 'testng', version: '6.11'
+}
+
+task regression(type: Test) {
+    systemProperty "projectIp", System.getProperty("projectIp")
+    systemProperty "sheetName", System.getProperty("sheetName")
+    setRpTagsForTestType("regression")
+    testLogging.showStandardStreams = true
+    testLogging.displayGranularity 1
+    testLogging.minGranularity 1
+    useTestNG() {
+        suites 'src/test/resources/suites/regression.xml'
+        parallel 'tests'
+        threadCount 10
+    }
+}
+
+task smoke(type: Test) {
+    systemProperty "sheetName", System.getProperty("sheetName")
+    systemProperty "projectIp", System.getProperty("projectIp")
+    setRpTagsForTestType("smoke")
+    testLogging.showStandardStreams = true
+    testLogging.displayGranularity 1
+    testLogging.minGranularity 1
+    useTestNG() {
+        suites 'src/test/resources/suites/smoke.xml'
+        parallel 'tests'
+        threadCount 10
+    }
+}
+
+private void setRpTagsForTestType(String testType) {
+    Properties rpProps = new Properties()
+    File rpPropsFile = new File("src/test/resources/reportportal.properties")
+    rpProps.load(rpPropsFile.newDataInputStream())
+    String branchTag = System.properties['Branch'] != null ? System.properties['Branch'] : "${getLocalBranch()}"
+    branchTag = branchTag.substring(branchTag.indexOf("/") + 1)
+    String projectIpTag = System.properties['projectIp'] != null ? System.properties['projectIp'] : "${getLocalProjectIp()}"
+    projectIpTag = projectIpTag.substring(projectIpTag.indexOf("//") + 2)
+    String userNameTag = System.properties['userName'] != null ? System.properties['userName'] : "${getUserName()}"
+    userNameTag = userNameTag.substring(userNameTag.indexOf("/") + 1)
+
+    rpProps.setProperty('rp.tags', "$userNameTag; $testType; $branchTag; $projectIpTag")
+    rpProps.store(rpPropsFile.newWriter(), null)
+}
+
+
+private String getUserName() {
+    "git config user.name".execute().text.trim()
+}
+
+private String getLocalBranch() {
+    "git rev-parse --abbrev-ref HEAD".execute().text.trim()
+}
+
+private String getLocalProjectIp() {
+    Properties localProjectProps = new Properties()
+    localProjectProps.load(new File("Configurations/project.properties").newDataInputStream())
+    String systProjectIp = System.properties['projectIp']
+    String localProjectIp = systProjectIp != null ? systProjectIp : localProjectProps.getProperty("projectIp")
+    localProjectIp
+}
