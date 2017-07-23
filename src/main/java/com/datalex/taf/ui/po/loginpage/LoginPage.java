@@ -2,6 +2,7 @@ package com.datalex.taf.ui.po.loginpage;
 
 import com.datalex.taf.ui.data.TestData;
 import com.datalex.taf.ui.helpers.ElementHelper;
+import com.datalex.taf.ui.helpers.Utils;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
@@ -30,12 +31,13 @@ public class LoginPage implements ILoginPage {
     public WebElement submitLogin;
 
     public void login(TestData testData) {
-        new ElementHelper(driver).waitForElementPresent(userLogin);
-        userLogin.clear();
+        new ElementHelper(driver).waitForElementToBeClickable(submitLogin);
+        new ElementHelper(driver).waitForElementToBeClickable(userLogin);
         userLogin.sendKeys("alan.peck@datalex.com");
-        userPassword.clear();
+        new ElementHelper(driver).waitForElementToBeClickable(userPassword);
         userPassword.sendKeys("Datalex123!");
         submitLogin.click();
         driver.switchTo().defaultContent();
+        new Utils().waitTime(5000);
     }
 }
