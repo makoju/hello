@@ -39,7 +39,7 @@ public class BEL_PO_POC {
         //Login page actions
         SearchPage searchPage = new SearchPage(driver);
         LoginPage loginPage = searchPage.goToLoginPage();
-        searchPage = loginPage.login(testData);
+        loginPage.login(testData);
         //Search page actions
         searchPage.setSearchType(testData.getTripType());
         searchPage.setOriginLocation(testData.getInputFrom());
