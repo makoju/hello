@@ -3,6 +3,7 @@ package com.datalex.taf.ui.po.searchpage;
 import com.datalex.taf.core.readers.property.TAFProperties;
 import com.datalex.taf.ui.helpers.ElementHelper;
 import com.datalex.taf.ui.helpers.General;
+import com.datalex.taf.ui.po.loginpage.LoginPage;
 import com.datalex.taf.ui.po.selectionpage.SelectionPage;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
@@ -21,6 +22,9 @@ public class SearchPage implements ISearchPage {
         PageFactory.initElements(driver, this);
         driver.get(TAFProperties.getPROJECTIP() + "/BEL/ApplicationStartAction.do?" + TAFProperties.getPOS());
     }
+
+    @FindBy(id = "loginLinkFromLoginBlock")
+    public WebElement loginButton;
 
     @FindBy(id = "outboundOption.originLocationName")
     public WebElement inputFrom;
@@ -56,6 +60,7 @@ public class SearchPage implements ISearchPage {
     public void setDestinationLocation(String code) throws Exception {
         new General().typeFlight(driver, inputToCodeHidden, inputToCode, code, "");
     }
+
     public void setSearchType(String searchType) throws Exception {
         if (searchType.toUpperCase().equals("OW")) {
             tripTypeOW.click();
@@ -64,8 +69,15 @@ public class SearchPage implements ISearchPage {
         }
     }
 
+    public LoginPage goToLoginPage() {
+        new ElementHelper(driver).waitForElementToBeClickable(loginButton);
+        loginButton.click();
+        new ElementHelper(driver).waitForFrameToBeAvailableAndSwitchToIt("ifrmLogin");
+        return new LoginPage(driver);
+    }
+
     public SelectionPage doSearch() {
-        new ElementHelper().waitForElementDisplayed(buttonSearch);
+        new ElementHelper(driver).waitForElementPresent(buttonSearch);
         buttonSearch.click();
         return new SelectionPage(driver);
     }
