@@ -1,9 +1,20 @@
 package com.datalex.taf.ui.po.selectionpage;
 
+import com.datalex.taf.ui.po.summarypage.SummaryPage;
+import org.openqa.selenium.WebElement;
+
 /**
- * Created by avulovic on 7/19/2017.
+ * Selection Page interface
  */
 public interface ISelectionPage {
 
-    void clickButtonSelection();
+    void selectInboundFareFamily(String fareFamily);
+
+    void selectReturnFareFamily(String fareFamily);
+
+    WebElement getSelectFlightRadioLocator(String fareFamilyAlias, int blockNumber);
+
+    String getFFAlias(String fareFamilyName);
+
+    SummaryPage doSelection();
 }
