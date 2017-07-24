@@ -36,9 +36,9 @@ public class ScreenshotHelper {
                     FileUtils.forceMkdir(screenDir);
                 }
                 ImageIO.write(takeScreenshotFullPage(driver), "PNG",
-                        new File(WORK_DIR + "testName" + dateFormat.format(date) + ".png"));
+                        new File(WORK_DIR + result.getMethod().getMethodName() + dateFormat.format(date) + ".png"));
                 TAFLogger.info("Screenshot taken!");
-                attachFileToReport(WORK_DIR + "testName" + dateFormat.format(date) + ".png", "attached");
+                attachFileToReport(WORK_DIR + result.getMethod().getMethodName() + dateFormat.format(date) + ".png", "attached");
             } catch (Exception e) {
                 TAFLogger.error("Exception during taking a screenshot " + e.getMessage());
                 TAFLogger.error(ExceptionUtils.getStackTrace(e));
