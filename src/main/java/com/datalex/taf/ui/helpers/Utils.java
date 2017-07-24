@@ -9,14 +9,14 @@ import org.apache.logging.log4j.LogManager;
  */
 public class Utils {
 
-    private static final org.apache.logging.log4j.Logger TAFLogger = LogManager.getLogger(Utils.class);
+    private static final org.apache.logging.log4j.Logger mLOG = LogManager.getLogger(Utils.class);
 
     public void waitTime(long time) {
         try {
-            TAFLogger.debug(String.format("Waiting for %sms", time));
+            mLOG.debug(String.format("Waiting for %sms", time));
             Thread.sleep(time);
-        } catch (final InterruptedException e) {
-            TAFLogger.error(e.getMessage());
+        } catch (Exception e) {
+            mLOG.error(e);
         }
     }
 

@@ -11,7 +11,7 @@ public interface ISearchPage {
 
     void setDestinationLocation(String code) throws Exception;
 
-    void setSearchType(String searchType) throws Exception;
+    void setSearchType(String searchType);
 
     SelectionPage doSearch();
 }

@@ -16,6 +16,10 @@ import java.util.stream.Stream;
  */
 public class CSVDataHelper {
 
+    private CSVDataHelper() {
+        throw new UnsupportedOperationException();
+    }
+
     /**
      * Read CSV File
      *

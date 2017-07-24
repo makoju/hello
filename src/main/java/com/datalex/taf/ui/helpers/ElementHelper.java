@@ -16,7 +16,9 @@ import java.util.List;
  * @author Aleksandar Vulovic
  */
 public class ElementHelper {
+
     private WebDriverWait wait;
+    private static org.apache.logging.log4j.Logger mLOG = LogManager.getLogger(ElementHelper.class);
 
     public ElementHelper() {
     }
@@ -25,26 +27,24 @@ public class ElementHelper {
         this.wait = new WebDriverWait(driver, 20);
     }
 
-    private static org.apache.logging.log4j.Logger TAFLogger = LogManager.getLogger(ElementHelper.class);
-
     public void waitForElementDisplayed(WebElement element) {
         final int timeMs = 15000;
         for (int i = 500; i < timeMs; i += 100) {
-            TAFLogger.info("Waiting for element displayed (ms): " + i);
+            mLOG.info("Waiting for element displayed (ms): " + i);
             new Utils().waitTime500ms();
             if (isElementDisplayed(element)) {
-                TAFLogger.info(String.format("ElementHelper is displayed after %d ms", i));
+                mLOG.info(String.format("ElementHelper is displayed after %d ms", i));
                 return;
             }
         }
-        TAFLogger.error(String.format("ElementHelper is not displayed after %d seconds", timeMs / 1000));
+        mLOG.error(String.format("ElementHelper is not displayed after %d seconds", timeMs / 1000));
     }
 
     public boolean isElementEnabled(WebElement element) {
         try {
             return element.isEnabled();
         } catch (Exception e) {
-            TAFLogger.error(e.getMessage());
+            mLOG.error(e);
         }
         return false;
     }
@@ -57,7 +57,7 @@ public class ElementHelper {
                 isDisplayed = element.isDisplayed();
             }
         } catch (Exception e) {
-            TAFLogger.error(e.getMessage());
+            mLOG.error(e);
         }
         return isDisplayed;
     }
@@ -67,7 +67,7 @@ public class ElementHelper {
         try {
             isSelected = element.isSelected();
         } catch (Exception e) {
-            TAFLogger.error(e.getMessage());
+            mLOG.error(e);
         }
         return isSelected;
     }
@@ -77,7 +77,7 @@ public class ElementHelper {
             String attribute = element.getAttribute("checked");
             return attribute.contains("true");
         } catch (Exception e) {
-            TAFLogger.error(e.getMessage());
+            mLOG.error(e);
         }
         return false;
     }
@@ -110,7 +110,7 @@ public class ElementHelper {
             Select select = new Select(element);
             select.selectByVisibleText(text);
         } catch (Exception e) {
-            TAFLogger.error(e.getMessage());
+            mLOG.error(e);
         }
     }
 
@@ -118,9 +118,9 @@ public class ElementHelper {
         parent.click();
         new Utils().waitTime500ms();
         for (WebElement option : children) {
-            TAFLogger.debug("Current option: " + option.getText());
+            mLOG.debug("Current option: " + option.getText());
             if (text.equals(option.getText())) {
-                TAFLogger.info("Click option: " + option.getText());
+                mLOG.info("Click option: " + option.getText());
                 option.click();
                 new Utils().waitTime500ms();
                 return;
@@ -131,7 +131,7 @@ public class ElementHelper {
     public List<String> getAllAvailableOptions(WebElement element) {
         Select select = new Select(element);
         List<WebElement> options = select.getOptions();
-        List<String> captions = new ArrayList<String>();
+        List<String> captions = new ArrayList<>();
         for (WebElement option : options) {
             captions.add(option.getText().trim());
         }

@@ -15,7 +15,7 @@ import java.io.InputStreamReader;
  */
 public class General {
 
-    private static final org.apache.logging.log4j.Logger TAFLogger = LogManager.getLogger(General.class);
+    private static final org.apache.logging.log4j.Logger mLOG = LogManager.getLogger(General.class);
 
     /**
      * Function to type airport code and select airport name item to form element direct using JS
@@ -27,46 +27,46 @@ public class General {
      * @throws Exception if error occurs
      */
     public void typeFlight(final WebDriver driver, WebElement controlNameHidden, WebElement controlName, final String airportCode, final String airportName) throws Exception {
-        TAFLogger.info("Inject " + airportCode + " Location into search field {" + airportCode + "}");
+        mLOG.info("Inject " + airportCode + " Location into search field {" + airportCode + "}");
 
         String airportCodeToInject = airportCode;
         String airportNameToInject = "";
         String strLine;
 
         if (airportName.equals("")) {
-            TAFLogger.debug("No Airport Name Specified. Looking through the Airport Codes List");
+            mLOG.debug("No Airport Name Specified. Looking through the Airport Codes List");
             FileInputStream fstream;
 
             fstream = new FileInputStream("./src/test/resources/airportCodesList.txt");
-
             DataInputStream in = new DataInputStream(fstream);
             BufferedReader br = new BufferedReader(new InputStreamReader(in));
 
             while ((strLine = br.readLine()) != null) {
                 if (strLine.contains("(" + airportCode + ")")) {
-                    TAFLogger.debug("Airport Name Found in List = " + strLine);
+                    mLOG.debug("Airport Name Found in List = " + strLine);
                     airportNameToInject = strLine;
 
                 }
             }
+            fstream.close();
             in.close();
 
             if (airportNameToInject.equals("")) {
-                TAFLogger.error("Could Not Find Airport Code in list");
+                mLOG.error("Could Not Find Airport Code in list");
                 throw new Exception("Could not find Airport Code in AirportCodesList " +
                         "Tried to find " + airportCodeToInject + " in Location into search field {" + controlName + "}");
             }
 
         } else {
-            TAFLogger.info("Airport Name specified");
+            mLOG.info("Airport Name specified");
             airportNameToInject = airportName;
         }
 
         if (typeUsingJS(driver, controlNameHidden, airportCodeToInject) &&
                 typeUsingJS(driver, controlName, airportNameToInject)) {
-            TAFLogger.info("Succesfully injected into location Search box");
+            mLOG.info("Succesfully injected into location Search box");
         } else {
-            TAFLogger.error("Failed to Inject Location into Search box");
+            mLOG.error("Failed to Inject Location into Search box");
             throw new Exception("Failed to Inject Location into Search box. " +
                     "Tried to Inject " + airportNameToInject + " (" + airportCodeToInject + ")" +
                     " Location into search field {" + controlName + "}");
@@ -85,8 +85,8 @@ public class General {
 
     public boolean typeUsingJS(WebDriver driver, WebElement locator, String value) {
         try {
-            TAFLogger.info("Method with JS executing");
-            TAFLogger.debug("selenium.type  " + value + " into " + locator);
+            mLOG.info("Method with JS executing");
+            mLOG.debug("selenium.type  " + value + " into " + locator);
             JavascriptExecutor jse = (JavascriptExecutor) driver;
             String scriptExecute;
 
@@ -96,7 +96,7 @@ public class General {
             return true;
 
         } catch (Exception e) {
-            TAFLogger.error(e.getMessage());
+            mLOG.error(e);
             return false;
         }
     }
@@ -106,12 +106,9 @@ public class General {
      *
      * @param loc name of element
      * @return String JSlocator
-     * @throws Exception if occurs
      */
 
-    public static String getJSLocator(WebElement loc) throws Exception {
-        String scriptExecute = "Null";
-        scriptExecute = "document.getElementById('" + loc.getAttribute("id") + "')";
-        return scriptExecute;
+    public static String getJSLocator(WebElement loc) {
+        return "document.getElementById('" + loc.getAttribute("id") + "')";
     }
 }

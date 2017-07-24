@@ -15,13 +15,13 @@ public class SelectionPage implements ISelectionPage {
 
     private WebDriver driver;
 
+    @FindBy(id = "pgButtonNext")
+    public WebElement buttonSelection;
+
     public SelectionPage(WebDriver driver) {
         this.driver = driver;
         PageFactory.initElements(driver, this);
     }
-
-    @FindBy(id = "pgButtonNext")
-    public WebElement buttonSelection;
 
     public void selectInboundFareFamily(String fareFamily) {
         new ElementHelper(driver).waitForElementToBeClickable(getSelectFlightRadioLocator(getFFAlias(fareFamily), 0));

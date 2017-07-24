@@ -17,11 +17,6 @@ import org.openqa.selenium.support.PageFactory;
 public class LoginPage implements ILoginPage{
     private WebDriver driver;
 
-    public LoginPage(WebDriver driver) {
-        this.driver = driver;
-        PageFactory.initElements(driver, this);
-    }
-
     @FindBy(id = "login")
     public WebElement userLogin;
 
@@ -30,6 +25,11 @@ public class LoginPage implements ILoginPage{
 
     @FindBy(xpath = ".//*[@id='signInForm']/div[2]/div[3]/button")
     public WebElement submitLogin;
+
+    public LoginPage(WebDriver driver) {
+        this.driver = driver;
+        PageFactory.initElements(driver, this);
+    }
 
     public SearchPage login(TestData testData) {
         new ElementHelper(driver).waitForElementToBeClickable(submitLogin);

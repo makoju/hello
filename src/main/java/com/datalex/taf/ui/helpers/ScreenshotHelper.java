@@ -12,6 +12,7 @@ import ru.yandex.qatools.ashot.shooting.ShootingStrategies;
 import javax.imageio.ImageIO;
 import java.awt.image.BufferedImage;
 import java.io.File;
+import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
@@ -22,10 +23,10 @@ import java.util.Date;
  */
 public class ScreenshotHelper {
 
-    private static org.apache.logging.log4j.Logger TAFLogger = LogManager.getLogger(ScreenshotHelper.class);
+    private static org.apache.logging.log4j.Logger mLOG = LogManager.getLogger(ScreenshotHelper.class);
     private static final String WORK_DIR = "./work/";
 
-    public void takeScreenshot(WebDriver driver, ITestResult result) throws Exception {
+    public void takeScreenshot(WebDriver driver, ITestResult result) throws IOException {
 
         if (result.getStatus() == ITestResult.FAILURE) {
             try {
@@ -37,11 +38,11 @@ public class ScreenshotHelper {
                 }
                 ImageIO.write(takeScreenshotFullPage(driver), "PNG",
                         new File(WORK_DIR + result.getMethod().getMethodName() + dateFormat.format(date) + ".png"));
-                TAFLogger.info("Screenshot taken!");
+                mLOG.info("Screenshot taken!");
                 attachFileToReport(WORK_DIR + result.getMethod().getMethodName() + dateFormat.format(date) + ".png", "attached");
-            } catch (Exception e) {
-                TAFLogger.error("Exception during taking a screenshot " + e.getMessage());
-                TAFLogger.error(ExceptionUtils.getStackTrace(e));
+            } catch (IOException e) {
+                mLOG.error("Exception during taking a screenshot " + e.getMessage());
+                mLOG.error(ExceptionUtils.getStackTrace(e));
             }
         }
     }
@@ -52,15 +53,15 @@ public class ScreenshotHelper {
      * @param driver WebDriver instance to use
      * @return BufferedImage or null if exception occurs during taking a screenshot
      */
-    public BufferedImage takeScreenshotFullPage(WebDriver driver) {
+    private BufferedImage takeScreenshotFullPage(WebDriver driver) {
         try {
             ru.yandex.qatools.ashot.Screenshot screenshot = new AShot()
                     .shootingStrategy(ShootingStrategies.viewportPasting(500))
                     .takeScreenshot(driver);
             return screenshot.getImage();
         } catch (Exception e) {
-            TAFLogger.error("Error during taking a screenshot with AShot");
-            TAFLogger.error(ExceptionUtils.getStackTrace(e));
+            mLOG.error("Error during taking a screenshot with AShot");
+            mLOG.error(ExceptionUtils.getStackTrace(e));
             return null;
         }
     }

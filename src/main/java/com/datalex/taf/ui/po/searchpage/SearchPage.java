@@ -17,16 +17,6 @@ public class SearchPage implements ISearchPage {
 
     private WebDriver driver;
 
-    public SearchPage(WebDriver driver) {
-        this.driver = driver;
-        PageFactory.initElements(driver, this);
-        driver.get(TAFProperties.getPROJECTIP() + "/BEL/ApplicationStartAction.do?" + TAFProperties.getPOS());
-    }
-
-    public SearchPage() {
-        driver.get(TAFProperties.getPROJECTIP() + "/BEL/ApplicationStartAction.do?" + TAFProperties.getPOS());
-    }
-
     @FindBy(id = "loginLinkFromLoginBlock")
     public WebElement loginButton;
 
@@ -57,6 +47,12 @@ public class SearchPage implements ISearchPage {
     @FindBy(xpath = "//table[@class='botButton1 botButtonSearch']")
     public WebElement buttonSearch;
 
+    public SearchPage(WebDriver driver) {
+        this.driver = driver;
+        PageFactory.initElements(driver, this);
+        driver.get(TAFProperties.getPROJECTIP() + "/BEL/ApplicationStartAction.do?" + TAFProperties.getPOS());
+    }
+
     public void setOriginLocation(String code) throws Exception {
         new General().typeFlight(driver, inputFromHidden, inputFrom, code, "");
     }
@@ -65,8 +61,8 @@ public class SearchPage implements ISearchPage {
         new General().typeFlight(driver, inputToCodeHidden, inputToCode, code, "");
     }
 
-    public void setSearchType(String searchType) throws Exception {
-        if (searchType.toUpperCase().equals("OW")) {
+    public void setSearchType(String searchType) {
+        if ("OW".equalsIgnoreCase(searchType)) {
             tripTypeOW.click();
         } else {
             tripTypeRT.click();
