@@ -1,6 +1,6 @@
 # TAF UI 2.0 - Page Object Model Framework - TestNG - POC
 
-# PRECONDITIONS
+# FRAMEWORK SETUP
 ## Lombok plugin
 * Go to File > Settings > Plugins.
 * Click on Browse repositories...
