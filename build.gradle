@@ -31,7 +31,7 @@ dependencies {
 
 task regression(type: Test) {
     systemProperty "projectIp", System.getProperty("projectIp")
-    systemProperty "sheetName", System.getProperty("sheetName")
+    systemProperty "csvFile", System.getProperty("csvFile")
     setRpTagsForTestType("regression")
     testLogging.showStandardStreams = true
     testLogging.displayGranularity 1
@@ -44,8 +44,8 @@ task regression(type: Test) {
 }
 
 task smoke(type: Test) {
-    systemProperty "sheetName", System.getProperty("sheetName")
     systemProperty "projectIp", System.getProperty("projectIp")
+    systemProperty "csvFile", System.getProperty("csvFile")
     setRpTagsForTestType("smoke")
     testLogging.showStandardStreams = true
     testLogging.displayGranularity 1
@@ -67,11 +67,9 @@ private void setRpTagsForTestType(String testType) {
     projectIpTag = projectIpTag.substring(projectIpTag.indexOf("//") + 2)
     String userNameTag = System.properties['userName'] != null ? System.properties['userName'] : "${getUserName()}"
     userNameTag = userNameTag.substring(userNameTag.indexOf("/") + 1)
-
     rpProps.setProperty('rp.tags', "$userNameTag; $testType; $branchTag; $projectIpTag")
     rpProps.store(rpPropsFile.newWriter(), null)
 }
-
 
 private String getUserName() {
     "git config user.name".execute().text.trim()
