@@ -23,6 +23,10 @@ public class SearchPage implements ISearchPage {
         driver.get(TAFProperties.getPROJECTIP() + "/BEL/ApplicationStartAction.do?" + TAFProperties.getPOS());
     }
 
+    public SearchPage() {
+        driver.get(TAFProperties.getPROJECTIP() + "/BEL/ApplicationStartAction.do?" + TAFProperties.getPOS());
+    }
+
     @FindBy(id = "loginLinkFromLoginBlock")
     public WebElement loginButton;
 

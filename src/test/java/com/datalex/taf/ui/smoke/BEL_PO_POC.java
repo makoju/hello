@@ -18,7 +18,7 @@ import static com.datalex.taf.ui.data.CSVDataHelper.readDataFromCSVFile;
 /**
  * BRU PageObject POC
  */
-@Test(groups = {"regression"})
+@Test(groups = {"smoke"})
 public class BEL_PO_POC {
     private WebDriver driver;
 
@@ -36,11 +36,10 @@ public class BEL_PO_POC {
     @Test(dataProvider = "CSVData", description = "SearchPageTest")
     public void searchPageTest(TestData testData) throws Exception {
         driver = new TAFSelenium().getDriver();
-
         //Login page actions
         SearchPage searchPage = new SearchPage(driver);
         LoginPage loginPage = searchPage.goToLoginPage();
-        loginPage.login(testData);
+        searchPage = loginPage.login(testData);
         //Search page actions
         searchPage.setSearchType(testData.getTripType());
         searchPage.setOriginLocation(testData.getInputFrom());
