@@ -11,9 +11,7 @@
     </groups>
 
     <listeners>
-        <listener class-name="org.uncommons.reportng.HTMLReporter"/>
         <listener class-name="org.testng.reporters.XMLReporter"/>
-        <listener class-name="org.uncommons.reportng.JUnitXMLReporter"/>
         <listener class-name="org.testng.reporters.DotTestListener"/>
         <listener class-name="com.epam.reportportal.testng.ReportPortalTestNGListener"/>
     </listeners>
@@ -23,7 +21,7 @@
             <package name="com.datalex.taf.testng.smoke"/>
         </packages>
         <classes>
-            <class name="com.datalex.taf.testng.regression.BEL_Smoke_UI"/>
+            <class name="com.datalex.taf.ui.smoke.BEL_PO_POC"/>
         </classes>
     </test>
 
