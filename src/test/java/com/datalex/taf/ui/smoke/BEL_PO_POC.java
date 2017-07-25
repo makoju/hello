@@ -44,6 +44,10 @@ public class BEL_PO_POC {
         searchPage.setSearchType(testData.getTripType());
         searchPage.setOriginLocation(testData.getInputFrom());
         searchPage.setDestinationLocation(testData.getInputTo());
+        searchPage.inputDepartureDate("10");
+        if (("RT").equalsIgnoreCase(testData.getTripType()))
+            searchPage.inputReturnDate("12");
+        //Selection page actions
         SelectionPage selectionPage = searchPage.doSearch();
     }
 }

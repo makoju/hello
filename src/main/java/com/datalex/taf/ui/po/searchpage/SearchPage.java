@@ -61,6 +61,14 @@ public class SearchPage implements ISearchPage {
         new General().typeFlight(driver, inputToCodeHidden, inputToCode, code, "");
     }
 
+    public void inputDepartureDate(String daysFromToday) throws Exception {
+        new General().inputDateByCalendar(driver, inputDepartOn, daysFromToday);
+    }
+
+    public void inputReturnDate(String daysFromToday) throws Exception {
+        new General().inputDateByCalendar(driver, inputReturnOn, daysFromToday);
+    }
+
     public void setSearchType(String searchType) {
         if ("OW".equalsIgnoreCase(searchType)) {
             tripTypeOW.click();

@@ -51,14 +51,10 @@ public class ElementHelper {
 
     public boolean isElementDisplayed(WebElement element) {
         boolean isDisplayed = false;
-        try {
             String tagName = element.getTagName();
             if (!tagName.isEmpty()) {
                 isDisplayed = element.isDisplayed();
             }
-        } catch (Exception e) {
-            mLOG.error(e);
-        }
         return isDisplayed;
     }
 
