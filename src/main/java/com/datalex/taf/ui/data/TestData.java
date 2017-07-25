@@ -42,7 +42,8 @@ public class TestData {
     private String age;
     private String insuranceEconomyInformationPage;
     private String baggageEconomyInformationPage;
-    private String testName;
+    private String email;
+    private String password;
 
     @Override
     public String toString() {
@@ -78,6 +79,8 @@ public class TestData {
                 .append("age", age)
                 .append("insuranceEconomyInformationPage", insuranceEconomyInformationPage)
                 .append("baggageEconomyInformationPage", baggageEconomyInformationPage)
+                .append("email", email)
+                .append("password", password)
                 .toString();
     }
 

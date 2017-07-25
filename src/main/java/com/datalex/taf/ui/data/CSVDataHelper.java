@@ -157,6 +157,12 @@ public class CSVDataHelper {
                     case "baggageconomynfirmationpage":
                         testRow.setBaggageEconomyInformationPage(entry.getValue());
                         break;
+                    case "email":
+                        testRow.setEmail(entry.getValue());
+                        break;
+                    case "password":
+                        testRow.setPassword(entry.getValue());
+                        break;
                     default:
                         TAFLogger.info("Unsupported field in test data; field name:" + entry.getKey() + " value:" + entry.getValue());
                 }

@@ -14,7 +14,7 @@ import org.openqa.selenium.support.PageFactory;
  *
  * @author Aleksanar Vulovic
  */
-public class LoginPage implements ILoginPage{
+public class LoginPage implements ILoginPage {
     private WebDriver driver;
 
     @FindBy(id = "login")
@@ -32,14 +32,16 @@ public class LoginPage implements ILoginPage{
     }
 
     public SearchPage login(TestData testData) {
-        new ElementHelper(driver).waitForElementToBeClickable(submitLogin);
-        new ElementHelper(driver).waitForElementToBeClickable(userLogin);
-        userLogin.sendKeys("alan.peck@datalex.com");
-        new ElementHelper(driver).waitForElementToBeClickable(userPassword);
-        userPassword.sendKeys("Datalex123!");
-        submitLogin.click();
-        driver.switchTo().defaultContent();
-        new Utils().waitTime(5000);
+        if ("Signed in".equalsIgnoreCase(testData.getLoopProfile())) {
+            new ElementHelper(driver).waitForElementToBeClickable(submitLogin);
+            new ElementHelper(driver).waitForElementToBeClickable(userLogin);
+            userLogin.sendKeys(testData.getEmail());
+            new ElementHelper(driver).waitForElementToBeClickable(userPassword);
+            userPassword.sendKeys(testData.getPassword());
+            submitLogin.click();
+            driver.switchTo().defaultContent();
+            new Utils().waitTime(5000);
+        }
         return new SearchPage(driver);
     }
 }

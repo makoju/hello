@@ -1,6 +1,7 @@
 package com.datalex.taf.ui.po.searchpage;
 
 import com.datalex.taf.core.readers.property.TAFProperties;
+import com.datalex.taf.ui.data.TestData;
 import com.datalex.taf.ui.helpers.ElementHelper;
 import com.datalex.taf.ui.helpers.General;
 import com.datalex.taf.ui.po.loginpage.LoginPage;
@@ -44,6 +45,9 @@ public class SearchPage implements ISearchPage {
     @FindBy(id = "tripTypeRT")
     public WebElement tripTypeRT;
 
+    @FindBy(id = "redemptionControl")
+    public WebElement loopPrice;
+
     @FindBy(xpath = "//table[@class='botButton1 botButtonSearch']")
     public WebElement buttonSearch;
 
@@ -77,6 +81,12 @@ public class SearchPage implements ISearchPage {
         }
     }
 
+    public void chooseLoopPrice(TestData testData){
+        if ("Signed in".equalsIgnoreCase(testData.getLoopProfile()) && ("Loops".equalsIgnoreCase(testData.getFrequentFlierProgram()))) {
+            loopPrice.click();
+        }
+    }
+
     public LoginPage goToLoginPage() {
         new ElementHelper(driver).waitForElementToBeClickable(loginButton);
         loginButton.click();
@@ -85,7 +95,7 @@ public class SearchPage implements ISearchPage {
     }
 
     public SelectionPage doSearch() {
-        new ElementHelper(driver).waitForElementPresent(buttonSearch);
+        new ElementHelper(driver).waitForElementToBeClickable(buttonSearch);
         buttonSearch.click();
         return new SelectionPage(driver);
     }

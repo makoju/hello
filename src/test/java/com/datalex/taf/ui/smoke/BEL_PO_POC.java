@@ -6,6 +6,7 @@ import com.datalex.taf.ui.helpers.ScreenshotHelper;
 import com.datalex.taf.ui.po.loginpage.LoginPage;
 import com.datalex.taf.ui.po.searchpage.SearchPage;
 import com.datalex.taf.ui.po.selectionpage.SelectionPage;
+import com.datalex.taf.ui.po.summarypage.SummaryPage;
 import org.openqa.selenium.WebDriver;
 import org.testng.ITestResult;
 import org.testng.annotations.AfterMethod;
@@ -35,6 +36,7 @@ public class BEL_PO_POC {
 
     @Test(dataProvider = "CSVData", description = "SearchPageTest")
     public void searchPageTest(TestData testData) throws Exception {
+        testData.printTestData();
         driver = new TAFSelenium().getDriver();
         //Login page actions
         SearchPage searchPage = new SearchPage(driver);
@@ -47,7 +49,12 @@ public class BEL_PO_POC {
         searchPage.inputDepartureDate("8");
         if (("RT").equalsIgnoreCase(testData.getTripType()))
             searchPage.inputReturnDate("12");
+        searchPage.chooseLoopPrice(testData);
         //Selection page actions
         SelectionPage selectionPage = searchPage.doSearch();
+        selectionPage.selectInboundFareFamily(testData.getFareFamily());
+        if (("RT").equalsIgnoreCase(testData.getTripType()))
+            selectionPage.selectReturnFareFamily(testData.getFareFamily());
+        SummaryPage summaryPage = selectionPage.doSelection();
     }
 }

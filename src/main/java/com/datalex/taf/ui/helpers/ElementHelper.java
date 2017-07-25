@@ -1,6 +1,7 @@
 package com.datalex.taf.ui.helpers;
 
 import org.apache.logging.log4j.LogManager;
+import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.ExpectedConditions;
@@ -24,7 +25,7 @@ public class ElementHelper {
     }
 
     public ElementHelper(WebDriver driver) {
-        this.wait = new WebDriverWait(driver, 20);
+        this.wait = new WebDriverWait(driver, 30);
     }
 
     public void waitForElementDisplayed(WebElement element) {
@@ -138,8 +139,16 @@ public class ElementHelper {
         wait.until(ExpectedConditions.elementToBeClickable(element));
     }
 
+    public void waitForElementToBeClickable(By element) {
+        wait.until(ExpectedConditions.elementToBeClickable(element));
+    }
+
     public void waitForElementPresent(WebElement element) {
         wait.until(ExpectedConditions.visibilityOf(element));
+    }
+
+    public void waitForPresenceOfElementLocated(By element){
+        wait.until(ExpectedConditions.presenceOfElementLocated(element));
     }
 
     public void waitForFrameToBeAvailableAndSwitchToIt(String element) {
