@@ -26,14 +26,31 @@ public class TAFSelenium {
 
     private static final org.apache.logging.log4j.Logger mLOG = LogManager.getLogger(TAFSelenium.class);
     private static ThreadLocal<RemoteWebDriver> mDriver = new ThreadLocal<>();
-    private DesiredCapabilities capability;
+    private static DesiredCapabilities capability;
 
-    public TAFSelenium() throws TAFSeleniumException, IOException {
+    /**
+     * Empty private constructor
+     */
+    private TAFSelenium() {
+    }
+
+    /**
+     * TAFSelenium init method
+     * Example of usage: TAFSelenium.initDriver();
+     * NOTE: It is important to use getDriver() because of parallel runs
+     *
+     * @throws TAFSeleniumException if taf.properties browserType field is empty
+     * @throws IOException          if reading from taf.properties fails
+     */
+    public static void initDriver() throws TAFSeleniumException, IOException {
         LoadProperties.propertyLoader();
         String browserName = TAFProperties.getBrowserType().toUpperCase();
         URL driverURL = new URL(TAFProperties.getGridHost() + ":" + TAFProperties.getGridPort() + "/wd/hub");
 
         switch (browserName) {
+            case "FIREFOX":
+                setFirefoxBrowser();
+                break;
             case "CHROME":
                 setChromeBrowser();
                 break;
@@ -42,9 +59,6 @@ public class TAFSelenium {
                 break;
             case "IE":
                 setIEBrowser();
-                break;
-            case "FIREFOX":
-                setFirefoxBrowser();
                 break;
             default:
                 throw new TAFSeleniumException("Choose browserType in taf.properties file!");
@@ -59,14 +73,18 @@ public class TAFSelenium {
 
     /**
      * Function to get driver instance
+     * Example of usage: WebDriver driver = TAFSelenium.getDriver();
      *
-     * @return driver
+     * @return WebDriver
      */
-    public WebDriver getDriver() {
+    public static WebDriver getDriver() {
         return mDriver.get();
     }
 
-    private void setFirefoxBrowser() {
+    /**
+     * Set Firefox driver
+     */
+    private static void setFirefoxBrowser() {
         File geckoDriver;
         if (OSDetection.isWindows()) {
             geckoDriver = new File("C:\\drivers\\geckodriver.exe");
@@ -82,7 +100,10 @@ public class TAFSelenium {
         capability.setJavascriptEnabled(true);
     }
 
-    private void setChromeBrowser() {
+    /**
+     * Set Chrome driver
+     */
+    private static void setChromeBrowser() {
         if (OSDetection.isWindows()) {
             final File file = new File("C:\\drivers\\chromedriver.exe");
             System.setProperty("webdriver.chrome.driver", file.getAbsolutePath());
@@ -99,7 +120,28 @@ public class TAFSelenium {
         capability.setCapability(ChromeOptions.CAPABILITY, options);
     }
 
-    private void setIEBrowser() throws TAFSeleniumException {
+    /**
+     * Set EDGE driver
+     *
+     * @throws TAFSeleniumException if driver file reading fails
+     */
+    private static void setEDGEBrowser() throws TAFSeleniumException {
+        if (OSDetection.isWindows()) {
+            final File file = new File("C:\\drivers\\MicrosoftWebDriver.exe");
+            System.setProperty("webdriver.edge.driver", file.getAbsolutePath());
+        } else {
+            throw new TAFSeleniumException("Not a windows machine. Please start up the the driver in selenium server");
+        }
+        capability = DesiredCapabilities.edge();
+        capability.setJavascriptEnabled(true);
+    }
+
+    /**
+     * Set IE driver
+     *
+     * @throws TAFSeleniumException if driver file reading fails
+     */
+    private static void setIEBrowser() throws TAFSeleniumException {
         if (OSDetection.isWindows()) {
             final File file = new File("C:\\drivers\\IEDriverServer.exe");
             System.setProperty("webdriver.ie.driver", file.getAbsolutePath());
@@ -109,16 +151,5 @@ public class TAFSelenium {
         capability = DesiredCapabilities.internetExplorer();
         capability.setJavascriptEnabled(true);
         capability.setCapability(InternetExplorerDriver.INTRODUCE_FLAKINESS_BY_IGNORING_SECURITY_DOMAINS, true);
-    }
-
-    private void setEDGEBrowser() throws TAFSeleniumException {
-        if (OSDetection.isWindows()) {
-            final File file = new File("C:\\drivers\\MicrosoftWebDriver.exe");
-            System.setProperty("webdriver.edge.driver", file.getAbsolutePath());
-        } else {
-            throw new TAFSeleniumException("Not a windows machine. Please start up the the driver in selenium server");
-        }
-        capability = DesiredCapabilities.edge();
-        capability.setJavascriptEnabled(true);
     }
 }

@@ -25,8 +25,8 @@ dependencies {
     compile group: 'org.apache.directory.studio', name: 'org.apache.commons.lang', version: '2.6'
     compile group: 'com.epam.reportportal', name: 'logger-java-log4j', version: '3.0.0' 
     compile group: 'com.epam.reportportal', name: 'agent-java-testng', version: '3.0.4'
-    testCompile group: 'org.testng', name: 'testng', version: '6.11'
     compile group: 'org.projectlombok', name: 'lombok', version: '1.16.12'
+    testCompile group: 'org.testng', name: 'testng', version: '6.11'
 }
 
 task regression(type: Test) {

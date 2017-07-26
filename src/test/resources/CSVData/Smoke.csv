@@ -1,2 +1,0 @@
-tripType,outboundPOS,inputFrom,inputTo,departOn,returnon,fromMC1,toMC1,fromMC2,toMC2,fromMC3,toMC3,departOnMC3,ADT,CHD,INF,cabinClass,fareFamily,insuranceSummaryPage,baggage,delayedPayment,meals,seats,pwd,paymentType,Loop Profile,frequentFlierProgram,age,insurancEconomynfirmationPage,baggagEconomynfirmationPage,email,password
-OW,BEL,BRU,LHR,41,46,,,,,,,,1,0,0,Economy,Check&Go,no,no,no,no,Yes,11111,ING,Signed in,LOOPS,18,Yes,Yes,alan.peck@datalex.com,Datalex123!

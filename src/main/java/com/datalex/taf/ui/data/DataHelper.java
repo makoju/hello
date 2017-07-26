@@ -14,9 +14,9 @@ import java.util.stream.Stream;
  *
  * @author Aleksandar Vulovic
  */
-public class CSVDataHelper {
+public class DataHelper {
 
-    private CSVDataHelper() {
+    private DataHelper() {
         throw new UnsupportedOperationException();
     }
 
@@ -28,15 +28,16 @@ public class CSVDataHelper {
      * @throws IOException if error occurs
      */
     public static List<Map<String, String>> readDataFromCSVFile(String csvFile) throws IOException {
+        String renamedCsvFile = "";
         if (csvFile.endsWith(".csv")) {
-            csvFile = csvFile.replace(".csv", "");
+            renamedCsvFile = csvFile.replace(".csv", "");
         }
         List<List<String>> listOfLines = new ArrayList<>();
         List<String> keys;
         Map<String, String> data = new LinkedHashMap<>();
         List<Map<String, String>> allData = new ArrayList<>();
 
-        try (Stream<String> lines = Files.lines(Paths.get("./src/test/resources/CSVData/" + csvFile + ".csv"), StandardCharsets.UTF_8)) {
+        try (Stream<String> lines = Files.lines(Paths.get("./src/test/resources/Data/" + renamedCsvFile + ".csv"), StandardCharsets.UTF_8)) {
             for (String line : (Iterable<String>) lines::iterator) {
                 listOfLines.add(Arrays.asList(line.split(",")));
             }
@@ -162,6 +163,12 @@ public class CSVDataHelper {
                         break;
                     case "password":
                         testRow.setPassword(entry.getValue());
+                        break;
+                    case "flightDates":
+                        testRow.setFlightDates(entry.getValue());
+                        break;
+                    case "promotion":
+                        testRow.setPromotion(entry.getValue());
                         break;
                     default:
                         TAFLogger.info("Unsupported field in test data; field name:" + entry.getKey() + " value:" + entry.getValue());

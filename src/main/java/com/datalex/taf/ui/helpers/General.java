@@ -21,6 +21,8 @@ import java.util.List;
 
 /**
  * GeneralHelper class
+ *
+ * @author ES Quality Team members - reused from taf-ui 1.0
  */
 public class General {
 
@@ -43,7 +45,6 @@ public class General {
         String strLine;
 
         if (airportName.equals("")) {
-            mLOG.debug("No Airport Name Specified. Looking through the Airport Codes List");
             FileInputStream fstream;
 
             fstream = new FileInputStream("./src/test/resources/airportCodesList.txt");
@@ -52,7 +53,6 @@ public class General {
 
             while ((strLine = br.readLine()) != null) {
                 if (strLine.contains("(" + airportCode + ")")) {
-                    mLOG.debug("Airport Name Found in List = " + strLine);
                     airportNameToInject = strLine;
 
                 }
@@ -61,19 +61,16 @@ public class General {
             fstream.close();
 
             if (airportNameToInject.equals("")) {
-                mLOG.error("Could Not Find Airport Code in list");
                 throw new Exception("Could not find Airport Code in AirportCodesList " +
                         "Tried to find " + airportCodeToInject + " in Location into search field {" + controlName + "}");
             }
 
         } else {
-            mLOG.info("Airport Name specified");
             airportNameToInject = airportName;
         }
 
         if (typeUsingJS(driver, controlNameHidden, airportCodeToInject) &&
                 typeUsingJS(driver, controlName, airportNameToInject)) {
-            mLOG.info("Succesfully injected into location Search box");
         } else {
             mLOG.error("Failed to Inject Location into Search box");
             throw new Exception("Failed to Inject Location into Search box. " +
@@ -94,8 +91,6 @@ public class General {
 
     public boolean typeUsingJS(WebDriver driver, WebElement locator, String value) {
         try {
-            mLOG.info("Method with JS executing");
-            mLOG.debug("selenium.type  " + value + " into " + locator);
             JavascriptExecutor jse = (JavascriptExecutor) driver;
             String scriptExecute;
 

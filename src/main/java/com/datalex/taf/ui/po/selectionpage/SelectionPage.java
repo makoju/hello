@@ -10,9 +10,10 @@ import org.openqa.selenium.support.PageFactory;
 
 /**
  * SelectionPage class
+ *
+ * @author Aleksandar Vulovic
  */
 public class SelectionPage implements ISelectionPage {
-
     private WebDriver driver;
 
     @FindBy(id = "pgButtonNext")

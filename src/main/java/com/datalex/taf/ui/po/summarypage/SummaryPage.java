@@ -7,6 +7,8 @@ import org.openqa.selenium.support.PageFactory;
 
 /**
  * Summary Page class
+ *
+ * @author Aleksandar Vulovic
  */
 public class SummaryPage {
 

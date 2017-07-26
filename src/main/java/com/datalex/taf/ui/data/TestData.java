@@ -44,6 +44,8 @@ public class TestData {
     private String baggageEconomyInformationPage;
     private String email;
     private String password;
+    private String promotion;
+    private String flightDates;
 
     @Override
     public String toString() {

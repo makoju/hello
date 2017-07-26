@@ -13,45 +13,40 @@ import org.testng.annotations.AfterMethod;
 import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
 
-import static com.datalex.taf.ui.data.CSVDataHelper.convertDataToObject;
-import static com.datalex.taf.ui.data.CSVDataHelper.readDataFromCSVFile;
+import static com.datalex.taf.ui.data.DataHelper.convertDataToObject;
+import static com.datalex.taf.ui.data.DataHelper.readDataFromCSVFile;
 
 /**
- * BRU PageObject POC
+ * BRU PageObject POC Test class
+ *
+ * @author Aleksandar Vulovic
  */
 @Test(groups = {"smoke"})
 public class BEL_PO_POC {
-    private WebDriver driver;
 
     @AfterMethod
     public void tearDown(ITestResult result) throws Exception {
-        new ScreenshotHelper().takeScreenshot(driver, result);
-        driver.quit();
+        if (!result.isSuccess())
+            new ScreenshotHelper().takeScreenshot(TAFSelenium.getDriver());
+        TAFSelenium.getDriver().quit();
     }
 
-    @DataProvider(name = "CSVData", parallel = false)
-    public Object[][] csvData() throws Exception {
+    @DataProvider(name = "Data", parallel = false)
+    public Object[][] data() throws Exception {
         return convertDataToObject(readDataFromCSVFile("Smoke"));
     }
 
-    @Test(dataProvider = "CSVData", description = "SearchPageTest")
+    @Test(dataProvider = "Data", description = "POC Test example")
     public void searchPageTest(TestData testData) throws Exception {
-        testData.printTestData();
-        driver = new TAFSelenium().getDriver();
+        TAFSelenium.initDriver();
+        WebDriver driver = TAFSelenium.getDriver();
         //Login page actions
         SearchPage searchPage = new SearchPage(driver);
         LoginPage loginPage = searchPage.goToLoginPage();
         searchPage = loginPage.login(testData);
         //Search page actions
-        searchPage.setSearchType(testData.getTripType());
-        searchPage.setOriginLocation(testData.getInputFrom());
-        searchPage.setDestinationLocation(testData.getInputTo());
-        searchPage.inputDepartureDate("8");
-        if (("RT").equalsIgnoreCase(testData.getTripType()))
-            searchPage.inputReturnDate("12");
-        searchPage.chooseLoopPrice(testData);
+        SelectionPage selectionPage = searchPage.doFlightSearch(testData);
         //Selection page actions
-        SelectionPage selectionPage = searchPage.doSearch();
         selectionPage.selectInboundFareFamily(testData.getFareFamily());
         if (("RT").equalsIgnoreCase(testData.getTripType()))
             selectionPage.selectReturnFareFamily(testData.getFareFamily());

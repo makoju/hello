@@ -5,7 +5,6 @@ import org.apache.commons.io.FileUtils;
 import org.apache.commons.lang3.exception.ExceptionUtils;
 import org.apache.logging.log4j.LogManager;
 import org.openqa.selenium.WebDriver;
-import org.testng.ITestResult;
 import ru.yandex.qatools.ashot.AShot;
 import ru.yandex.qatools.ashot.shooting.ShootingStrategies;
 
@@ -26,9 +25,15 @@ public class ScreenshotHelper {
     private static org.apache.logging.log4j.Logger mLOG = LogManager.getLogger(ScreenshotHelper.class);
     private static final String WORK_DIR = "./work/";
 
-    public void takeScreenshot(WebDriver driver, ITestResult result) throws IOException {
-
-        if (result.getStatus() == ITestResult.FAILURE) {
+    /**
+     * Metod to take screenshot
+     *
+     * @param driver WebDriver
+     * @param result ITestResult from TestNG
+     * @throws IOException if saving file is failed
+     */
+    public void takeScreenshot(WebDriver driver) throws IOException {
+        if (true) {
             try {
                 SimpleDateFormat dateFormat = new SimpleDateFormat("MMddyyyyHHmmss");
                 Date date = new Date();
@@ -37,9 +42,9 @@ public class ScreenshotHelper {
                     FileUtils.forceMkdir(screenDir);
                 }
                 ImageIO.write(takeScreenshotFullPage(driver), "PNG",
-                        new File(WORK_DIR + result.getMethod().getMethodName() + dateFormat.format(date) + ".png"));
+                        new File(WORK_DIR + dateFormat.format(date) + ".png"));
                 mLOG.info("Screenshot taken!");
-                attachFileToReport(WORK_DIR + result.getMethod().getMethodName() + dateFormat.format(date) + ".png", "attached");
+                attachFileToReport(WORK_DIR + dateFormat.format(date) + ".png", "attached");
             } catch (IOException e) {
                 mLOG.error("Exception during taking a screenshot " + e.getMessage());
                 mLOG.error(ExceptionUtils.getStackTrace(e));
@@ -66,6 +71,12 @@ public class ScreenshotHelper {
         }
     }
 
+    /**
+     * Method to attach screenshot file to Report Portal
+     *
+     * @param filePath
+     * @param message
+     */
     private void attachFileToReport(String filePath, String message) {
         org.apache.logging.log4j.LogManager.getLogger(TAFLogger.class).info("RP_MESSAGE#FILE#{}#{}", filePath, message);
     }

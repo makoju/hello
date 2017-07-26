@@ -5,6 +5,8 @@ import org.openqa.selenium.WebElement;
 
 /**
  * Selection Page interface
+ *
+ * @author Aleksandar Vulovic
  */
 public interface ISelectionPage {
 
