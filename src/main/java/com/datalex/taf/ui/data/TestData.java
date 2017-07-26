@@ -1,8 +1,8 @@
 package com.datalex.taf.ui.data;
 
 import com.datalex.taf.core.loggers.TAFLogger;
-import org.apache.commons.lang.builder.ToStringBuilder;
 import lombok.Data;
+import org.apache.commons.lang.builder.ToStringBuilder;
 
 /**
  * TestData class
@@ -83,6 +83,8 @@ public class TestData {
                 .append("baggageEconomyInformationPage", baggageEconomyInformationPage)
                 .append("email", email)
                 .append("password", password)
+                .append("promotion", promotion)
+                .append("flightDates", flightDates)
                 .toString();
     }
 
