@@ -31,23 +31,21 @@ public class ScreenshotHelper {
      * @param driver WebDriver
      * @throws IOException if saving file is failed
      */
-    public void takeScreenshot(WebDriver driver) throws IOException {
-        if (true) {
-            try {
-                SimpleDateFormat dateFormat = new SimpleDateFormat("MMddyyyyHHmmss");
-                Date date = new Date();
-                File screenDir = new File(WORK_DIR);
-                if (!screenDir.exists()) {
-                    FileUtils.forceMkdir(screenDir);
-                }
-                ImageIO.write(takeScreenshotFullPage(driver), "PNG",
-                        new File(WORK_DIR + dateFormat.format(date) + ".png"));
-                mLOG.info("Screenshot taken!");
-                attachFileToReport(WORK_DIR + dateFormat.format(date) + ".png", "attached");
-            } catch (IOException e) {
-                mLOG.error("Exception during taking a screenshot " + e.getMessage());
-                mLOG.error(ExceptionUtils.getStackTrace(e));
+    public void takeScreenshot(WebDriver driver) {
+        try {
+            SimpleDateFormat dateFormat = new SimpleDateFormat("MMddyyyyHHmmss");
+            Date date = new Date();
+            File screenDir = new File(WORK_DIR);
+            if (!screenDir.exists()) {
+                FileUtils.forceMkdir(screenDir);
             }
+            ImageIO.write(takeScreenshotFullPage(driver), "PNG",
+                    new File(WORK_DIR + dateFormat.format(date) + ".png"));
+            mLOG.info("Screenshot taken!");
+            attachFileToReport(WORK_DIR + dateFormat.format(date) + ".png", "attached");
+        } catch (IOException e) {
+            mLOG.error("Exception during taking a screenshot " + e.getMessage());
+            mLOG.error(ExceptionUtils.getStackTrace(e));
         }
     }
 
