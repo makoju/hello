@@ -29,7 +29,6 @@ public class ScreenshotHelper {
      * Metod to take screenshot
      *
      * @param driver WebDriver
-     * @param result ITestResult from TestNG
      * @throws IOException if saving file is failed
      */
     public void takeScreenshot(WebDriver driver) throws IOException {
