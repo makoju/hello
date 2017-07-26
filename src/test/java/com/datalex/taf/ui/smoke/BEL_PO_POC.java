@@ -4,6 +4,7 @@ import com.datalex.taf.ui.base.TAFSelenium;
 import com.datalex.taf.ui.data.TestData;
 import com.datalex.taf.ui.helpers.ScreenshotHelper;
 import com.datalex.taf.ui.po.loginpage.LoginPage;
+import com.datalex.taf.ui.po.passengerspage.PassengersPage;
 import com.datalex.taf.ui.po.searchpage.SearchPage;
 import com.datalex.taf.ui.po.selectionpage.SelectionPage;
 import com.datalex.taf.ui.po.summarypage.SummaryPage;
@@ -50,6 +51,10 @@ public class BEL_PO_POC {
         selectionPage.selectInboundFareFamily(testData.getFareFamily());
         if (("RT").equalsIgnoreCase(testData.getTripType()))
             selectionPage.selectReturnFareFamily(testData.getFareFamily());
+        //Summary page actions
         SummaryPage summaryPage = selectionPage.doSelection();
+        //Passengers page actions
+        PassengersPage passengersPage = summaryPage.goToPassengersPage();
+        passengersPage.fillTravellersPage(testData);
     }
 }

@@ -26,6 +26,7 @@ dependencies {
     compile group: 'com.epam.reportportal', name: 'logger-java-log4j', version: '3.0.0' 
     compile group: 'com.epam.reportportal', name: 'agent-java-testng', version: '3.0.4'
     compile group: 'org.projectlombok', name: 'lombok', version: '1.16.12'
+    compile group: 'com.github.javafaker', name: 'javafaker', version: '0.13'
     testCompile group: 'org.testng', name: 'testng', version: '6.11'
 }
 

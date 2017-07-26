@@ -179,6 +179,24 @@ public class ElementHelper {
     }
 
     /**
+     * Select option from drop down by value
+     *
+     * @param element WebElement
+     * @param value    value to select
+     */
+    public void selectOptionByValue(WebElement element, String value) {
+        if (value == null) {
+            return;
+        }
+        try {
+            Select select = new Select(element);
+            select.selectByValue(value);
+        } catch (Exception e) {
+            mLOG.error(e);
+        }
+    }
+
+    /**
      * Select option by text in parent element
      *
      * @param parent   parent element

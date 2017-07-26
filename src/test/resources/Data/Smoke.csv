@@ -1,3 +1,3 @@
 tripType,flightDates,promotion,outboundPOS,inputFrom,inputTo,departOn,returnon,fromMC1,toMC1,fromMC2,toMC2,fromMC3,toMC3,departOnMC3,ADT,CHD,INF,cabinClass,fareFamily,insuranceSummaryPage,baggage,delayedPayment,meals,seats,pwd,paymentType,Loop Profile,frequentFlierProgram,age,insurancEconomynfirmationPage,baggagEconomynfirmationPage,email,password
-OW,flexibleDates,,BEL,BRU,LHR,7,10,,,,,,,,1,1,1,Business,Check&Go,no,no,no,no,Yes,11111,ING,Signed in,LOOPS,18,Yes,Yes,alan.peck@datalex.com,Datalex123!
-OW,fixedDates,,BEL,BRU,LHR,7,10,,,,,,,,1,1,1,Business,Check&Go,no,no,no,no,Yes,11111,ING,Signed in,LOOPS,18,Yes,Yes,alan.peck@datalex.com,Datalex123!
+OW,fixedDates,,BEL,BRU,LHR,10,16,,,,,,,,2,0,0,Economy,Check&Go,no,no,no,no,Yes,11111,ING,Signed out,,18,Yes,Yes,alan.peck@datalex.com,Datalex123!
+RT,fixedDates,,BEL,BRU,LHR,9,15,,,,,,,,4,0,0,Economy,Check&Go,no,no,no,no,Yes,11111,ING,Signed out,,18,Yes,Yes,alan.peck@datalex.com,Datalex123!
