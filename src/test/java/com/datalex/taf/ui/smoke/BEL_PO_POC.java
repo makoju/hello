@@ -56,5 +56,6 @@ public class BEL_PO_POC {
         //Passengers page actions
         PassengersPage passengersPage = summaryPage.goToPassengersPage();
         passengersPage.fillTravellersPage(testData);
+        passengersPage.goToPayment();
     }
 }

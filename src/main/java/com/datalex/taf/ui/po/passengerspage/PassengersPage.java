@@ -1,5 +1,6 @@
 package com.datalex.taf.ui.po.passengerspage;
 
+import com.datalex.taf.core.loggers.TAFLogger;
 import com.datalex.taf.ui.data.TestData;
 import com.datalex.taf.ui.helpers.ElementHelper;
 import com.github.javafaker.Faker;
@@ -20,10 +21,10 @@ public class PassengersPage implements IPassengersPage {
     @FindBy(id = "pgButtonProceed")
     public WebElement buttonProceed;
 
-    @FindBy(id = "travellersInfo[0].emailAddress")
+    @FindBy(id = "emailAddress")
     public WebElement travellerEmailAddress;
 
-    @FindBy(id = "travellersInfo[0].confirmEmail")
+    @FindBy(id = "confirmEmail")
     public WebElement travellerConfirmEmail;
 
     @FindBy(id = "mobilePhoneNumberCountryCode")
@@ -45,25 +46,101 @@ public class PassengersPage implements IPassengersPage {
         int infQty = Integer.parseInt(testData.getInf());
 
         int travellersQty = adtQty + chdQty + infQty;
+        new ElementHelper().zoomOutPage(driver);
         for (int i = 0; i <= travellersQty - 1; i++) {
-            Faker faker = new Faker();
-            WebElement title = driver.findElement(By.id("travellersInfo[" + i + "].title"));
-            new ElementHelper().selectOptionByText(title, "Mr");
-            driver.findElement(By.id("travellersInfo[" + i + "].firstName")).sendKeys(faker.name().firstName());
-            driver.findElement(By.id("travellersInfo[" + i + "].middleName")).sendKeys(faker.name().firstName());
-            driver.findElement(By.id("travellersInfo[" + i + "].lastName")).sendKeys(faker.name().lastName());
-
-            WebElement country = driver.findElement(By.id("travellersInfo[" + i + "].citizenCountry"));
-            new ElementHelper().selectOptionByText(country, "Serbia");
-
-            WebElement loyalty = driver.findElement(By.id("travellersInfo[" + i + "].loyaltyMemberships[0]"));
-            new ElementHelper().selectOptionByText(loyalty, testData.getFrequentFlierProgram());
+            populatePassengerDetails(testData, i);
+            populatePassportData(testData, i);
+            setFrequentFlierProgram(testData, i);
+            populatePassengerDoB(testData, i);
         }
+        populateContactDetails(testData);
+
+    }
+
+    public void setFrequentFlierProgram(TestData testData, int passengerNumber) {
+        WebElement loyalty = driver.findElement(By.id("travellersInfo[" + passengerNumber + "].loyaltyMemberships[0]"));
+        WebElement loyaltyNumber = driver.findElement(By.id("travellersInfo[" + passengerNumber + "].loyaltyNumbers[0]"));
+        switch (testData.getFrequentFlierProgram()) {
+            case "Agean":
+                new ElementHelper().selectOptionByValue(loyalty, "A3");
+                loyaltyNumber.sendKeys("992003004357384");
+                break;
+            case "Miles and More":
+                new ElementHelper().selectOptionByValue(loyalty, "LH");
+                loyaltyNumber.sendKeys("992003004357384");
+                break;
+            case "LOOP":
+                new ElementHelper().selectOptionByValue(loyalty, "SN");
+                break;
+            default:
+                TAFLogger.info("invalid frequent flier program");
+        }
+    }
+
+    public void populatePassportData(TestData testData, int passengerNumber) {
+        WebElement country = driver.findElement(By.id("travellersInfo[" + passengerNumber + "].citizenCountry"));
+        new ElementHelper(driver).waitForElementDisplayed(country);
+        new ElementHelper().selectOptionByValue(country, "US");
+
+        WebElement passport = driver.findElement(By.id("travellersInfo[" + passengerNumber + "].advancedPassengerDetails(foid)"));
+        new ElementHelper(driver).waitForElementDisplayed(passport);
+        new ElementHelper().selectOptionByValue(passport, "ID_CARD");
+
+        WebElement foidNumber = driver.findElement(By.id("travellersInfo[" + passengerNumber + "].advancedPassengerDetails(foidNumber)"));
+        new ElementHelper(driver).waitForElementDisplayed(foidNumber);
+        foidNumber.sendKeys("1234567890");
+
+        WebElement foidExpireDay = driver.findElement(By.id("travellersInfo[" + passengerNumber + "].advancedPassengerDetails(foidExpireDay)"));
+        new ElementHelper(driver).waitForElementDisplayed(foidExpireDay);
+        new ElementHelper().selectOptionByValue(foidExpireDay, "1");
+
+        WebElement foidExpireMonth = driver.findElement(By.id("travellersInfo[" + passengerNumber + "].advancedPassengerDetails(foidExpireMonth)"));
+        new ElementHelper(driver).waitForElementDisplayed(foidExpireMonth);
+        new ElementHelper().selectOptionByValue(foidExpireMonth, "1");
+
+        WebElement foidExpireYear = driver.findElement(By.id("travellersInfo[" + passengerNumber + "].advancedPassengerDetails(foidExpireYear)"));
+        new ElementHelper(driver).waitForElementDisplayed(foidExpireYear);
+        new ElementHelper().selectOptionByValue(foidExpireYear, "2022");
+
+        WebElement issuingCountry = driver.findElement(By.id("travellersInfo[" + passengerNumber + "].advancedPassengerDetails(foidCountry)"));
+        new ElementHelper(driver).waitForElementDisplayed(issuingCountry);
+        new ElementHelper().selectOptionByValue(issuingCountry, "US");
+    }
+
+    public void populatePassengerDetails(TestData testData, int passengerNumber) {
         Faker faker = new Faker();
+        WebElement title = driver.findElement(By.id("travellersInfo[" + passengerNumber + "].title"));
+        new ElementHelper(driver).waitForElementDisplayed(title);
+        new ElementHelper().selectOptionByText(title, "Mr");
+        driver.findElement(By.id("travellersInfo[" + passengerNumber + "].firstName")).sendKeys(faker.name().firstName());
+        driver.findElement(By.id("travellersInfo[" + passengerNumber + "].middleName")).sendKeys(faker.name().firstName());
+        driver.findElement(By.id("travellersInfo[" + passengerNumber + "].lastName")).sendKeys(faker.name().lastName());
+    }
+
+    public void populatePassengerDoB(TestData testData, int passengerNumber) {
+        WebElement calendarDialog = driver.findElement(By.id("travellersInfo[" + passengerNumber + "].advancedPassengerDetails(dobDate)"));
+        calendarDialog.click();
+        new ElementHelper(driver).waitForElementPresent(calendarDialog);
+        new ElementHelper().executeScript(driver, "document.getElementById('travellersInfo[" + passengerNumber + "].advancedPassengerDetails(dobDay)').setAttribute('value', '12')");
+        new ElementHelper().executeScript(driver, "document.getElementById('travellersInfo[" + passengerNumber + "].advancedPassengerDetails(dobMonth)').setAttribute('value', '12')");
+        new ElementHelper().executeScript(driver, "document.getElementById('travellersInfo[" + passengerNumber + "].advancedPassengerDetails(dobYear)').setAttribute('value', '1984')");
+        driver.findElement(By.xpath("//td[. = \"12\"]")).click();
+    }
+
+    public void populateContactDetails(TestData testData) {
+        Faker faker = new Faker();
+        new ElementHelper(driver).waitForElementDisplayed(travellerEmailAddress);
         travellerEmailAddress.sendKeys(testData.getEmail());
+        new ElementHelper(driver).waitForElementDisplayed(travellerConfirmEmail);
         travellerConfirmEmail.sendKeys(testData.getEmail());
+        new ElementHelper(driver).waitForElementDisplayed(travellerPhoneNumber);
         travellerPhoneNumber.sendKeys(faker.phoneNumber().phoneNumber());
-        new ElementHelper().selectOptionByValue(travellerCountryCode, "AO");
+        new ElementHelper().selectOptionByValue(travellerCountryCode, "US");
+    }
+
+    public void goToPayment() {
+        new ElementHelper(driver).waitForElementToBeClickable(buttonProceed);
+        buttonProceed.click();
     }
 
 

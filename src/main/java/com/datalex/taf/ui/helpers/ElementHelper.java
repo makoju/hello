@@ -2,6 +2,7 @@ package com.datalex.taf.ui.helpers;
 
 import org.apache.logging.log4j.LogManager;
 import org.openqa.selenium.By;
+import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.ExpectedConditions;
@@ -182,7 +183,7 @@ public class ElementHelper {
      * Select option from drop down by value
      *
      * @param element WebElement
-     * @param value    value to select
+     * @param value   value to select
      */
     public void selectOptionByValue(WebElement element, String value) {
         if (value == null) {
@@ -276,5 +277,26 @@ public class ElementHelper {
      */
     public void waitForFrameToBeAvailableAndSwitchToIt(String element) {
         wait.until(ExpectedConditions.frameToBeAvailableAndSwitchToIt(element));
+    }
+
+    /**
+     * Function to execute Javascript using WebDriver
+     * <p>
+     * To use it here are some following example:
+     * <p>
+     * driver.executeScript("window.scrollBy(0,150)");
+     * driver.executeScript("document.getElementById('" + elementId + "').value").toString();
+     *
+     * @param scriptToRun script
+     * @return JavaScript object
+     */
+    public Object executeScript(WebDriver driver, String scriptToRun) {
+        return ((JavascriptExecutor) driver).executeScript(scriptToRun);
+    }
+
+    public void zoomOutPage(WebDriver driver){
+        for (int i = 0; i < 5; i++) {
+            driver.findElement(By.tagName("html")).sendKeys(Keys.chord(Keys.CONTROL, Keys.SUBTRACT));
+        }
     }
 }
