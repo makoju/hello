@@ -46,7 +46,6 @@ public class PassengersPage implements IPassengersPage {
         int infQty = Integer.parseInt(testData.getInf());
 
         int travellersQty = adtQty + chdQty + infQty;
-        new ElementHelper().zoomOutPage(driver);
         for (int i = 0; i <= travellersQty - 1; i++) {
             populatePassengerDetails(testData, i);
             populatePassportData(testData, i);

@@ -290,10 +290,4 @@ public class ElementHelper {
     public Object executeScript(WebDriver driver, String scriptToRun) {
         return ((JavascriptExecutor) driver).executeScript(scriptToRun);
     }
-
-    public void zoomOutPage(WebDriver driver){
-        for (int i = 0; i < 5; i++) {
-            driver.findElement(By.tagName("html")).sendKeys(Keys.chord(Keys.CONTROL, Keys.SUBTRACT));
-        }
-    }
 }
