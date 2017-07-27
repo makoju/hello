@@ -9,6 +9,7 @@ import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 
+import javax.rmi.CORBA.Util;
 import java.io.BufferedReader;
 import java.io.DataInputStream;
 import java.io.FileInputStream;
@@ -262,7 +263,7 @@ public class General {
             //driver.click(controls.get(calendarIcon));
 
             if (!driver.findElement(By.cssSelector("div#calendar1Outer")).isDisplayed()) {
-                new Utils().wait(5000);
+                new Utils().wait(1000);
             }
 
             if (driver.findElement(By.cssSelector("div#calendar1Outer")).isDisplayed()) {
@@ -290,7 +291,7 @@ public class General {
                         WebElement nextMonth = driver.findElement(By.cssSelector("div#calendar1Dialog a[onclick*='nextMonth']"));
                         new ElementHelper(driver).waitForElementPresent(nextMonth);
                         clickElementJS(driver, nextMonth);
-                        new Utils().waitTime(5000);
+                        new Utils().waitTime(1000);
                         i++;
                     } else {
                         calendarShown = true;
@@ -300,7 +301,7 @@ public class General {
                 if (!calendarShown) {
                     throw new Exception("FAIL");
                 }
-                Thread.sleep(15000);
+                new Utils().waitTime(1000);
                 driver.findElement(By.cssSelector("div#calendar1Outer" + " a[onclick*='" +
                         "year:" + yearDep + "'][onclick*='month:" + month + "'][onclick*='day:" + day + "']")).click();
             } else {

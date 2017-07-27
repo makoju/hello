@@ -4,6 +4,7 @@ import com.datalex.taf.core.loggers.TAFLogger;
 import com.datalex.taf.ui.data.TestData;
 import com.datalex.taf.ui.helpers.ElementHelper;
 import com.github.javafaker.Faker;
+import lombok.extern.log4j.Log4j2;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
@@ -15,11 +16,15 @@ import org.openqa.selenium.support.PageFactory;
  *
  * @author Aleksandar Vulovic
  */
+@Log4j2
 public class PassengersPage implements IPassengersPage {
     private WebDriver driver;
 
     @FindBy(id = "pgButtonProceed")
     public WebElement buttonProceed;
+
+    @FindBy(id = "pgSeatSelect")
+    public WebElement seatSelectButton;
 
     @FindBy(id = "emailAddress")
     public WebElement travellerEmailAddress;
@@ -34,6 +39,7 @@ public class PassengersPage implements IPassengersPage {
     public WebElement travellerPhoneNumber;
 
     public PassengersPage(WebDriver driver) {
+        log.info("Initiating Passenger Page");
         this.driver = driver;
         new ElementHelper(driver).waitForPresenceOfElementLocated(By.id("pgTravellers"));
         new ElementHelper(driver).waitForElementToBeClickable(By.id("pgButtonProceed"));
@@ -137,7 +143,14 @@ public class PassengersPage implements IPassengersPage {
         new ElementHelper().selectOptionByValue(travellerCountryCode, "US");
     }
 
+    public void goToSeatSelect(){
+        log.info("Passenger details filled. Going to Seat Selection page");
+        new ElementHelper(driver).waitForElementToBeClickable(seatSelectButton);
+        seatSelectButton.click();
+    }
+
     public void goToPayment() {
+        log.info("Passenger details filled. Going to Payment page");
         new ElementHelper(driver).waitForElementToBeClickable(buttonProceed);
         buttonProceed.click();
     }
