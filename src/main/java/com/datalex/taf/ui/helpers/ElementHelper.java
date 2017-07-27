@@ -1,6 +1,6 @@
 package com.datalex.taf.ui.helpers;
 
-import org.apache.logging.log4j.LogManager;
+import lombok.extern.log4j.Log4j2;
 import org.openqa.selenium.*;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.Select;
@@ -14,10 +14,10 @@ import java.util.List;
  *
  * @author Aleksandar Vulovic
  */
+@Log4j2
 public class ElementHelper {
 
     private WebDriverWait wait;
-    private static org.apache.logging.log4j.Logger mLOG = LogManager.getLogger(ElementHelper.class);
 
     /**
      * Empty constructor for methods that are NOT using WebDriverWait
@@ -42,14 +42,14 @@ public class ElementHelper {
     public void waitForElementDisplayed(WebElement element) {
         final int timeMs = 15000;
         for (int i = 500; i < timeMs; i += 100) {
-            mLOG.info("Waiting for element displayed (ms): " + i);
+            log.info("Waiting for element displayed (ms): " + i);
             new Utils().waitTime500ms();
             if (isElementDisplayed(element)) {
-                mLOG.info(String.format("ElementHelper is displayed after %d ms", i));
+                log.info(String.format("ElementHelper is displayed after %d ms", i));
                 return;
             }
         }
-        mLOG.error(String.format("ElementHelper is not displayed after %d seconds", timeMs / 1000));
+        log.error(String.format("ElementHelper is not displayed after %d seconds", timeMs / 1000));
     }
 
     /**
@@ -62,7 +62,7 @@ public class ElementHelper {
         try {
             return element.isEnabled();
         } catch (Exception e) {
-            mLOG.error(e);
+            log.error(e);
         }
         return false;
     }
@@ -93,7 +93,7 @@ public class ElementHelper {
         try {
             isSelected = element.isSelected();
         } catch (Exception e) {
-            mLOG.error(e);
+            log.error(e);
         }
         return isSelected;
     }
@@ -109,7 +109,7 @@ public class ElementHelper {
             String attribute = element.getAttribute("checked");
             return attribute.contains("true");
         } catch (Exception e) {
-            mLOG.error(e);
+            log.error(e);
         }
         return false;
     }
@@ -172,7 +172,7 @@ public class ElementHelper {
             Select select = new Select(element);
             select.selectByVisibleText(text);
         } catch (Exception e) {
-            mLOG.error(e);
+            log.error(e);
         }
     }
 
@@ -190,7 +190,7 @@ public class ElementHelper {
             Select select = new Select(element);
             select.selectByValue(value);
         } catch (Exception e) {
-            mLOG.error(e);
+            log.error(e);
         }
     }
 
@@ -205,9 +205,9 @@ public class ElementHelper {
         parent.click();
         new Utils().waitTime500ms();
         for (WebElement option : children) {
-            mLOG.debug("Current option: " + option.getText());
+            log.debug("Current option: " + option.getText());
             if (text.equals(option.getText())) {
-                mLOG.info("Click option: " + option.getText());
+                log.info("Click option: " + option.getText());
                 option.click();
                 new Utils().waitTime500ms();
                 return;

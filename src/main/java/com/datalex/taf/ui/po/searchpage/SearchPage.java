@@ -7,7 +7,7 @@ import com.datalex.taf.ui.helpers.General;
 import com.datalex.taf.ui.po.exceptions.SearchPageException;
 import com.datalex.taf.ui.po.loginpage.LoginPage;
 import com.datalex.taf.ui.po.selectionpage.SelectionPage;
-import org.apache.logging.log4j.LogManager;
+import lombok.extern.log4j.Log4j2;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
@@ -18,8 +18,8 @@ import org.openqa.selenium.support.PageFactory;
  *
  * @author Aleksandar Vulovic
  */
+@Log4j2
 public class SearchPage implements ISearchPage {
-    private static final org.apache.logging.log4j.Logger mLOG = LogManager.getLogger(SearchPage.class);
     private WebDriver driver;
 
     @FindBy(id = "loginLinkFromLoginBlock")
@@ -128,7 +128,7 @@ public class SearchPage implements ISearchPage {
         try {
             new General().typeFlight(driver, inputFromHidden, inputFrom, code, "");
         } catch (Exception e) {
-            mLOG.error(e);
+            log.error(e);
         }
     }
 
@@ -136,7 +136,7 @@ public class SearchPage implements ISearchPage {
         try {
             new General().typeFlight(driver, inputToCodeHidden, inputTo, code, "");
         } catch (Exception e) {
-            mLOG.error(e);
+            log.error(e);
         }
     }
 

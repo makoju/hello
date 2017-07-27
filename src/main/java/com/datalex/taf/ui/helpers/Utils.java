@@ -1,15 +1,14 @@
 package com.datalex.taf.ui.helpers;
 
-import org.apache.logging.log4j.LogManager;
+import lombok.extern.log4j.Log4j2;
 
 /**
  * Utils Class
  *
  * @author Aleksandar Vulovic
  */
+@Log4j2
 public class Utils {
-
-    private static final org.apache.logging.log4j.Logger mLOG = LogManager.getLogger(Utils.class);
 
     /**
      * Method for thread sleep
@@ -18,10 +17,10 @@ public class Utils {
      */
     public void waitTime(long time) {
         try {
-            mLOG.debug(String.format("Waiting for %sms", time));
+            log.debug(String.format("Waiting for %sms", time));
             Thread.sleep(time);
         } catch (Exception e) {
-            mLOG.error(e);
+            log.error(e);
         }
     }
 
