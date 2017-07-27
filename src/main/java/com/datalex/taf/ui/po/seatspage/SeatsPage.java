@@ -16,7 +16,7 @@ import org.openqa.selenium.support.PageFactory;
 public class SeatsPage {
     private WebDriver driver;
 
-    @FindBy(xpath = "pgButtonSubmit2")
+    @FindBy(id = "pgButtonSubmit2")
     public WebElement buttonSubmit;
 
     @FindBy(xpath = "//a[@class='skipSelectionLink']")
