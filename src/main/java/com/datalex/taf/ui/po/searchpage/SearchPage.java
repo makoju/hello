@@ -119,12 +119,14 @@ public class SearchPage implements ISearchPage {
     public WebElement inputToMC3CodeHidden;
 
     public SearchPage(WebDriver driver) {
+        log.info("Initiating Flight Search Page");
         this.driver = driver;
         PageFactory.initElements(driver, this);
         driver.get(TAFProperties.getPROJECTIP() + "/BEL/ApplicationStartAction.do?" + TAFProperties.getPOS());
     }
 
     public void setOriginLocation(String code) throws SearchPageException {
+        log.info("Setting Origin Location");
         try {
             new General().typeFlight(driver, inputFromHidden, inputFrom, code, "");
         } catch (Exception e) {
@@ -133,6 +135,7 @@ public class SearchPage implements ISearchPage {
     }
 
     public void setDestinationLocation(String code) throws SearchPageException {
+        log.info("Setting Destination Location");
         try {
             new General().typeFlight(driver, inputToCodeHidden, inputTo, code, "");
         } catch (Exception e) {
@@ -141,10 +144,12 @@ public class SearchPage implements ISearchPage {
     }
 
     public void inputDepartureDate(String daysFromToday) throws Exception {
+        log.info("Selecting Departure Date");
         new General().inputDateByCalendar(driver, inputDepartOn, daysFromToday);
     }
 
     public void inputReturnDate(String daysFromToday) throws Exception {
+        log.info("Selecting Return Date");
         new General().inputDateByCalendar(driver, inputReturnOn, daysFromToday);
     }
 
@@ -155,6 +160,7 @@ public class SearchPage implements ISearchPage {
     }
 
     public void setMC(TestData testData) throws Exception {
+        log.info("Trip is OpenJaw");
         tripTypeMC.click();
         if (!(testData.getFromMC1().isEmpty() || "null".equals(testData.getFromMC1()))) {
             new General().typeFlight(driver, inputFromMC1CodeHidden, inputFromMC1, testData.getFromMC1(), "");
@@ -171,6 +177,7 @@ public class SearchPage implements ISearchPage {
     }
 
     public void setRT(TestData testData) throws Exception {
+        log.info("Trip is Return Flight");
         tripTypeRT.click();
         setOriginLocation(testData.getInputFrom());
         setDestinationLocation(testData.getInputTo());
@@ -201,6 +208,7 @@ public class SearchPage implements ISearchPage {
     }
 
     public void setPromotion(TestData testData) {
+        log.info("Setting Promotion Code");
         if (!testData.getPromotion().isEmpty()) {
             new ElementHelper(driver).waitForElementToBeClickable(promotionLink);
             promotionLink.click();
@@ -210,6 +218,7 @@ public class SearchPage implements ISearchPage {
     }
 
     public LoginPage goToLoginPage() {
+        log.info("Going Into Login Page");
         new ElementHelper(driver).waitForElementToBeClickable(loginButton);
         loginButton.click();
         new ElementHelper(driver).waitForFrameToBeAvailableAndSwitchToIt("ifrmLogin");
@@ -217,6 +226,7 @@ public class SearchPage implements ISearchPage {
     }
 
     public SelectionPage doSearch() {
+        log.info("Search Interaction Complete. Searching flight now...");
         new ElementHelper(driver).waitForElementToBeClickable(buttonSearch);
         buttonSearch.click();
         return new SelectionPage(driver);

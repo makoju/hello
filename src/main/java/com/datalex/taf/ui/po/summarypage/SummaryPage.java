@@ -2,6 +2,7 @@ package com.datalex.taf.ui.po.summarypage;
 
 import com.datalex.taf.ui.helpers.ElementHelper;
 import com.datalex.taf.ui.po.passengerspage.PassengersPage;
+import lombok.extern.log4j.Log4j2;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
@@ -13,6 +14,7 @@ import org.openqa.selenium.support.PageFactory;
  *
  * @author Aleksandar Vulovic
  */
+@Log4j2
 public class SummaryPage {
     private WebDriver driver;
 
@@ -29,6 +31,7 @@ public class SummaryPage {
     public WebElement addBaggageButton;
 
     public SummaryPage(WebDriver driver) {
+        log.info("Initiating Summary Page");
         this.driver = driver;
         new ElementHelper(driver).waitForPresenceOfElementLocated(By.id("pgItinerarySummary"));
         new ElementHelper(driver).waitForElementToBeClickable(By.id("pgButtonNext"));
@@ -36,6 +39,7 @@ public class SummaryPage {
     }
 
     public PassengersPage goToPassengersPage() {
+        log.info("Summary Page Interaction Completed. Proceeding onwards...");
         new ElementHelper(driver).waitForElementToBeClickable(buttonNext);
         buttonNext.click();
         return new PassengersPage(driver);

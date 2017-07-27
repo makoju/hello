@@ -10,9 +10,9 @@ import org.openqa.selenium.WebElement;
  */
 public interface ISelectionPage {
 
-    void selectInboundFareFamily(String fareFamily);
+    void selectOutboundFareFamily(String fareFamily);
 
-    void selectReturnFareFamily(String fareFamily);
+    void selectInboundFareFamily(String fareFamily);
 
     WebElement getSelectFlightRadioLocator(String fareFamilyAlias, int blockNumber);
 
