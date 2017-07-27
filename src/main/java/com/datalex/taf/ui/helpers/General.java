@@ -2,7 +2,7 @@ package com.datalex.taf.ui.helpers;
 
 import com.datalex.taf.core.readers.property.TAFProperties;
 import com.datalex.taf.ui.helpers.constants.SettingsConstants;
-import org.apache.logging.log4j.LogManager;
+import lombok.extern.log4j.Log4j2;
 import org.joda.time.DateTime;
 import org.openqa.selenium.By;
 import org.openqa.selenium.JavascriptExecutor;
@@ -24,9 +24,8 @@ import java.util.List;
  *
  * @author ES Quality Team members - reused from taf-ui 1.0
  */
+@Log4j2
 public class General {
-
-    private static final org.apache.logging.log4j.Logger mLOG = LogManager.getLogger(General.class);
 
     /**
      * Function to type airport code and select airport name item to form element direct using JS
@@ -38,7 +37,7 @@ public class General {
      * @throws Exception if error occurs
      */
     public void typeFlight(final WebDriver driver, WebElement controlNameHidden, WebElement controlName, final String airportCode, final String airportName) throws Exception {
-        mLOG.info("Inject " + airportCode + " Location into search field {" + airportCode + "}");
+        log.info("Inject " + airportCode + " Location into search field {" + airportCode + "}");
 
         String airportCodeToInject = airportCode;
         String airportNameToInject = "";
@@ -72,7 +71,7 @@ public class General {
         if (typeUsingJS(driver, controlNameHidden, airportCodeToInject) &&
                 typeUsingJS(driver, controlName, airportNameToInject)) {
         } else {
-            mLOG.error("Failed to Inject Location into Search box");
+            log.error("Failed to Inject Location into Search box");
             throw new Exception("Failed to Inject Location into Search box. " +
                     "Tried to Inject " + airportNameToInject + " (" + airportCodeToInject + ")" +
                     " Location into search field {" + controlName + "}");
@@ -100,7 +99,7 @@ public class General {
             return true;
 
         } catch (Exception e) {
-            mLOG.error(e);
+            log.error(e);
             return false;
         }
     }
@@ -133,7 +132,7 @@ public class General {
         String dateDOMFormat = "ND";
         JavascriptExecutor jse = (JavascriptExecutor) driver;
         dateDOMFormat = (String) jse.executeScript("return window.Constants.dateEntryPattern;");
-        mLOG.debug(dateDOMFormat);
+        log.debug(dateDOMFormat);
 
         if (!(dateDOMFormat == null)) {
             dateDOMFormat = dateDOMFormat.trim();
@@ -143,7 +142,7 @@ public class General {
 
         if (!dateNum.contains("/")) {
             if (dateNum.contains("-")) {
-                mLOG.debug("Specified Day Detected: " + dateNum + " | Attempting to set new Offset Days");
+                log.debug("Specified Day Detected: " + dateNum + " | Attempting to set new Offset Days");
 
                 String[] specDay = dateNum.split("-");
                 int presetOD = Integer.parseInt(specDay[0]);
@@ -164,7 +163,7 @@ public class General {
 
                 dateNum = String.valueOf(newPresetOD);
 
-                mLOG.debug("New Offset Days: " + dateNum);
+                log.debug("New Offset Days: " + dateNum);
             }
             dt = dt.plusDays(Integer.parseInt(dateNum));
             month = "" + dt.getMonthOfYear();
@@ -192,10 +191,10 @@ public class General {
         int subMonth = Integer.parseInt(month) - 1;
         month = String.valueOf(subMonth);
 
-        mLOG.debug("date from: " + yearDep + " " + month + " " + day);
+        log.debug("date from: " + yearDep + " " + month + " " + day);
 
         if (TAFProperties.getInjectJSCalendar()) {
-            mLOG.info("Not interacting with Calender. Injecting Dates Only!");
+            log.info("Not interacting with Calender. Injecting Dates Only!");
             //use calendarIcon as prefix to typing using JS
             //rather than doing another if else
             //nMonth Human Readable month
@@ -237,7 +236,7 @@ public class General {
                     dateToInject = dateFormatChinese;
             }
 
-            mLOG.debug("dateToInject " + dateToInject);
+            log.debug("dateToInject " + dateToInject);
 
 
             if (populateCalendarJS(driver, calendarIcon, dateToInject,
@@ -321,7 +320,7 @@ public class General {
 
         try {
             if (daysOffset < 1) {
-                mLOG.error("Offset Days cannot be less than ONE!");
+                log.error("Offset Days cannot be less than ONE!");
                 return "ERROR";
             }
             GregorianCalendar calendar = new GregorianCalendar();
@@ -333,7 +332,7 @@ public class General {
             selOffsetDay = simpleDateformat.format(futureDay);
 
         } catch (Exception e) {
-            mLOG.error(e.getMessage(), e);
+            log.error(e.getMessage(), e);
             e.printStackTrace();
             return "ERROR";
         }
@@ -360,7 +359,7 @@ public class General {
             }
 
             if (!Arrays.asList(daysOfTheWeek).contains(specDay)) {
-                mLOG.error("Cannot Find {" + specDay + "} in daysOfTheWeek Array");
+                log.error("Cannot Find {" + specDay + "} in daysOfTheWeek Array");
                 return 0;
             } else if (offsetDay.equals(specDay)) {
                 //Leave the Original
@@ -378,7 +377,7 @@ public class General {
                 retVal = originalOD + (sd - od);
             }
         } catch (Exception e) {
-            mLOG.error(e.getMessage(), e);
+            log.error(e.getMessage(), e);
             e.printStackTrace();
             return 0;
         }
@@ -395,10 +394,10 @@ public class General {
     public void clickElementJS(WebDriver driver, WebElement element) throws Exception {
         JavascriptExecutor js = (JavascriptExecutor) driver;
         if (driver.toString().contains("InternetExplorer")) {
-            mLOG.info("ie");
+            log.info("ie");
             js.executeScript("arguments[0].scrollIntoView(true);arguments[0].fireEvent( \'onclick \');", element);
         } else {
-            mLOG.info("ff or other");
+            log.info("ff or other");
             js.executeScript("var evObj=document.createEvent('MouseEvents');" +
                     "evObj.initEvent('click',true,true );arguments[0].dispatchEvent(evObj);", element);
         }
@@ -426,7 +425,7 @@ public class General {
             jse.executeScript(scriptExecuteYear);
             return true;
         } catch (Exception e) {
-            mLOG.error("Failed");
+            log.error("Failed");
             return false;
         }
     }

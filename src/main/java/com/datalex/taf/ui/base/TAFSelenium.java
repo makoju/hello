@@ -4,7 +4,7 @@ import com.datalex.taf.core.readers.property.LoadProperties;
 import com.datalex.taf.core.readers.property.TAFProperties;
 import com.datalex.taf.core.utilities.OSDetection;
 import com.datalex.taf.ui.base.exceptions.TAFSeleniumException;
-import org.apache.logging.log4j.LogManager;
+import lombok.extern.log4j.Log4j2;
 import org.openqa.selenium.Platform;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeOptions;
@@ -22,9 +22,9 @@ import java.net.URL;
  *
  * @author Aleksandar Vulovic
  */
+@Log4j2
 public class TAFSelenium {
 
-    private static final org.apache.logging.log4j.Logger mLOG = LogManager.getLogger(TAFSelenium.class);
     private static ThreadLocal<RemoteWebDriver> mDriver = new ThreadLocal<>();
     private static DesiredCapabilities capability;
 
@@ -68,7 +68,7 @@ public class TAFSelenium {
         mDriver.set(driver);
         mDriver.get().manage().deleteAllCookies();
         mDriver.get().manage().window().maximize();
-        mLOG.info("TAFSelenium initialized!");
+        log.info("TAFSelenium initialized!");
     }
 
     /**
