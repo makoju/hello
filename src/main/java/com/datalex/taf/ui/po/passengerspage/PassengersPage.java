@@ -133,7 +133,7 @@ public class PassengersPage implements IPassengersPage {
         WebElement calendarDialog = driver.findElement(By.id("travellersInfo[" + passengerNumber + "].advancedPassengerDetails(dobDate)"));
         calendarDialog.click();
         new ElementHelper(driver).waitForElementPresent(calendarDialog);
-        new ElementHelper().waitForElementPresent(year);
+        new ElementHelper(driver).waitForElementPresent(year);
         new ElementHelper().selectOptionByValue(year, "1984");
         new ElementHelper(driver).waitForElementPresent(month);
         new ElementHelper().selectOptionByValue(month, "12");
