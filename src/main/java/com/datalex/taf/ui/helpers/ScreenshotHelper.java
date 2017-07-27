@@ -1,9 +1,9 @@
 package com.datalex.taf.ui.helpers;
 
 import com.datalex.taf.core.loggers.TAFLogger;
+import lombok.extern.log4j.Log4j2;
 import org.apache.commons.io.FileUtils;
 import org.apache.commons.lang3.exception.ExceptionUtils;
-import org.apache.logging.log4j.LogManager;
 import org.openqa.selenium.WebDriver;
 import ru.yandex.qatools.ashot.AShot;
 import ru.yandex.qatools.ashot.shooting.ShootingStrategies;
@@ -20,9 +20,9 @@ import java.util.Date;
  *
  * @author Aleksandar Vulovic
  */
+@Log4j2
 public class ScreenshotHelper {
 
-    private static org.apache.logging.log4j.Logger mLOG = LogManager.getLogger(ScreenshotHelper.class);
     private static final String WORK_DIR = "./work/";
 
     /**
@@ -41,11 +41,11 @@ public class ScreenshotHelper {
             }
             ImageIO.write(takeScreenshotFullPage(driver), "PNG",
                     new File(WORK_DIR + dateFormat.format(date) + ".png"));
-            mLOG.info("Screenshot taken!");
+            log.info("Screenshot taken!");
             attachFileToReport(WORK_DIR + dateFormat.format(date) + ".png", "attached");
         } catch (IOException e) {
-            mLOG.error("Exception during taking a screenshot " + e.getMessage());
-            mLOG.error(ExceptionUtils.getStackTrace(e));
+            log.error("Exception during taking a screenshot " + e.getMessage());
+            log.error(ExceptionUtils.getStackTrace(e));
         }
     }
 
@@ -62,8 +62,8 @@ public class ScreenshotHelper {
                     .takeScreenshot(driver);
             return screenshot.getImage();
         } catch (Exception e) {
-            mLOG.error("Error during taking a screenshot with AShot");
-            mLOG.error(ExceptionUtils.getStackTrace(e));
+            log.error("Error during taking a screenshot with AShot");
+            log.error(ExceptionUtils.getStackTrace(e));
             return null;
         }
     }

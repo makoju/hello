@@ -8,7 +8,6 @@ import com.datalex.taf.ui.po.exceptions.SearchPageException;
 import com.datalex.taf.ui.po.loginpage.LoginPage;
 import com.datalex.taf.ui.po.selectionpage.SelectionPage;
 import lombok.extern.log4j.Log4j2;
-import org.apache.logging.log4j.LogManager;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
@@ -21,7 +20,6 @@ import org.openqa.selenium.support.PageFactory;
  */
 @Log4j2
 public class SearchPage implements ISearchPage {
-    private static final org.apache.logging.log4j.Logger mLOG = LogManager.getLogger(SearchPage.class);
     private WebDriver driver;
 
     @FindBy(id = "loginLinkFromLoginBlock")
@@ -121,37 +119,32 @@ public class SearchPage implements ISearchPage {
     public WebElement inputToMC3CodeHidden;
 
     public SearchPage(WebDriver driver) {
-        log.info("Initiating Flight Search Page");
         this.driver = driver;
         PageFactory.initElements(driver, this);
         driver.get(TAFProperties.getPROJECTIP() + "/BEL/ApplicationStartAction.do?" + TAFProperties.getPOS());
     }
 
     public void setOriginLocation(String code) throws SearchPageException {
-        log.info("Setting Origin Location");
         try {
             new General().typeFlight(driver, inputFromHidden, inputFrom, code, "");
         } catch (Exception e) {
-            mLOG.error(e);
+            log.error(e);
         }
     }
 
     public void setDestinationLocation(String code) throws SearchPageException {
-        log.info("Setting Destination Location");
         try {
             new General().typeFlight(driver, inputToCodeHidden, inputTo, code, "");
         } catch (Exception e) {
-            mLOG.error(e);
+            log.error(e);
         }
     }
 
     public void inputDepartureDate(String daysFromToday) throws Exception {
-        log.info("Selecting Departure Date");
         new General().inputDateByCalendar(driver, inputDepartOn, daysFromToday);
     }
 
     public void inputReturnDate(String daysFromToday) throws Exception {
-        log.info("Selecting Return Date");
         new General().inputDateByCalendar(driver, inputReturnOn, daysFromToday);
     }
 
@@ -162,7 +155,6 @@ public class SearchPage implements ISearchPage {
     }
 
     public void setMC(TestData testData) throws Exception {
-        log.info("Trip is OpenJaw");
         tripTypeMC.click();
         if (!(testData.getFromMC1().isEmpty() || "null".equals(testData.getFromMC1()))) {
             new General().typeFlight(driver, inputFromMC1CodeHidden, inputFromMC1, testData.getFromMC1(), "");
@@ -179,7 +171,6 @@ public class SearchPage implements ISearchPage {
     }
 
     public void setRT(TestData testData) throws Exception {
-        log.info("Trip is Return Flight");
         tripTypeRT.click();
         setOriginLocation(testData.getInputFrom());
         setDestinationLocation(testData.getInputTo());
@@ -188,7 +179,6 @@ public class SearchPage implements ISearchPage {
     }
 
     public void setOW(TestData testData) throws Exception {
-        log.info("Trip is One Way Flight");
         tripTypeOW.click();
         setOriginLocation(testData.getInputFrom());
         setDestinationLocation(testData.getInputTo());
@@ -202,7 +192,6 @@ public class SearchPage implements ISearchPage {
     }
 
     public void setFlightDateTypes(TestData testData) {
-        log.info("Setting Flight Search Type");
         if ("flexibleDates".equals(testData.getFlightDates())) {
             flexibleDates.click();
         }
@@ -212,7 +201,6 @@ public class SearchPage implements ISearchPage {
     }
 
     public void setPromotion(TestData testData) {
-        log.info("Setting Promotion Code");
         if (!testData.getPromotion().isEmpty()) {
             new ElementHelper(driver).waitForElementToBeClickable(promotionLink);
             promotionLink.click();
@@ -222,7 +210,6 @@ public class SearchPage implements ISearchPage {
     }
 
     public LoginPage goToLoginPage() {
-        log.info("Going Into Login Page");
         new ElementHelper(driver).waitForElementToBeClickable(loginButton);
         loginButton.click();
         new ElementHelper(driver).waitForFrameToBeAvailableAndSwitchToIt("ifrmLogin");
@@ -230,7 +217,6 @@ public class SearchPage implements ISearchPage {
     }
 
     public SelectionPage doSearch() {
-        log.info("Search Interaction Complete. Searching flight now...");
         new ElementHelper(driver).waitForElementToBeClickable(buttonSearch);
         buttonSearch.click();
         return new SelectionPage(driver);
