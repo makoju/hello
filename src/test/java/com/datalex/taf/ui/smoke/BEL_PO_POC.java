@@ -48,9 +48,9 @@ public class BEL_PO_POC {
         //Search page actions
         SelectionPage selectionPage = searchPage.doFlightSearch(testData);
         //Selection page actions
-        selectionPage.selectInboundFareFamily(testData.getFareFamily());
+        selectionPage.selectOutboundFareFamily(testData.getFareFamily());
         if (("RT").equalsIgnoreCase(testData.getTripType()))
-            selectionPage.selectReturnFareFamily(testData.getFareFamily());
+            selectionPage.selectInboundFareFamily(testData.getFareFamily());
         //Summary page actions
         SummaryPage summaryPage = selectionPage.doSelection();
         //Passengers page actions
