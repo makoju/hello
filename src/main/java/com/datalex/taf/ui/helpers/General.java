@@ -9,7 +9,6 @@ import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 
-import javax.rmi.CORBA.Util;
 import java.io.BufferedReader;
 import java.io.DataInputStream;
 import java.io.FileInputStream;
