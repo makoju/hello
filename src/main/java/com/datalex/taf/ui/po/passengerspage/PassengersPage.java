@@ -12,6 +12,8 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
 
+import java.util.Locale;
+
 /**
  * Passengers page class
  *
@@ -141,7 +143,7 @@ public class PassengersPage implements IPassengersPage {
     }
 
     public void populateContactDetails(TestData testData) {
-        Faker faker = new Faker();
+        Faker faker = new Faker(new Locale("{en-US}"));
         new ElementHelper(driver).waitForElementDisplayed(travellerEmailAddress);
         travellerEmailAddress.sendKeys(testData.getEmail());
         new ElementHelper(driver).waitForElementDisplayed(travellerConfirmEmail);
