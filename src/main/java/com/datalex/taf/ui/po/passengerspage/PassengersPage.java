@@ -3,6 +3,7 @@ package com.datalex.taf.ui.po.passengerspage;
 import com.datalex.taf.core.loggers.TAFLogger;
 import com.datalex.taf.ui.data.TestData;
 import com.datalex.taf.ui.helpers.ElementHelper;
+import com.datalex.taf.ui.po.seatspage.SeatsPage;
 import com.github.javafaker.Faker;
 import lombok.extern.log4j.Log4j2;
 import org.openqa.selenium.By;
@@ -143,10 +144,11 @@ public class PassengersPage implements IPassengersPage {
         new ElementHelper().selectOptionByValue(travellerCountryCode, "US");
     }
 
-    public void goToSeatSelect(){
+    public SeatsPage goToSeatSelect(){
         log.info("Passenger details filled. Going to Seat Selection page");
-        new ElementHelper(driver).waitForElementToBeClickable(seatSelectButton);
-        seatSelectButton.click();
+        new ElementHelper(driver).waitForElementToBeClickable(buttonProceed);
+        buttonProceed.click();
+        return new SeatsPage(driver);
     }
 
     public void goToPayment() {

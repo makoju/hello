@@ -5,7 +5,9 @@ import com.datalex.taf.ui.data.TestData;
 import com.datalex.taf.ui.helpers.ScreenshotHelper;
 import com.datalex.taf.ui.po.loginpage.LoginPage;
 import com.datalex.taf.ui.po.passengerspage.PassengersPage;
+import com.datalex.taf.ui.po.paymentpage.PaymentPage;
 import com.datalex.taf.ui.po.searchpage.SearchPage;
+import com.datalex.taf.ui.po.seatspage.SeatsPage;
 import com.datalex.taf.ui.po.selectionpage.SelectionPage;
 import com.datalex.taf.ui.po.summarypage.SummaryPage;
 import org.openqa.selenium.WebDriver;
@@ -56,6 +58,7 @@ public class BEL_PO_POC {
         //Passengers page actions
         PassengersPage passengersPage = summaryPage.goToPassengersPage();
         passengersPage.fillTravellersPage(testData);
-        passengersPage.goToPayment();
+        SeatsPage seatsPage = passengersPage.goToSeatSelect();
+        PaymentPage paymentPage = seatsPage.skipSeatSelection();
     }
 }
