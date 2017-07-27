@@ -58,7 +58,10 @@ public class BEL_PO_POC {
         //Passengers page actions
         PassengersPage passengersPage = summaryPage.goToPassengersPage();
         passengersPage.fillTravellersPage(testData);
+        //Seats page actions
         SeatsPage seatsPage = passengersPage.goToSeatSelect();
         PaymentPage paymentPage = seatsPage.skipSeatSelection();
+        //Payment page actions
+        paymentPage.populatePaymentPage(testData);
     }
 }
