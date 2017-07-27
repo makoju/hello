@@ -133,7 +133,9 @@ public class PassengersPage implements IPassengersPage {
         WebElement calendarDialog = driver.findElement(By.id("travellersInfo[" + passengerNumber + "].advancedPassengerDetails(dobDate)"));
         calendarDialog.click();
         new ElementHelper(driver).waitForElementPresent(calendarDialog);
+        new ElementHelper().waitForElementPresent(year);
         new ElementHelper().selectOptionByValue(year, "1984");
+        new ElementHelper(driver).waitForElementPresent(month);
         new ElementHelper().selectOptionByValue(month, "12");
         driver.findElement(By.xpath("//td[. = \"12\"]")).click();
     }
@@ -145,7 +147,7 @@ public class PassengersPage implements IPassengersPage {
         new ElementHelper(driver).waitForElementDisplayed(travellerConfirmEmail);
         travellerConfirmEmail.sendKeys(testData.getEmail());
         new ElementHelper(driver).waitForElementDisplayed(travellerPhoneNumber);
-        travellerPhoneNumber.sendKeys(faker.phoneNumber().phoneNumber());
+        travellerPhoneNumber.sendKeys(faker.phoneNumber().cellPhone());
         new ElementHelper().selectOptionByValue(travellerCountryCode, "US");
     }
 
