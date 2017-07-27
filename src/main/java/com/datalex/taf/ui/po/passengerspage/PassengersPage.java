@@ -36,6 +36,12 @@ public class PassengersPage implements IPassengersPage {
     @FindBy(id = "mobilePhoneNumberCountryCode")
     public WebElement travellerCountryCode;
 
+    @FindBy(id = "cdrControlMonth")
+    public WebElement month;
+
+    @FindBy(id = "cdrControlYear")
+    public WebElement year;
+
     @FindBy(id = "travellersInfo[0].mobilePhone.phoneNumber")
     public WebElement travellerPhoneNumber;
 
@@ -127,9 +133,8 @@ public class PassengersPage implements IPassengersPage {
         WebElement calendarDialog = driver.findElement(By.id("travellersInfo[" + passengerNumber + "].advancedPassengerDetails(dobDate)"));
         calendarDialog.click();
         new ElementHelper(driver).waitForElementPresent(calendarDialog);
-        new ElementHelper().executeScript(driver, "document.getElementById('travellersInfo[" + passengerNumber + "].advancedPassengerDetails(dobDay)').setAttribute('value', '12')");
-        new ElementHelper().executeScript(driver, "document.getElementById('travellersInfo[" + passengerNumber + "].advancedPassengerDetails(dobMonth)').setAttribute('value', '12')");
-        new ElementHelper().executeScript(driver, "document.getElementById('travellersInfo[" + passengerNumber + "].advancedPassengerDetails(dobYear)').setAttribute('value', '1984')");
+        new ElementHelper().selectOptionByValue(year, "1984");
+        new ElementHelper().selectOptionByValue(month, "12");
         driver.findElement(By.xpath("//td[. = \"12\"]")).click();
     }
 
