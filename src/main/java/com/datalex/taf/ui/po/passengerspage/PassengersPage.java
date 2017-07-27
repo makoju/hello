@@ -144,18 +144,10 @@ public class PassengersPage implements IPassengersPage {
         new ElementHelper().selectOptionByValue(travellerCountryCode, "US");
     }
 
-    public SeatsPage goToSeatSelect(){
+    public SeatsPage goToSeatSelect() {
         log.info("Passenger details filled. Going to Seat Selection page");
         new ElementHelper(driver).waitForElementToBeClickable(buttonProceed);
         buttonProceed.click();
         return new SeatsPage(driver);
     }
-
-    public void goToPayment() {
-        log.info("Passenger details filled. Going to Payment page");
-        new ElementHelper(driver).waitForElementToBeClickable(buttonProceed);
-        buttonProceed.click();
-    }
-
-
 }
