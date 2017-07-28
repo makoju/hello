@@ -2,6 +2,7 @@ package com.datalex.taf.ui.po.paymentpage;
 
 import com.datalex.taf.ui.data.TestData;
 import com.datalex.taf.ui.helpers.ElementHelper;
+import com.datalex.taf.ui.po.exceptions.PaymentPageException;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
@@ -65,7 +66,7 @@ public class PaymentPage {
     public void payWithDebitCards(TestData testData) {
     }
 
-    public void populatePaymentPage(TestData testData) throws Exception {
+    public void populatePaymentPage(TestData testData) throws PaymentPageException {
         switch (testData.getPaymentType()) {
             case "VISA":
             case "MASTERCARD":
@@ -85,7 +86,7 @@ public class PaymentPage {
             case "BELFIUS":
             case "IDEAL":
             default:
-                throw new Exception("Payment method not specified!");
+                throw new PaymentPageException("Payment method not specified!");
         }
         elementHelper.waitForElementToBeClickable(acceptTermsAndConditionsCheckBox);
         acceptTermsAndConditionsCheckBox.click();

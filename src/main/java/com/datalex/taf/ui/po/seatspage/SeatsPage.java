@@ -21,7 +21,7 @@ public class SeatsPage {
     public WebElement buttonSubmit;
 
     @FindBy(xpath = "//a[@class='skipSelectionLink']")
-    public WebElement skipSeatSelection;
+    public WebElement skipSeatSelectionButton;
 
     @FindBy(xpath = "//*[@id='pgButtonClear']/span/span")
     public WebElement clearSeatSelection;
@@ -40,7 +40,7 @@ public class SeatsPage {
     }
 
     public PaymentPage skipSeatSelection() {
-        skipSeatSelection.click();
+        skipSeatSelectionButton.click();
         return new PaymentPage(driver);
     }
 }
