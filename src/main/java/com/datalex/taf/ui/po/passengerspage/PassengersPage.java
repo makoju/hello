@@ -3,6 +3,10 @@ package com.datalex.taf.ui.po.passengerspage;
 import com.datalex.taf.core.loggers.TAFLogger;
 import com.datalex.taf.ui.data.TestData;
 import com.datalex.taf.ui.helpers.ElementHelper;
+import com.datalex.taf.ui.travellers.Adult;
+import com.datalex.taf.ui.travellers.Child;
+import com.datalex.taf.ui.travellers.Infant;
+import com.datalex.taf.ui.travellers.Traveller;
 import com.github.javafaker.Faker;
 import lombok.extern.log4j.Log4j2;
 import org.openqa.selenium.By;
@@ -38,27 +42,37 @@ public class PassengersPage implements IPassengersPage {
     @FindBy(id = "travellersInfo[0].mobilePhone.phoneNumber")
     public WebElement travellerPhoneNumber;
 
+    private ElementHelper eh;
+
     public PassengersPage(WebDriver driver) {
         log.info("Initiating Passenger Page");
         this.driver = driver;
-        new ElementHelper(driver).waitForPresenceOfElementLocated(By.id("pgTravellers"));
-        new ElementHelper(driver).waitForElementToBeClickable(By.id("pgButtonProceed"));
+        eh = new ElementHelper(driver);
+        eh.waitForPresenceOfElementLocated(By.id("pgTravellers"));
+        eh.waitForElementToBeClickable(By.id("pgButtonProceed"));
         PageFactory.initElements(driver, this);
     }
 
-    public void fillTravellersPage(TestData testData) {
-        int adtQty = Integer.parseInt(testData.getAdt());
-        int chdQty = Integer.parseInt(testData.getChd());
-        int infQty = Integer.parseInt(testData.getInf());
+    public void fillPassengersPage() throws Exception {
+        log.info("Filling All Passengers Information");
+        Traveller traveller = new Traveller(driver);
 
-        int travellersQty = adtQty + chdQty + infQty;
-        for (int i = 0; i <= travellersQty - 1; i++) {
-            populatePassengerDetails(testData, i);
-            populatePassportData(testData, i);
-            setFrequentFlierProgram(testData, i);
-            populatePassengerDoB(testData, i);
+        for (int i = 0; i <= (traveller.getHowManyPassengerSelected()-1); i++){
+            traveller.fillTravellerInformation(traveller.determinePassengerType(i), i);
         }
-        populateContactDetails(testData);
+
+//        int adtQty = Integer.parseInt(testData.getAdt());
+//        int chdQty = Integer.parseInt(testData.getChd());
+//        int infQty = Integer.parseInt(testData.getInf());
+//
+//        int travellersQty = adtQty + chdQty + infQty;
+//        for (int i = 0; i <= travellersQty - 1; i++) {
+//            populatePassengerDetails(testData, i);
+//            populatePassportData(testData, i);
+//            setFrequentFlierProgram(testData, i);
+//            populatePassengerDoB(testData, i);
+//        }
+//        populateContactDetails(testData);
 
     }
 
@@ -82,76 +96,77 @@ public class PassengersPage implements IPassengersPage {
         }
     }
 
+//    protected void fillPaxDetail(int passengerNumber) {
+//        Faker faker = new Faker();
+//        WebElement title = driver.findElement(By.id("travellersInfo[" + passengerNumber + "].title"));
+//        eh.waitForElementDisplayed(title);
+//        eh.selectOptionByText(title, "Mr");
+//        driver.findElement(By.id("travellersInfo[" + passengerNumber + "].firstName")).sendKeys(faker.name().firstName());
+//        driver.findElement(By.id("travellersInfo[" + passengerNumber + "].middleName")).sendKeys(faker.name().firstName());
+//        driver.findElement(By.id("travellersInfo[" + passengerNumber + "].lastName")).sendKeys(faker.name().lastName());
+//    }
+
     public void populatePassportData(TestData testData, int passengerNumber) {
         WebElement country = driver.findElement(By.id("travellersInfo[" + passengerNumber + "].citizenCountry"));
-        new ElementHelper(driver).waitForElementDisplayed(country);
-        new ElementHelper().selectOptionByValue(country, "US");
+        eh.waitForElementDisplayed(country);
+        eh.selectOptionByValue(country, "US");
 
         WebElement passport = driver.findElement(By.id("travellersInfo[" + passengerNumber + "].advancedPassengerDetails(foid)"));
-        new ElementHelper(driver).waitForElementDisplayed(passport);
-        new ElementHelper().selectOptionByValue(passport, "ID_CARD");
+        eh.waitForElementDisplayed(passport);
+        eh.selectOptionByValue(passport, "ID_CARD");
 
         WebElement foidNumber = driver.findElement(By.id("travellersInfo[" + passengerNumber + "].advancedPassengerDetails(foidNumber)"));
-        new ElementHelper(driver).waitForElementDisplayed(foidNumber);
+        eh.waitForElementDisplayed(foidNumber);
         foidNumber.sendKeys("1234567890");
 
         WebElement foidExpireDay = driver.findElement(By.id("travellersInfo[" + passengerNumber + "].advancedPassengerDetails(foidExpireDay)"));
-        new ElementHelper(driver).waitForElementDisplayed(foidExpireDay);
-        new ElementHelper().selectOptionByValue(foidExpireDay, "1");
+        eh.waitForElementDisplayed(foidExpireDay);
+        eh.selectOptionByValue(foidExpireDay, "1");
 
         WebElement foidExpireMonth = driver.findElement(By.id("travellersInfo[" + passengerNumber + "].advancedPassengerDetails(foidExpireMonth)"));
-        new ElementHelper(driver).waitForElementDisplayed(foidExpireMonth);
-        new ElementHelper().selectOptionByValue(foidExpireMonth, "1");
+        eh.waitForElementDisplayed(foidExpireMonth);
+        eh.selectOptionByValue(foidExpireMonth, "1");
 
         WebElement foidExpireYear = driver.findElement(By.id("travellersInfo[" + passengerNumber + "].advancedPassengerDetails(foidExpireYear)"));
-        new ElementHelper(driver).waitForElementDisplayed(foidExpireYear);
-        new ElementHelper().selectOptionByValue(foidExpireYear, "2022");
+        eh.waitForElementDisplayed(foidExpireYear);
+        eh.selectOptionByValue(foidExpireYear, "2022");
 
         WebElement issuingCountry = driver.findElement(By.id("travellersInfo[" + passengerNumber + "].advancedPassengerDetails(foidCountry)"));
-        new ElementHelper(driver).waitForElementDisplayed(issuingCountry);
-        new ElementHelper().selectOptionByValue(issuingCountry, "US");
+        eh.waitForElementDisplayed(issuingCountry);
+        eh.selectOptionByValue(issuingCountry, "US");
     }
 
-    public void populatePassengerDetails(TestData testData, int passengerNumber) {
-        Faker faker = new Faker();
-        WebElement title = driver.findElement(By.id("travellersInfo[" + passengerNumber + "].title"));
-        new ElementHelper(driver).waitForElementDisplayed(title);
-        new ElementHelper().selectOptionByText(title, "Mr");
-        driver.findElement(By.id("travellersInfo[" + passengerNumber + "].firstName")).sendKeys(faker.name().firstName());
-        driver.findElement(By.id("travellersInfo[" + passengerNumber + "].middleName")).sendKeys(faker.name().firstName());
-        driver.findElement(By.id("travellersInfo[" + passengerNumber + "].lastName")).sendKeys(faker.name().lastName());
-    }
 
     public void populatePassengerDoB(TestData testData, int passengerNumber) {
         WebElement calendarDialog = driver.findElement(By.id("travellersInfo[" + passengerNumber + "].advancedPassengerDetails(dobDate)"));
         calendarDialog.click();
-        new ElementHelper(driver).waitForElementPresent(calendarDialog);
-        new ElementHelper().executeScript(driver, "document.getElementById('travellersInfo[" + passengerNumber + "].advancedPassengerDetails(dobDay)').setAttribute('value', '12')");
-        new ElementHelper().executeScript(driver, "document.getElementById('travellersInfo[" + passengerNumber + "].advancedPassengerDetails(dobMonth)').setAttribute('value', '12')");
-        new ElementHelper().executeScript(driver, "document.getElementById('travellersInfo[" + passengerNumber + "].advancedPassengerDetails(dobYear)').setAttribute('value', '1984')");
+        eh.waitForElementPresent(calendarDialog);
+        eh.executeScript(driver, "document.getElementById('travellersInfo[" + passengerNumber + "].advancedPassengerDetails(dobDay)').setAttribute('value', '12')");
+        eh.executeScript(driver, "document.getElementById('travellersInfo[" + passengerNumber + "].advancedPassengerDetails(dobMonth)').setAttribute('value', '12')");
+        eh.executeScript(driver, "document.getElementById('travellersInfo[" + passengerNumber + "].advancedPassengerDetails(dobYear)').setAttribute('value', '1984')");
         driver.findElement(By.xpath("//td[. = \"12\"]")).click();
     }
 
     public void populateContactDetails(TestData testData) {
         Faker faker = new Faker();
-        new ElementHelper(driver).waitForElementDisplayed(travellerEmailAddress);
+        eh.waitForElementDisplayed(travellerEmailAddress);
         travellerEmailAddress.sendKeys(testData.getEmail());
-        new ElementHelper(driver).waitForElementDisplayed(travellerConfirmEmail);
+        eh.waitForElementDisplayed(travellerConfirmEmail);
         travellerConfirmEmail.sendKeys(testData.getEmail());
-        new ElementHelper(driver).waitForElementDisplayed(travellerPhoneNumber);
+        eh.waitForElementDisplayed(travellerPhoneNumber);
         travellerPhoneNumber.sendKeys(faker.phoneNumber().phoneNumber());
-        new ElementHelper().selectOptionByValue(travellerCountryCode, "US");
+        eh.selectOptionByValue(travellerCountryCode, "US");
     }
 
     public void goToSeatSelect(){
         log.info("Passenger details filled. Going to Seat Selection page");
-        new ElementHelper(driver).waitForElementToBeClickable(seatSelectButton);
+        eh.waitForElementToBeClickable(seatSelectButton);
         seatSelectButton.click();
     }
 
     public void goToPayment() {
         log.info("Passenger details filled. Going to Payment page");
-        new ElementHelper(driver).waitForElementToBeClickable(buttonProceed);
+        eh.waitForElementToBeClickable(buttonProceed);
         buttonProceed.click();
     }
 

@@ -42,10 +42,10 @@ public class ElementHelper {
     public void waitForElementDisplayed(WebElement element) {
         final int timeMs = 15000;
         for (int i = 500; i < timeMs; i += 100) {
-            log.info("Waiting for element displayed (ms): " + i);
+            log.debug("Waiting for element displayed (ms): " + i);
             new Utils().waitTime500ms();
             if (isElementDisplayed(element)) {
-                log.info(String.format("ElementHelper is displayed after %d ms", i));
+                log.debug(String.format("ElementHelper is displayed after %d ms", i));
                 return;
             }
         }
@@ -207,7 +207,7 @@ public class ElementHelper {
         for (WebElement option : children) {
             log.debug("Current option: " + option.getText());
             if (text.equals(option.getText())) {
-                log.info("Click option: " + option.getText());
+                log.debug("Click option: " + option.getText());
                 option.click();
                 new Utils().waitTime500ms();
                 return;
