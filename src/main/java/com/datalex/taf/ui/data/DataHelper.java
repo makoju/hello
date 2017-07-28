@@ -1,6 +1,6 @@
 package com.datalex.taf.ui.data;
 
-import com.datalex.taf.core.loggers.TAFLogger;
+import lombok.extern.log4j.Log4j2;
 
 import java.io.IOException;
 import java.nio.charset.StandardCharsets;
@@ -14,6 +14,7 @@ import java.util.stream.Stream;
  *
  * @author Aleksandar Vulovic
  */
+@Log4j2
 public class DataHelper {
 
     private DataHelper() {
@@ -48,9 +49,10 @@ public class DataHelper {
                 allData.add(new HashMap<>(data));
                 data.clear();
             }
-        } finally {
-            return allData;
+        } catch (Exception e) {
+            log.warn(e);
         }
+        return allData;
     }
 
     /**
@@ -170,7 +172,7 @@ public class DataHelper {
                         testRow.setPromotion(entry.getValue());
                         break;
                     default:
-                        TAFLogger.info("Unsupported field in test data; field name:" + entry.getKey() + " value:" + entry.getValue());
+                        log.info("Unsupported field in test data; field name:" + entry.getKey() + " value:" + entry.getValue());
                 }
             }
             testData.add(testRow);
