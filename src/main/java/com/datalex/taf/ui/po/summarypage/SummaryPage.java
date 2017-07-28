@@ -17,6 +17,7 @@ import org.openqa.selenium.support.PageFactory;
 @Log4j2
 public class SummaryPage {
     private WebDriver driver;
+    private ElementHelper elementHelper;
 
     @FindBy(id = "pgButtonNext")
     public WebElement buttonNext;
@@ -33,14 +34,15 @@ public class SummaryPage {
     public SummaryPage(WebDriver driver) {
         log.info("Initiating Summary Page");
         this.driver = driver;
-        new ElementHelper(driver).waitForPresenceOfElementLocated(By.id("pgItinerarySummary"));
-        new ElementHelper(driver).waitForElementToBeClickable(By.id("pgButtonNext"));
+        elementHelper = new ElementHelper(driver);
+        elementHelper.waitForPresenceOfElementLocated(By.id("pgItinerarySummary"));
+        elementHelper.waitForElementToBeClickable(By.id("pgButtonNext"));
         PageFactory.initElements(driver, this);
     }
 
     public PassengersPage goToPassengersPage() {
         log.info("Summary Page Interaction Completed. Proceeding onwards...");
-        new ElementHelper(driver).waitForElementToBeClickable(buttonNext);
+        elementHelper.waitForElementToBeClickable(buttonNext);
         buttonNext.click();
         return new PassengersPage(driver);
     }

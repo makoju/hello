@@ -14,13 +14,15 @@ import org.openqa.selenium.support.PageFactory;
  */
 public class ConfirmationPage implements IConfirmationPage {
     private WebDriver driver;
+    private ElementHelper elementHelper;
 
     @FindBy(id = "pgButtonSubmit2")
     public WebElement buttonSubmit;
 
     public ConfirmationPage(WebDriver driver) {
         this.driver = driver;
-        new ElementHelper(driver).waitForPresenceOfElementLocated(By.id("pgConfirmation"));
+        elementHelper = new ElementHelper(driver);
+        elementHelper.waitForPresenceOfElementLocated(By.id("pgConfirmation"));
         PageFactory.initElements(driver, this);
     }
 }

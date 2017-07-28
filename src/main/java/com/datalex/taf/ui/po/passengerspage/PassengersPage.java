@@ -22,6 +22,7 @@ import java.util.Locale;
 @Log4j2
 public class PassengersPage implements IPassengersPage {
     private WebDriver driver;
+    private ElementHelper elementHelper;
 
     @FindBy(id = "pgButtonProceed")
     public WebElement buttonProceed;
@@ -50,8 +51,9 @@ public class PassengersPage implements IPassengersPage {
     public PassengersPage(WebDriver driver) {
         log.info("Initiating Passenger Page");
         this.driver = driver;
-        new ElementHelper(driver).waitForPresenceOfElementLocated(By.id("pgTravellers"));
-        new ElementHelper(driver).waitForElementToBeClickable(By.id("pgButtonProceed"));
+        elementHelper = new ElementHelper(driver);
+        elementHelper.waitForPresenceOfElementLocated(By.id("pgTravellers"));
+        elementHelper.waitForElementToBeClickable(By.id("pgButtonProceed"));
         PageFactory.initElements(driver, this);
     }
 
@@ -93,38 +95,38 @@ public class PassengersPage implements IPassengersPage {
 
     public void populatePassportData(TestData testData, int passengerNumber) {
         WebElement country = driver.findElement(By.id("travellersInfo[" + passengerNumber + "].citizenCountry"));
-        new ElementHelper(driver).waitForElementDisplayed(country);
+        elementHelper.waitForElementDisplayed(country);
         new ElementHelper().selectOptionByValue(country, "US");
 
         WebElement passport = driver.findElement(By.id("travellersInfo[" + passengerNumber + "].advancedPassengerDetails(foid)"));
-        new ElementHelper(driver).waitForElementDisplayed(passport);
+        elementHelper.waitForElementDisplayed(passport);
         new ElementHelper().selectOptionByValue(passport, "ID_CARD");
 
         WebElement foidNumber = driver.findElement(By.id("travellersInfo[" + passengerNumber + "].advancedPassengerDetails(foidNumber)"));
-        new ElementHelper(driver).waitForElementDisplayed(foidNumber);
+        elementHelper.waitForElementDisplayed(foidNumber);
         foidNumber.sendKeys("1234567890");
 
         WebElement foidExpireDay = driver.findElement(By.id("travellersInfo[" + passengerNumber + "].advancedPassengerDetails(foidExpireDay)"));
-        new ElementHelper(driver).waitForElementDisplayed(foidExpireDay);
+        elementHelper.waitForElementDisplayed(foidExpireDay);
         new ElementHelper().selectOptionByValue(foidExpireDay, "1");
 
         WebElement foidExpireMonth = driver.findElement(By.id("travellersInfo[" + passengerNumber + "].advancedPassengerDetails(foidExpireMonth)"));
-        new ElementHelper(driver).waitForElementDisplayed(foidExpireMonth);
+        elementHelper.waitForElementDisplayed(foidExpireMonth);
         new ElementHelper().selectOptionByValue(foidExpireMonth, "1");
 
         WebElement foidExpireYear = driver.findElement(By.id("travellersInfo[" + passengerNumber + "].advancedPassengerDetails(foidExpireYear)"));
-        new ElementHelper(driver).waitForElementDisplayed(foidExpireYear);
+        elementHelper.waitForElementDisplayed(foidExpireYear);
         new ElementHelper().selectOptionByValue(foidExpireYear, "2022");
 
         WebElement issuingCountry = driver.findElement(By.id("travellersInfo[" + passengerNumber + "].advancedPassengerDetails(foidCountry)"));
-        new ElementHelper(driver).waitForElementDisplayed(issuingCountry);
+        elementHelper.waitForElementDisplayed(issuingCountry);
         new ElementHelper().selectOptionByValue(issuingCountry, "US");
     }
 
     public void populatePassengerDetails(TestData testData, int passengerNumber) {
         Faker faker = new Faker();
         WebElement title = driver.findElement(By.id("travellersInfo[" + passengerNumber + "].title"));
-        new ElementHelper(driver).waitForElementDisplayed(title);
+        elementHelper.waitForElementDisplayed(title);
         new ElementHelper().selectOptionByText(title, "Mr");
         driver.findElement(By.id("travellersInfo[" + passengerNumber + "].firstName")).sendKeys(faker.name().firstName());
         driver.findElement(By.id("travellersInfo[" + passengerNumber + "].middleName")).sendKeys(faker.name().firstName());
@@ -134,28 +136,28 @@ public class PassengersPage implements IPassengersPage {
     public void populatePassengerDoB(TestData testData, int passengerNumber) {
         WebElement calendarDialog = driver.findElement(By.id("travellersInfo[" + passengerNumber + "].advancedPassengerDetails(dobDate)"));
         calendarDialog.click();
-        new ElementHelper(driver).waitForElementPresent(calendarDialog);
-        new ElementHelper(driver).waitForElementPresent(year);
+        elementHelper.waitForElementPresent(calendarDialog);
+        elementHelper.waitForElementPresent(year);
         new ElementHelper().selectOptionByValue(year, "1984");
-        new ElementHelper(driver).waitForElementPresent(month);
+        elementHelper.waitForElementPresent(month);
         new ElementHelper().selectOptionByValue(month, "12");
         driver.findElement(By.xpath("//td[. = \"12\"]")).click();
     }
 
     public void populateContactDetails(TestData testData) {
         Faker faker = new Faker(new Locale("{en-US}"));
-        new ElementHelper(driver).waitForElementDisplayed(travellerEmailAddress);
+        elementHelper.waitForElementDisplayed(travellerEmailAddress);
         travellerEmailAddress.sendKeys(testData.getEmail());
-        new ElementHelper(driver).waitForElementDisplayed(travellerConfirmEmail);
+        elementHelper.waitForElementDisplayed(travellerConfirmEmail);
         travellerConfirmEmail.sendKeys(testData.getEmail());
-        new ElementHelper(driver).waitForElementDisplayed(travellerPhoneNumber);
+        elementHelper.waitForElementDisplayed(travellerPhoneNumber);
         travellerPhoneNumber.sendKeys(faker.phoneNumber().cellPhone());
         new ElementHelper().selectOptionByValue(travellerCountryCode, "US");
     }
 
     public SeatsPage goToSeatSelect() {
         log.info("Passenger details filled. Going to Seat Selection page");
-        new ElementHelper(driver).waitForElementToBeClickable(buttonProceed);
+        elementHelper.waitForElementToBeClickable(buttonProceed);
         buttonProceed.click();
         return new SeatsPage(driver);
     }

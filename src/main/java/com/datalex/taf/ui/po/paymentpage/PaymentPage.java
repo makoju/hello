@@ -15,6 +15,7 @@ import org.openqa.selenium.support.PageFactory;
  */
 public class PaymentPage {
     private WebDriver driver;
+    private ElementHelper elementHelper;
 
     @FindBy(id = "pgButtonPurchase")
     public WebElement confirmAndPay;
@@ -39,19 +40,20 @@ public class PaymentPage {
 
     public PaymentPage(WebDriver driver) {
         this.driver = driver;
-        new ElementHelper(driver).waitForPresenceOfElementLocated(By.id("pgPayment"));
-        new ElementHelper(driver).waitForElementToBeClickable(By.id("pgButtonPurchase"));
+        elementHelper = new ElementHelper(driver);
+        elementHelper.waitForPresenceOfElementLocated(By.id("pgPayment"));
+        elementHelper.waitForElementToBeClickable(By.id("pgButtonPurchase"));
         PageFactory.initElements(driver, this);
     }
 
     public void payWithPayPal(TestData testData) {
-        new ElementHelper(driver).waitForElementToBeClickable(payPal);
+        elementHelper.waitForElementToBeClickable(payPal);
         payPal.click();
         confirmAndPay.click();
     }
 
     public void payWithOnlineBanking(TestData testData) {
-        new ElementHelper(driver).waitForElementToBeClickable(onlineBank);
+        elementHelper.waitForElementToBeClickable(onlineBank);
         onlineBank.click();
         new ElementHelper().selectOptionByValue(onlineBankDropDown, testData.getPaymentType());
     }
@@ -85,7 +87,7 @@ public class PaymentPage {
             default:
                 throw new Exception("Payment method not specified!");
         }
-        new ElementHelper(driver).waitForElementToBeClickable(acceptTermsAndConditionsCheckBox);
+        elementHelper.waitForElementToBeClickable(acceptTermsAndConditionsCheckBox);
         acceptTermsAndConditionsCheckBox.click();
     }
 }

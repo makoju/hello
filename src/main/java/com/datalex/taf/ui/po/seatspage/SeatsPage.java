@@ -15,6 +15,7 @@ import org.openqa.selenium.support.PageFactory;
  */
 public class SeatsPage {
     private WebDriver driver;
+    private ElementHelper elementHelper;
 
     @FindBy(id = "pgButtonSubmit2")
     public WebElement buttonSubmit;
@@ -27,8 +28,9 @@ public class SeatsPage {
 
     public SeatsPage(WebDriver driver) {
         this.driver = driver;
-        new ElementHelper(driver).waitForPresenceOfElementLocated(By.id("pgSeatSelection"));
-        new ElementHelper(driver).waitForElementToBeClickable(By.id("pgButtonSubmit2"));
+        elementHelper = new ElementHelper(driver);
+        elementHelper.waitForPresenceOfElementLocated(By.id("pgSeatSelection"));
+        elementHelper.waitForElementToBeClickable(By.id("pgButtonSubmit2"));
         PageFactory.initElements(driver, this);
     }
 
