@@ -17,6 +17,9 @@ import java.util.stream.Stream;
 @Log4j2
 public class DataHelper {
 
+    /**
+     * Private constructor
+     */
     private DataHelper() {
         throw new UnsupportedOperationException();
     }
@@ -29,15 +32,16 @@ public class DataHelper {
      * @throws IOException if error occurs
      */
     public static List<Map<String, String>> readDataFromCSVFile(String csvFile) throws IOException {
+        String renamedCSVFile = csvFile;
         if (csvFile.endsWith(".csv")) {
-            csvFile = csvFile.replace(".csv", "");
+            renamedCSVFile = csvFile.replace(".csv", "");
         }
         List<List<String>> listOfLines = new ArrayList<>();
         List<String> keys;
         Map<String, String> data = new LinkedHashMap<>();
         List<Map<String, String>> allData = new ArrayList<>();
 
-        try (Stream<String> lines = Files.lines(Paths.get("./src/test/resources/Data/" + csvFile + ".csv"), StandardCharsets.UTF_8)) {
+        try (Stream<String> lines = Files.lines(Paths.get("./src/test/resources/Data/" + renamedCSVFile + ".csv"), StandardCharsets.UTF_8)) {
             for (String line : (Iterable<String>) lines::iterator) {
                 listOfLines.add(Arrays.asList(line.split(",")));
             }
@@ -172,7 +176,7 @@ public class DataHelper {
                         testRow.setPromotion(entry.getValue());
                         break;
                     default:
-                        log.info("Unsupported field in test data; field name:" + entry.getKey() + " value:" + entry.getValue());
+                        log.warn("Unsupported field in test data; field name:" + entry.getKey() + " value:" + entry.getValue());
                 }
             }
             testData.add(testRow);
