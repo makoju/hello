@@ -148,7 +148,7 @@ public class ElementHelper {
     }
 
     /**
-     * Method to get number of elements from List<WebElement>
+     * Method to get number of elements from WebElement List
      *
      * @param elements WebElement List
      * @return number of elements
@@ -283,6 +283,7 @@ public class ElementHelper {
      * driver.executeScript("window.scrollBy(0,150)");
      * driver.executeScript("document.getElementById('" + elementId + "').value").toString();
      *
+     * @param  driver Webdriver
      * @param scriptToRun script
      * @return JavaScript object
      */

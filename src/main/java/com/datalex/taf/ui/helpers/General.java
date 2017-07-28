@@ -31,6 +31,7 @@ public class General {
      * Function to type airport code and select airport name item to form element direct using JS
      *
      * @param driver      instance
+     * @param controlNameHidden WebElement
      * @param controlName name of element
      * @param airportCode code for airport
      * @param airportName name of airport
