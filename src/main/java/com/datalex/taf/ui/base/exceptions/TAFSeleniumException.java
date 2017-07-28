@@ -1,11 +1,13 @@
 package com.datalex.taf.ui.base.exceptions;
 
+import java.io.IOException;
+
 /**
  * TAFSeleniumException class
  *
  * @author Aleksandar Vulovic
  */
-public class TAFSeleniumException extends Exception {
+public class TAFSeleniumException extends IOException {
 
     /**
      * General TAFSelenium exception
