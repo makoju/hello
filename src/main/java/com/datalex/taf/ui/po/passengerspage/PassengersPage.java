@@ -3,6 +3,7 @@ package com.datalex.taf.ui.po.passengerspage;
 import com.datalex.taf.core.loggers.TAFLogger;
 import com.datalex.taf.ui.data.TestData;
 import com.datalex.taf.ui.helpers.ElementHelper;
+import com.datalex.taf.ui.po.seatspage.SeatsPage;
 import com.datalex.taf.ui.travellers.Adult;
 import com.datalex.taf.ui.travellers.Child;
 import com.datalex.taf.ui.travellers.Infant;
