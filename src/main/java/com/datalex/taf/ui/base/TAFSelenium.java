@@ -7,7 +7,9 @@ import com.datalex.taf.ui.base.exceptions.TAFSeleniumException;
 import lombok.extern.log4j.Log4j2;
 import org.openqa.selenium.Platform;
 import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.chrome.ChromeOptions;
+import org.openqa.selenium.edge.EdgeDriver;
 import org.openqa.selenium.firefox.FirefoxDriver;
 import org.openqa.selenium.ie.InternetExplorerDriver;
 import org.openqa.selenium.remote.DesiredCapabilities;
@@ -21,13 +23,19 @@ import static com.datalex.taf.ui.base.constants.DriverConstants.*;
 
 /**
  * TAFSelenium class
+ * <p>
+ * TAFSelenium can be started in "local" mode and in "grid" mode.
+ * If runMode=local in taf.properties, it will start local WebDriver
+ * If runMode=grid in taf.properties it will use RemoteWebDriver
  *
  * @author Aleksandar Vulovic
  */
 @Log4j2
 public class TAFSelenium {
-    private static ThreadLocal<RemoteWebDriver> mDriver = new ThreadLocal<>();
+    private static ThreadLocal<RemoteWebDriver> remoteDriver = new ThreadLocal<>();
+    private static WebDriver localDriver;
     private static DesiredCapabilities capability;
+    private static final String RUN_MODE_LOCAL = "local";
 
     /**
      * Empty private constructor
@@ -65,10 +73,15 @@ public class TAFSelenium {
                 throw new TAFSeleniumException("Choose browserType in taf.properties file!");
         }
 
-        RemoteWebDriver driver = new RemoteWebDriver(driverURL, capability);
-        mDriver.set(driver);
-        mDriver.get().manage().deleteAllCookies();
-        mDriver.get().manage().window().maximize();
+        if (RUN_MODE_LOCAL.equalsIgnoreCase(TAFProperties.getSeleniumRunModeValue())) {
+            localDriver.manage().deleteAllCookies();
+            //localDriver.manage().window().maximize();
+        } else {
+            RemoteWebDriver driver = new RemoteWebDriver(driverURL, capability);
+            remoteDriver.set(driver);
+            remoteDriver.get().manage().deleteAllCookies();
+            remoteDriver.get().manage().window().maximize();
+        }
         log.info("TAFSelenium initialized!");
     }
 
@@ -79,7 +92,10 @@ public class TAFSelenium {
      * @return WebDriver
      */
     public static WebDriver getDriver() {
-        return mDriver.get();
+        if (RUN_MODE_LOCAL.equalsIgnoreCase(TAFProperties.getSeleniumRunModeValue())) {
+            return localDriver;
+        }
+        return remoteDriver.get();
     }
 
     /**
@@ -92,13 +108,16 @@ public class TAFSelenium {
         } else {
             geckoDriver = new File(GECKO_DRIVER_LINUX_PATH);
         }
-
         System.setProperty(GECKO_DRIVER_SYSTEM_PROPERTY, geckoDriver.getAbsolutePath());
         capability = DesiredCapabilities.firefox();
         capability.setBrowserName("firefox");
         capability.setPlatform(Platform.ANY);
         capability.setCapability(FirefoxDriver.MARIONETTE, true);
         capability.setJavascriptEnabled(true);
+
+        if (RUN_MODE_LOCAL.equalsIgnoreCase(TAFProperties.getSeleniumRunModeValue())) {
+            localDriver = new FirefoxDriver(capability);
+        }
     }
 
     /**
@@ -119,6 +138,10 @@ public class TAFSelenium {
         options.addArguments("--disable-extensions");
         options.addArguments("test-type");
         capability.setCapability(ChromeOptions.CAPABILITY, options);
+
+        if (RUN_MODE_LOCAL.equalsIgnoreCase(TAFProperties.getSeleniumRunModeValue())) {
+            localDriver = new ChromeDriver(capability);
+        }
     }
 
     /**
@@ -135,6 +158,10 @@ public class TAFSelenium {
         }
         capability = DesiredCapabilities.edge();
         capability.setJavascriptEnabled(true);
+
+        if (RUN_MODE_LOCAL.equalsIgnoreCase(TAFProperties.getSeleniumRunModeValue())) {
+            localDriver = new EdgeDriver(capability);
+        }
     }
 
     /**
@@ -152,5 +179,9 @@ public class TAFSelenium {
         capability = DesiredCapabilities.internetExplorer();
         capability.setJavascriptEnabled(true);
         capability.setCapability(InternetExplorerDriver.INTRODUCE_FLAKINESS_BY_IGNORING_SECURITY_DOMAINS, true);
+
+        if (RUN_MODE_LOCAL.equalsIgnoreCase(TAFProperties.getSeleniumRunModeValue())) {
+            localDriver = new InternetExplorerDriver(capability);
+        }
     }
 }
