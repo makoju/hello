@@ -63,10 +63,10 @@ public class PassengersPage implements IPassengersPage {
             traveller.fillTravellerInformation(traveller.determinePassengerType(i), i);
             if(driver.findElements(By.id("travellersInfo[" + i + "].loyaltyMemberships[0]")).size() > 0)
                 setFrequentFlierProgram(testData, i);
+
         }
         //traveller.fillTravellerEmergencyContactInformation(testData);
         populateContactDetails(testData);
-
     }
 
     public void setFrequentFlierProgram(TestData testData, int passengerNumber) {
@@ -95,7 +95,8 @@ public class PassengersPage implements IPassengersPage {
 
 
     public void populateContactDetails(TestData testData) {
-        Faker faker = new Faker(new Locale("{en-US}"));
+        //Faker faker = new Faker(new Locale("{en-US}"));
+        Faker faker = new Faker();
         elementHelper.waitForElementDisplayed(travellerEmailAddress);
         travellerEmailAddress.sendKeys(testData.getEmail());
         elementHelper.waitForElementDisplayed(travellerConfirmEmail);

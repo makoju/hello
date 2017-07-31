@@ -17,8 +17,14 @@ public class SeatsPage {
     private WebDriver driver;
     private ElementHelper elementHelper;
 
+    @FindBy(id = "pgSeatSelection")
+    public WebElement pgSeatSelect;
+
+    @FindBy(id = "pgButtonContinue")
+    public WebElement nextFlightBtn;
+
     @FindBy(id = "pgButtonSubmit2")
-    public WebElement buttonSubmit;
+    public WebElement continueBtn;
 
     @FindBy(xpath = "//a[@class='skipSelectionLink']")
     public WebElement skipSeatSelectionButton;
@@ -29,13 +35,17 @@ public class SeatsPage {
     public SeatsPage(WebDriver driver) {
         this.driver = driver;
         elementHelper = new ElementHelper(driver);
-        elementHelper.waitForPresenceOfElementLocated(By.id("pgSeatSelection"));
-        elementHelper.waitForElementToBeClickable(By.id("pgButtonSubmit2"));
+        elementHelper.waitForPresenceOfElementLocated(By.id("pgSeatSelect"));
+        //elementHelper.waitForElementToBeClickable(By.id("pgButtonContinue"));
         PageFactory.initElements(driver, this);
     }
 
+    public void goToNextFlight(){
+        nextFlightBtn.click();
+    }
+
     public PaymentPage goToPayment() {
-        buttonSubmit.click();
+        continueBtn.click();
         return new PaymentPage(driver);
     }
 
