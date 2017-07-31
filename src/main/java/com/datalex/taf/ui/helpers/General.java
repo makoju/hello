@@ -4,15 +4,13 @@ import com.datalex.taf.core.readers.property.TAFProperties;
 import com.datalex.taf.ui.helpers.constants.SettingsConstants;
 import lombok.extern.log4j.Log4j2;
 import org.joda.time.DateTime;
-import org.openqa.selenium.By;
-import org.openqa.selenium.JavascriptExecutor;
-import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.WebElement;
+import org.openqa.selenium.*;
 
 import java.io.BufferedReader;
 import java.io.DataInputStream;
 import java.io.FileInputStream;
 import java.io.InputStreamReader;
+import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Arrays;
 import java.util.Date;
@@ -121,7 +119,7 @@ public class General {
      *
      * @param driver       instance
      * @param calendarIcon calendar icon xpath
-     * @param dateNum      date in days from today
+     * @param dateNum      date in days from today. Following Date format available Positive Integer i.e 42, Date by Georgian Calendar DD/MM/YYYY
      * @throws Exception if error occurs
      */
     public void inputDateByCalendar(WebDriver driver, WebElement calendarIcon, String dateNum) throws Exception {
@@ -248,15 +246,6 @@ public class General {
                 throw new Exception("Injecting into JS Failed...miserably");
             }
 
-
-//            if (typeUsingJS(driver, calendarIcon + "Date", dateToInject) &&
-//                    typeUsingJS(driver, calendarIcon + "Day", String.format("%02d", Integer.parseInt(day))) &&
-//                    typeUsingJS(driver, calendarIcon + "Month", String.format("%02d", Integer.parseInt(month))) &&
-//                    typeUsingJS(driver, calendarIcon + "Year", yearDep)) ;
-//            else
-//                throw new Exception("Injecting into JS Failed...miserably");
-
-
         } else {
             //Open calendar by clicking icon
             calendarIcon.click();
@@ -308,6 +297,36 @@ public class General {
                 throw new Exception("Calendar has been opened but not visible");
             }
         }
+    }
+
+    public void handleDatePickerCalender(WebDriver driver, WebElement calendarIcon, Date date) throws Exception, NoSuchElementException
+    {
+        DateFormat formatter = new SimpleDateFormat("dd/MM/yyyy");
+        log.debug("ADT Date of Birth: " +formatter.format(date));
+        String formattedDate = formatter.format(date);
+
+        int month;
+        int day;
+        int year;
+        int index1, index2;
+        String[] months = {
+                "", "January", "February", "March", "April", "May", "June", "July", "August", "September",
+                "October", "November", "December"
+        };
+
+        index1 = formattedDate.indexOf('/');
+        index2 = formattedDate.lastIndexOf('/');
+        day = Integer.parseInt(formattedDate.substring(0, index1));
+        month = Integer.parseInt(formattedDate.substring(index1 + 1, index2));
+        year = Integer.parseInt(formattedDate.substring(index2 + 1));
+
+        log.debug( "Date is: " + year + " " + months[month] + " " + day);
+
+        calendarIcon.click();
+        new ElementHelper().selectOptionByValue(driver.findElement(By.cssSelector("select#cdrControlYear")), Integer.toString(year));
+        new ElementHelper().selectOptionByValue(driver.findElement(By.cssSelector("select#cdrControlMonth")), months[month]);
+        driver.findElement(By.cssSelector("a[onclick*='day:" + day + "']")).click();
+
     }
 
     /**

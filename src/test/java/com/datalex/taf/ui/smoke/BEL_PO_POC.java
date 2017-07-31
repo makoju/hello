@@ -56,10 +56,12 @@ public class BEL_PO_POC {
         SummaryPage summaryPage = selectionPage.doSelection();
         //Passengers page actions
         PassengersPage passengersPage = summaryPage.goToPassengersPage();
-        passengersPage.fillTravellersPage(testData);
+        passengersPage.fillPassengersPage(testData);
         //Seats page actions
         SeatsPage seatsPage = passengersPage.goToSeatSelect();
-        PaymentPage paymentPage = seatsPage.skipSeatSelection();
+        if (("RT").equalsIgnoreCase(testData.getTripType()))
+            seatsPage.goToNextFlight();
+        PaymentPage paymentPage = seatsPage.goToPayment();
         //Payment page actions
         paymentPage.populatePaymentPage(testData);
     }

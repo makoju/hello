@@ -4,6 +4,10 @@ import com.datalex.taf.core.loggers.TAFLogger;
 import com.datalex.taf.ui.data.TestData;
 import com.datalex.taf.ui.helpers.ElementHelper;
 import com.datalex.taf.ui.po.seatspage.SeatsPage;
+import com.datalex.taf.ui.travellers.Adult;
+import com.datalex.taf.ui.travellers.Child;
+import com.datalex.taf.ui.travellers.Infant;
+import com.datalex.taf.ui.travellers.Traveller;
 import com.github.javafaker.Faker;
 import lombok.extern.log4j.Log4j2;
 import org.openqa.selenium.By;
@@ -39,12 +43,6 @@ public class PassengersPage implements IPassengersPage {
     @FindBy(id = "mobilePhoneNumberCountryCode")
     public WebElement travellerCountryCode;
 
-    @FindBy(id = "cdrControlMonth")
-    public WebElement month;
-
-    @FindBy(id = "cdrControlYear")
-    public WebElement year;
-
     @FindBy(id = "travellersInfo[0].mobilePhone.phoneNumber")
     public WebElement travellerPhoneNumber;
 
@@ -57,20 +55,18 @@ public class PassengersPage implements IPassengersPage {
         PageFactory.initElements(driver, this);
     }
 
-    public void fillTravellersPage(TestData testData) {
-        int adtQty = Integer.parseInt(testData.getAdt());
-        int chdQty = Integer.parseInt(testData.getChd());
-        int infQty = Integer.parseInt(testData.getInf());
+    public void fillPassengersPage(TestData testData) throws Exception {
+        log.info("Filling All Passengers Information");
+        Traveller traveller = new Traveller(driver);
 
-        int travellersQty = adtQty + chdQty + infQty;
-        for (int i = 0; i <= travellersQty - 1; i++) {
-            populatePassengerDetails(testData, i);
-            populatePassportData(testData, i);
-            setFrequentFlierProgram(testData, i);
-            populatePassengerDoB(testData, i);
+        for (int i = 0; i <= (traveller.getHowManyPassengerSelected()-1); i++){
+            traveller.fillTravellerInformation(traveller.determinePassengerType(i), i);
+            if(driver.findElements(By.id("travellersInfo[" + i + "].loyaltyMemberships[0]")).size() > 0)
+                setFrequentFlierProgram(testData, i);
+
         }
+        //traveller.fillTravellerEmergencyContactInformation(testData);
         populateContactDetails(testData);
-
     }
 
     public void setFrequentFlierProgram(TestData testData, int passengerNumber) {
@@ -97,59 +93,10 @@ public class PassengersPage implements IPassengersPage {
         }
     }
 
-    public void populatePassportData(TestData testData, int passengerNumber) {
-        WebElement country = driver.findElement(By.id("travellersInfo[" + passengerNumber + "].citizenCountry"));
-        elementHelper.waitForElementDisplayed(country);
-        new ElementHelper().selectOptionByValue(country, "US");
-
-        WebElement passport = driver.findElement(By.id("travellersInfo[" + passengerNumber + "].advancedPassengerDetails(foid)"));
-        elementHelper.waitForElementDisplayed(passport);
-        new ElementHelper().selectOptionByValue(passport, "ID_CARD");
-
-        WebElement foidNumber = driver.findElement(By.id("travellersInfo[" + passengerNumber + "].advancedPassengerDetails(foidNumber)"));
-        elementHelper.waitForElementDisplayed(foidNumber);
-        foidNumber.sendKeys("1234567890");
-
-        WebElement foidExpireDay = driver.findElement(By.id("travellersInfo[" + passengerNumber + "].advancedPassengerDetails(foidExpireDay)"));
-        elementHelper.waitForElementDisplayed(foidExpireDay);
-        new ElementHelper().selectOptionByValue(foidExpireDay, "1");
-
-        WebElement foidExpireMonth = driver.findElement(By.id("travellersInfo[" + passengerNumber + "].advancedPassengerDetails(foidExpireMonth)"));
-        elementHelper.waitForElementDisplayed(foidExpireMonth);
-        new ElementHelper().selectOptionByValue(foidExpireMonth, "1");
-
-        WebElement foidExpireYear = driver.findElement(By.id("travellersInfo[" + passengerNumber + "].advancedPassengerDetails(foidExpireYear)"));
-        elementHelper.waitForElementDisplayed(foidExpireYear);
-        new ElementHelper().selectOptionByValue(foidExpireYear, "2022");
-
-        WebElement issuingCountry = driver.findElement(By.id("travellersInfo[" + passengerNumber + "].advancedPassengerDetails(foidCountry)"));
-        elementHelper.waitForElementDisplayed(issuingCountry);
-        new ElementHelper().selectOptionByValue(issuingCountry, "US");
-    }
-
-    public void populatePassengerDetails(TestData testData, int passengerNumber) {
-        Faker faker = new Faker();
-        WebElement title = driver.findElement(By.id("travellersInfo[" + passengerNumber + "].title"));
-        elementHelper.waitForElementDisplayed(title);
-        new ElementHelper().selectOptionByText(title, "Mr");
-        driver.findElement(By.id("travellersInfo[" + passengerNumber + "].firstName")).sendKeys(faker.name().firstName());
-        driver.findElement(By.id("travellersInfo[" + passengerNumber + "].middleName")).sendKeys(faker.name().firstName());
-        driver.findElement(By.id("travellersInfo[" + passengerNumber + "].lastName")).sendKeys(faker.name().lastName());
-    }
-
-    public void populatePassengerDoB(TestData testData, int passengerNumber) {
-        WebElement calendarDialog = driver.findElement(By.id("travellersInfo[" + passengerNumber + "].advancedPassengerDetails(dobDate)"));
-        calendarDialog.click();
-        elementHelper.waitForElementPresent(calendarDialog);
-        elementHelper.waitForElementPresent(year);
-        new ElementHelper().selectOptionByValue(year, "1984");
-        elementHelper.waitForElementPresent(month);
-        new ElementHelper().selectOptionByValue(month, "12");
-        driver.findElement(By.xpath("//td[. = \"12\"]")).click();
-    }
 
     public void populateContactDetails(TestData testData) {
-        Faker faker = new Faker(new Locale("{en-US}"));
+        //Faker faker = new Faker(new Locale("{en-US}"));
+        Faker faker = new Faker();
         elementHelper.waitForElementDisplayed(travellerEmailAddress);
         travellerEmailAddress.sendKeys(testData.getEmail());
         elementHelper.waitForElementDisplayed(travellerConfirmEmail);
@@ -165,4 +112,6 @@ public class PassengersPage implements IPassengersPage {
         buttonProceed.click();
         return new SeatsPage(driver);
     }
+
+
 }

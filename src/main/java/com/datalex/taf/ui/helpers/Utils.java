@@ -30,4 +30,8 @@ public class Utils {
     public void waitTime500ms() {
         waitTime(500);
     }
+
+    public int randBetween(int start, int end) {
+        return start + (int)Math.round(Math.random() * (end - start));
+    }
 }
