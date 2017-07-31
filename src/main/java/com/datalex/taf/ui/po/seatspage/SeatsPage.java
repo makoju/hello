@@ -20,8 +20,8 @@ public class SeatsPage {
     private WebDriver driver;
     private ElementHelper elementHelper;
 
-    @FindBy(id = "pgSeatSelection")
-    public WebElement pgSeatSelect;
+    @FindBy(id = "idSeatMapPlaceHolderInner")
+    public WebElement seatSelectionImg;
 
     @FindBy(id = "pgButtonContinue")
     public WebElement nextFlightBtn;
@@ -39,12 +39,7 @@ public class SeatsPage {
         this.driver = driver;
         elementHelper = new ElementHelper(driver);
         elementHelper.waitForPresenceOfElementLocated(By.id("pgSeatSelection"));
-        elementHelper.waitForPresenceOfElementLocated(By.id("idSeatMapPlaceHolder"));
         PageFactory.initElements(driver, this);
-    }
-
-    public void goToNextFlight() {
-        nextFlightBtn.click();
     }
 
     public PaymentPage goToPayment() {
@@ -54,13 +49,13 @@ public class SeatsPage {
 
     public PaymentPage skipSeatSelection(TestData testData) {
         if ("RT".equalsIgnoreCase(testData.getTripType())) {
+            elementHelper.waitForElementDisplayed(seatSelectionImg);
+            elementHelper.waitForElementToBeClickable(nextFlightBtn);
             nextFlightBtn.click();
-            log.info("Clicked skip seat selection for RT");
         }
-        elementHelper.waitForElementToBeClickable(skipSeatSelectionButton);
-        PageFactory.initElements(driver, this);
-        nextFlightBtn.click();
-        log.info("Clicked skip seat selection for OW");
+        elementHelper.waitForElementDisplayed(seatSelectionImg);
+        elementHelper.waitForElementDisplayed(continueBtn);
+        continueBtn.click();
         return new PaymentPage(driver);
     }
 }

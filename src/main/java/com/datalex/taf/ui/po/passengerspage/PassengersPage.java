@@ -95,7 +95,7 @@ public class PassengersPage implements IPassengersPage {
 
 
     public void populateContactDetails(TestData testData) {
-        Faker faker = new Faker(new Locale("en"));
+        //Faker faker = new Faker(new Locale("en"));
         elementHelper.waitForElementDisplayed(travellerEmailAddress);
         travellerEmailAddress.sendKeys(testData.getEmail());
         elementHelper.waitForElementDisplayed(travellerConfirmEmail);
