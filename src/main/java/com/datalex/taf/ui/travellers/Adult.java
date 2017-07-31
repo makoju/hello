@@ -51,6 +51,13 @@ public class Adult extends Detail {
             inputMiddleName();
             inputLastName();
             if(checkDateOfBirthFormExist(false)) fillDateOfBirthByCalendar(false);
+            //APD
+            selectCitizenship();
+            selectFormOfID(foidType);
+            inputFormOfIDNumber();
+            inputFormOfIDExpiryDate();
+            inputIssuingCountry();
+            if(checkDateOfBirthFormExist(true)) fillDateOfBirthByCalendar(true);
 
     }
 
@@ -74,6 +81,45 @@ public class Adult extends Detail {
 
     public void inputLastName(){
         driver.findElement(By.id("travellersInfo[" + paxNumber + "].lastName")).sendKeys(lastName);
+    }
+
+    public void selectCitizenship(){
+        WebElement citizenSelectionElement = driver.findElement(By.id("travellersInfo[" + paxNumber + "].citizenCountry"));
+        eh.waitForElementDisplayed(citizenSelectionElement);
+        eh.selectOptionByValue(citizenSelectionElement, citizenship);
+        new Utils().waitTime(1500);
+    }
+
+    public void selectFormOfID(String foidType){
+        WebElement foidTypeElement = driver.findElement(By.id("travellersInfo[" + paxNumber + "].advancedPassengerDetails(foid)"));
+        eh.waitForElementDisplayed(foidTypeElement);
+        eh.selectOptionByValue(foidTypeElement, foidType);
+    }
+
+    public void inputFormOfIDNumber(){
+        WebElement foidNumberElement = driver.findElement(By.id("travellersInfo[" + paxNumber + "].advancedPassengerDetails(foidNumber)"));
+        eh.waitForElementDisplayed(foidNumberElement);
+        foidNumberElement.sendKeys(foidNumber);
+    }
+
+    public void inputFormOfIDExpiryDate(){
+        WebElement foidExpireDayElement = driver.findElement(By.id("travellersInfo[" + paxNumber + "].advancedPassengerDetails(foidExpireDay)"));
+        eh.waitForElementDisplayed(foidExpireDayElement);
+        eh.selectOptionByValue(foidExpireDayElement, "1");
+
+        WebElement foidExpireMonthElement = driver.findElement(By.id("travellersInfo[" + paxNumber + "].advancedPassengerDetails(foidExpireMonth)"));
+        eh.waitForElementDisplayed(foidExpireMonthElement);
+        eh.selectOptionByValue(foidExpireMonthElement, "1");
+
+        WebElement foidExpireYearElement = driver.findElement(By.id("travellersInfo[" + paxNumber + "].advancedPassengerDetails(foidExpireYear)"));
+        eh.waitForElementDisplayed(foidExpireYearElement);
+        eh.selectOptionByValue(foidExpireYearElement, "2027");
+    }
+
+    public void inputIssuingCountry(){
+        WebElement issuingCountryElement = driver.findElement(By.id("travellersInfo[" + paxNumber + "].advancedPassengerDetails(foidCountry)"));
+        eh.waitForElementDisplayed(issuingCountryElement);
+        eh.selectOptionByValue(issuingCountryElement, issuingCountry);
     }
 
     /**

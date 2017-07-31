@@ -8,6 +8,7 @@ import com.datalex.taf.ui.po.passengerspage.PassengersPage;
 import com.datalex.taf.ui.po.searchpage.SearchPage;
 import com.datalex.taf.ui.po.selectionpage.SelectionPage;
 import com.datalex.taf.ui.po.summarypage.SummaryPage;
+import com.datalex.taf.ui.travellers.Adult;
 import org.openqa.selenium.WebDriver;
 import org.testng.ITestResult;
 import org.testng.annotations.AfterMethod;
@@ -37,7 +38,7 @@ public class BEL_PO_POC {
         return convertDataToObject(readDataFromCSVFile("Smoke"));
     }
 
-    @Test(dataProvider = "Data", description = "POC Test example")
+    @Test(enabled = true, dataProvider = "Data", description = "POC Test example")
     public void searchPageTest(TestData testData) throws Exception {
         TAFSelenium.initDriver();
         WebDriver driver = TAFSelenium.getDriver();
@@ -55,7 +56,14 @@ public class BEL_PO_POC {
         SummaryPage summaryPage = selectionPage.doSelection();
         //Passengers page actions
         PassengersPage passengersPage = summaryPage.goToPassengersPage();
-        passengersPage.fillTravellersPage(testData);
+        passengersPage.fillPassengersPage(testData);
         passengersPage.goToPayment();
+    }
+
+    @Test(enabled = false, description = "POC Test example")
+    public void QuickTest() throws Exception {
+        TAFSelenium.initDriver();
+        WebDriver driver = TAFSelenium.getDriver();
+        Adult adt = new Adult(driver);
     }
 }

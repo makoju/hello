@@ -8,6 +8,7 @@ import org.openqa.selenium.By;
 import org.openqa.selenium.NoSuchElementException;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
+import org.openqa.selenium.support.FindBy;
 
 /**
  * Created by jossie.saul on 27/07/2017.
@@ -22,10 +23,24 @@ public class Traveller {
 
     private Infant inf;
 
-    private ElementHelper eh;
+    @FindBy(id = "emailAddress")
+    public WebElement travellerEmailAddress;
+
+    @FindBy(id = "confirmEmail")
+    public WebElement travellerConfirmEmail;
+
+    @FindBy(id = "mobilePhoneNumberCountryCode")
+    public WebElement travellerCountryCode;
+
+    @FindBy(id = "travellersInfo[0].mobilePhone.phoneNumber")
+    public WebElement travellerPhoneNumber;
+
+    public ElementHelper eh;
 
     public Traveller(WebDriver driver){
+
         this.driver = driver;
+        eh = new ElementHelper(driver);
     }
 
     public void fillTravellerInformation(String paxType, int passengerNumber) throws Exception {
@@ -43,12 +58,17 @@ public class Traveller {
                 log.error("PaxType is Empty or not Recognized. PaxType{"+paxType+"}");
                 throw new Exception();
         }
-
-
     }
 
-    public void fillPassportInformation(){
-
+    public void fillTravellerEmergencyContactInformation(TestData testData) throws Exception{
+        Faker faker = new Faker();
+        eh.waitForElementDisplayed(travellerEmailAddress);
+        travellerEmailAddress.sendKeys(testData.getEmail());
+        eh.waitForElementDisplayed(travellerConfirmEmail);
+        travellerConfirmEmail.sendKeys(testData.getEmail());
+        eh.waitForElementDisplayed(travellerPhoneNumber);
+        travellerPhoneNumber.sendKeys(faker.phoneNumber().phoneNumber());
+        eh.selectOptionByValue(travellerCountryCode, "US");
     }
 
     public String determinePassengerType(int passengerNumber){

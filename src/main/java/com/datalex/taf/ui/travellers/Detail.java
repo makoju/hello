@@ -6,7 +6,6 @@ import lombok.Data;
 import lombok.extern.log4j.Log4j2;
 
 import java.time.Year;
-import java.util.Calendar;
 import java.util.Date;
 import java.util.GregorianCalendar;
 import java.util.Random;
@@ -34,11 +33,19 @@ public class Detail {
 
     protected String frequentFlyerNumber;
 
-    protected String passportNumber;
+    protected String foidNumber;
 
-    protected String passportCountry;
+    /**
+     * 2.DOC - passport
+     * ID_CARD - NationalID
+     */
+    protected String foidType;
 
-    protected Date   passportExpiryDate;
+    protected String foidCountry;
+
+    protected String issuingCountry;
+
+    protected Date foidExpiryDate;
 
     protected Date   dateOfBirth;
 
@@ -49,9 +56,12 @@ public class Detail {
         middleName = faker.name().firstName();
         lastName = faker.name().lastName();
         citizenship = "US";
-        passportNumber = String.valueOf(new Random().nextInt(9000000) + 1000000);
-        passportCountry = "US";
-        passportExpiryDate = new Date();
+        foidType = "2.DOC";
+        foidNumber = String.valueOf(new Random().nextInt(9000000) + 1000000);
+        foidCountry = "US";
+        foidExpiryDate = new Date();
+        issuingCountry = "US";
+
     }
 
     private String getRandom(String[] array) {
