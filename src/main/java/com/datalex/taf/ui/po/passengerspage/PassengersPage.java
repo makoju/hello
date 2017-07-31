@@ -15,6 +15,8 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
 
+import java.util.Locale;
+
 /**
  * Passengers page class
  *
@@ -23,6 +25,7 @@ import org.openqa.selenium.support.PageFactory;
 @Log4j2
 public class PassengersPage implements IPassengersPage {
     private WebDriver driver;
+    private ElementHelper elementHelper;
 
     @FindBy(id = "pgButtonProceed")
     public WebElement buttonProceed;
@@ -42,14 +45,12 @@ public class PassengersPage implements IPassengersPage {
     @FindBy(id = "travellersInfo[0].mobilePhone.phoneNumber")
     public WebElement travellerPhoneNumber;
 
-    private ElementHelper eh;
-
     public PassengersPage(WebDriver driver) {
         log.info("Initiating Passenger Page");
         this.driver = driver;
-        eh = new ElementHelper(driver);
-        eh.waitForPresenceOfElementLocated(By.id("pgTravellers"));
-        eh.waitForElementToBeClickable(By.id("pgButtonProceed"));
+        elementHelper = new ElementHelper(driver);
+        elementHelper.waitForPresenceOfElementLocated(By.id("pgTravellers"));
+        elementHelper.waitForElementToBeClickable(By.id("pgButtonProceed"));
         PageFactory.initElements(driver, this);
     }
 
@@ -64,6 +65,7 @@ public class PassengersPage implements IPassengersPage {
         }
         //traveller.fillTravellerEmergencyContactInformation(testData);
         populateContactDetails(testData);
+
     }
 
     public void setFrequentFlierProgram(TestData testData, int passengerNumber) {
@@ -88,26 +90,21 @@ public class PassengersPage implements IPassengersPage {
 
 
     public void populateContactDetails(TestData testData) {
-        Faker faker = new Faker();
-        eh.waitForElementDisplayed(travellerEmailAddress);
+        Faker faker = new Faker(new Locale("{en-US}"));
+        elementHelper.waitForElementDisplayed(travellerEmailAddress);
         travellerEmailAddress.sendKeys(testData.getEmail());
-        eh.waitForElementDisplayed(travellerConfirmEmail);
+        elementHelper.waitForElementDisplayed(travellerConfirmEmail);
         travellerConfirmEmail.sendKeys(testData.getEmail());
-        eh.waitForElementDisplayed(travellerPhoneNumber);
-        travellerPhoneNumber.sendKeys(faker.phoneNumber().phoneNumber());
-        eh.selectOptionByValue(travellerCountryCode, "US");
+        elementHelper.waitForElementDisplayed(travellerPhoneNumber);
+        travellerPhoneNumber.sendKeys(faker.phoneNumber().cellPhone());
+        new ElementHelper().selectOptionByValue(travellerCountryCode, "US");
     }
 
-    public void goToSeatSelect(){
+    public SeatsPage goToSeatSelect() {
         log.info("Passenger details filled. Going to Seat Selection page");
-        eh.waitForElementToBeClickable(seatSelectButton);
-        seatSelectButton.click();
-    }
-
-    public void goToPayment() {
-        log.info("Passenger details filled. Going to Payment page");
-        eh.waitForElementToBeClickable(buttonProceed);
+        elementHelper.waitForElementToBeClickable(buttonProceed);
         buttonProceed.click();
+        return new SeatsPage(driver);
     }
 
 

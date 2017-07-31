@@ -21,6 +21,7 @@ import org.openqa.selenium.support.PageFactory;
 @Log4j2
 public class SearchPage implements ISearchPage {
     private WebDriver driver;
+    private ElementHelper elementHelper;
 
     @FindBy(id = "loginLinkFromLoginBlock")
     public WebElement loginButton;
@@ -121,6 +122,7 @@ public class SearchPage implements ISearchPage {
     public SearchPage(WebDriver driver) {
         log.info("Initiating Flight Search Page");
         this.driver = driver;
+        elementHelper = new ElementHelper(driver);
         PageFactory.initElements(driver, this);
         driver.get(TAFProperties.getPROJECTIP() + "/BEL/ApplicationStartAction.do?" + TAFProperties.getPOS());
     }
@@ -210,24 +212,24 @@ public class SearchPage implements ISearchPage {
     public void setPromotion(TestData testData) {
         log.info("Setting Promotion Code");
         if (!testData.getPromotion().isEmpty()) {
-            new ElementHelper(driver).waitForElementToBeClickable(promotionLink);
+            elementHelper.waitForElementToBeClickable(promotionLink);
             promotionLink.click();
-            new ElementHelper(driver).waitForElementToBeClickable(promotionInput);
+            elementHelper.waitForElementToBeClickable(promotionInput);
             promotionInput.sendKeys(testData.getPromotion().trim());
         }
     }
 
     public LoginPage goToLoginPage() {
         log.info("Going Into Login Page");
-        new ElementHelper(driver).waitForElementToBeClickable(loginButton);
+        elementHelper.waitForElementToBeClickable(loginButton);
         loginButton.click();
-        new ElementHelper(driver).waitForFrameToBeAvailableAndSwitchToIt("ifrmLogin");
+        elementHelper.waitForFrameToBeAvailableAndSwitchToIt("ifrmLogin");
         return new LoginPage(driver);
     }
 
     public SelectionPage doSearch() {
         log.info("Search Interaction Complete. Searching flight now...");
-        new ElementHelper(driver).waitForElementToBeClickable(buttonSearch);
+        elementHelper.waitForElementToBeClickable(buttonSearch);
         buttonSearch.click();
         return new SelectionPage(driver);
     }

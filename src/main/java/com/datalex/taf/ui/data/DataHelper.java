@@ -1,6 +1,6 @@
 package com.datalex.taf.ui.data;
 
-import com.datalex.taf.core.loggers.TAFLogger;
+import lombok.extern.log4j.Log4j2;
 
 import java.io.IOException;
 import java.nio.charset.StandardCharsets;
@@ -14,8 +14,12 @@ import java.util.stream.Stream;
  *
  * @author Aleksandar Vulovic
  */
+@Log4j2
 public class DataHelper {
 
+    /**
+     * Private constructor
+     */
     private DataHelper() {
         throw new UnsupportedOperationException();
     }
@@ -28,15 +32,16 @@ public class DataHelper {
      * @throws IOException if error occurs
      */
     public static List<Map<String, String>> readDataFromCSVFile(String csvFile) throws IOException {
+        String renamedCSVFile = csvFile;
         if (csvFile.endsWith(".csv")) {
-            csvFile = csvFile.replace(".csv", "");
+            renamedCSVFile = csvFile.replace(".csv", "");
         }
         List<List<String>> listOfLines = new ArrayList<>();
         List<String> keys;
         Map<String, String> data = new LinkedHashMap<>();
         List<Map<String, String>> allData = new ArrayList<>();
 
-        try (Stream<String> lines = Files.lines(Paths.get("./src/test/resources/Data/" + csvFile + ".csv"), StandardCharsets.UTF_8)) {
+        try (Stream<String> lines = Files.lines(Paths.get("./src/test/resources/Data/" + renamedCSVFile + ".csv"), StandardCharsets.UTF_8)) {
             for (String line : (Iterable<String>) lines::iterator) {
                 listOfLines.add(Arrays.asList(line.split(",")));
             }
@@ -48,9 +53,10 @@ public class DataHelper {
                 allData.add(new HashMap<>(data));
                 data.clear();
             }
-        } finally {
-            return allData;
+        } catch (Exception e) {
+            log.warn(e);
         }
+        return allData;
     }
 
     /**
@@ -170,7 +176,7 @@ public class DataHelper {
                         testRow.setPromotion(entry.getValue());
                         break;
                     default:
-                        TAFLogger.info("Unsupported field in test data; field name:" + entry.getKey() + " value:" + entry.getValue());
+                        log.warn("Unsupported field in test data; field name:" + entry.getKey() + " value:" + entry.getValue());
                 }
             }
             testData.add(testRow);

@@ -1,8 +1,8 @@
 package com.datalex.taf.ui.data;
 
-import com.datalex.taf.core.loggers.TAFLogger;
 import lombok.Data;
-import org.apache.commons.lang.builder.ToStringBuilder;
+import lombok.ToString;
+import lombok.extern.log4j.Log4j2;
 
 /**
  * TestData class
@@ -10,6 +10,8 @@ import org.apache.commons.lang.builder.ToStringBuilder;
  * @author Aleksandar Vulovic
  */
 @Data
+@ToString
+@Log4j2
 public class TestData {
     private String testCaseName;
     private String tripType;
@@ -47,48 +49,10 @@ public class TestData {
     private String promotion;
     private String flightDates;
 
-    @Override
-    public String toString() {
-        return new ToStringBuilder(this)
-                .append("testCaseName", testCaseName)
-                .append("tripType", tripType)
-                .append("outboundPOS", outboundPOS)
-                .append("inputFrom", inputFrom)
-                .append("inputTo", inputTo)
-                .append("departOn", departOn)
-                .append("returnOn", returnOn)
-                .append("fromMC1", fromMC1)
-                .append("toMC1", toMC1)
-                .append("fromMC2", fromMC2)
-                .append("toMC2", toMC2)
-                .append("fromMC3", fromMC3)
-                .append("toMC3", toMC3)
-                .append("departOnMC3", departOnMC3)
-                .append("adt", adt)
-                .append("chd", chd)
-                .append("inf", inf)
-                .append("cabinClass", cabinClass)
-                .append("fareFamily", fareFamily)
-                .append("insuranceSummaryPage", insuranceSummaryPage)
-                .append("baggage", baggage)
-                .append("delayedPayment", delayedPayment)
-                .append("meals", meals)
-                .append("seats", seats)
-                .append("pwd", pwd)
-                .append("paymentType", paymentType)
-                .append("loopProfile", loopProfile)
-                .append("frequentFlierProgram", frequentFlierProgram)
-                .append("age", age)
-                .append("insuranceEconomyInformationPage", insuranceEconomyInformationPage)
-                .append("baggageEconomyInformationPage", baggageEconomyInformationPage)
-                .append("email", email)
-                .append("password", password)
-                .append("promotion", promotion)
-                .append("flightDates", flightDates)
-                .toString();
-    }
-
+    /**
+     * Method to log TestData
+     */
     public void printTestData() {
-        TAFLogger.info(this.toString());
+        log.info(this.toString());
     }
 }

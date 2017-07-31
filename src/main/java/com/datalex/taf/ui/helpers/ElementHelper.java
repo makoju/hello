@@ -16,7 +16,6 @@ import java.util.List;
  */
 @Log4j2
 public class ElementHelper {
-
     private WebDriverWait wait;
 
     /**
@@ -28,7 +27,7 @@ public class ElementHelper {
     /**
      * Constructor for methods that are using WebDriverWait
      *
-     * @param driver
+     * @param driver WebDriver
      */
     public ElementHelper(WebDriver driver) {
         this.wait = new WebDriverWait(driver, 30);
@@ -149,7 +148,7 @@ public class ElementHelper {
     }
 
     /**
-     * Method to get number of elements from List<WebElement>
+     * Method to get number of elements from WebElement List
      *
      * @param elements WebElement List
      * @return number of elements
@@ -261,7 +260,7 @@ public class ElementHelper {
     /**
      * Wait for presence of element located on page
      *
-     * @param element
+     * @param element WebElement
      */
     public void waitForPresenceOfElementLocated(By element) {
         wait.until(ExpectedConditions.presenceOfElementLocated(element));
@@ -284,6 +283,7 @@ public class ElementHelper {
      * driver.executeScript("window.scrollBy(0,150)");
      * driver.executeScript("document.getElementById('" + elementId + "').value").toString();
      *
+     * @param  driver Webdriver
      * @param scriptToRun script
      * @return JavaScript object
      */

@@ -17,6 +17,7 @@ import org.openqa.selenium.support.PageFactory;
 @Log4j2
 public class SelectionPage implements ISelectionPage {
     private WebDriver driver;
+    private ElementHelper elementHelper;
 
     @FindBy(id = "pgButtonNext")
     public WebElement buttonSelection;
@@ -24,22 +25,23 @@ public class SelectionPage implements ISelectionPage {
     public SelectionPage(WebDriver driver) {
         log.info("Initiating Selection Page");
         this.driver = driver;
-        new ElementHelper(driver).waitForPresenceOfElementLocated(By.id("pgFlightSelection"));
-        new ElementHelper(driver).waitForElementToBeClickable(By.id("pgButtonNext"));
+        elementHelper = new ElementHelper(driver);
+        elementHelper.waitForPresenceOfElementLocated(By.id("pgFlightSelection"));
+        elementHelper.waitForElementToBeClickable(By.id("pgButtonNext"));
         PageFactory.initElements(driver, this);
     }
 
     public void selectOutboundFareFamily(String fareFamily) {
         log.info("Selecting Outbound Fare Family");
-        new ElementHelper(driver).waitForElementDisplayed(getSelectFlightRadioLocator(getFFAlias(fareFamily), 0));
-        new ElementHelper(driver).waitForElementToBeClickable(getSelectFlightRadioLocator(getFFAlias(fareFamily), 0));
+        elementHelper.waitForElementDisplayed(getSelectFlightRadioLocator(getFFAlias(fareFamily), 0));
+        elementHelper.waitForElementToBeClickable(getSelectFlightRadioLocator(getFFAlias(fareFamily), 0));
         getSelectFlightRadioLocator(getFFAlias(fareFamily), 0).click();
     }
 
     public void selectInboundFareFamily(String fareFamily) {
         log.info("Selecting Inbound Fare Family");
-        new ElementHelper(driver).waitForElementDisplayed(getSelectFlightRadioLocator(getFFAlias(fareFamily), 1));
-        new ElementHelper(driver).waitForElementToBeClickable(getSelectFlightRadioLocator(getFFAlias(fareFamily), 1));
+        elementHelper.waitForElementDisplayed(getSelectFlightRadioLocator(getFFAlias(fareFamily), 1));
+        elementHelper.waitForElementToBeClickable(getSelectFlightRadioLocator(getFFAlias(fareFamily), 1));
         getSelectFlightRadioLocator(getFFAlias(fareFamily), 1).click();
     }
 
@@ -72,7 +74,7 @@ public class SelectionPage implements ISelectionPage {
 
     public SummaryPage doSelection() {
         log.info("Flight Selection activity completed. Proceeding onwards...");
-        new ElementHelper(driver).waitForElementToBeClickable(buttonSelection);
+        elementHelper.waitForElementToBeClickable(buttonSelection);
         buttonSelection.click();
         return new SummaryPage(driver);
     }

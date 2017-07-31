@@ -17,6 +17,8 @@ import java.io.File;
 import java.io.IOException;
 import java.net.URL;
 
+import static com.datalex.taf.ui.base.constants.DriverConstants.*;
+
 /**
  * TAFSelenium class
  *
@@ -24,7 +26,6 @@ import java.net.URL;
  */
 @Log4j2
 public class TAFSelenium {
-
     private static ThreadLocal<RemoteWebDriver> mDriver = new ThreadLocal<>();
     private static DesiredCapabilities capability;
 
@@ -42,7 +43,7 @@ public class TAFSelenium {
      * @throws TAFSeleniumException if taf.properties browserType field is empty
      * @throws IOException          if reading from taf.properties fails
      */
-    public static void initDriver() throws TAFSeleniumException, IOException {
+    public static void initDriver() throws IOException {
         LoadProperties.propertyLoader();
         String browserName = TAFProperties.getBrowserType().toUpperCase();
         URL driverURL = new URL(TAFProperties.getGridHost() + ":" + TAFProperties.getGridPort() + "/wd/hub");
@@ -87,12 +88,12 @@ public class TAFSelenium {
     private static void setFirefoxBrowser() {
         File geckoDriver;
         if (OSDetection.isWindows()) {
-            geckoDriver = new File("C:\\drivers\\geckodriver.exe");
+            geckoDriver = new File(GECKO_DRIVER_WINDOWS_PATH);
         } else {
-            geckoDriver = new File("/home/pstuser/drivers/geckodriver");
+            geckoDriver = new File(GECKO_DRIVER_LINUX_PATH);
         }
 
-        System.setProperty("webdriver.gecko.driver", geckoDriver.getAbsolutePath());
+        System.setProperty(GECKO_DRIVER_SYSTEM_PROPERTY, geckoDriver.getAbsolutePath());
         capability = DesiredCapabilities.firefox();
         capability.setBrowserName("firefox");
         capability.setPlatform(Platform.ANY);
@@ -105,11 +106,11 @@ public class TAFSelenium {
      */
     private static void setChromeBrowser() {
         if (OSDetection.isWindows()) {
-            final File file = new File("C:\\drivers\\chromedriver.exe");
-            System.setProperty("webdriver.chrome.driver", file.getAbsolutePath());
+            final File file = new File(CHROME_DRIVER_WINDOWS_PATH);
+            System.setProperty(CHROME_DRIVER_SYSTEM_PROPERTY, file.getAbsolutePath());
         } else if (OSDetection.isUnix()) {
-            final File file = new File("/home/pstuser/drivers/chromedriver_linux64");
-            System.setProperty("webdriver.chrome.driver", file.getAbsolutePath());
+            final File file = new File(CHROME_DRIVER_LINUX_PATH);
+            System.setProperty(CHROME_DRIVER_SYSTEM_PROPERTY, file.getAbsolutePath());
         }
         capability = DesiredCapabilities.chrome();
         capability.setJavascriptEnabled(true);
@@ -127,8 +128,8 @@ public class TAFSelenium {
      */
     private static void setEDGEBrowser() throws TAFSeleniumException {
         if (OSDetection.isWindows()) {
-            final File file = new File("C:\\drivers\\MicrosoftWebDriver.exe");
-            System.setProperty("webdriver.edge.driver", file.getAbsolutePath());
+            final File file = new File(MS_DRIVER_WINDOWS_PATH);
+            System.setProperty(EDGE_DRIVER_SYSTEM_PROPERTY, file.getAbsolutePath());
         } else {
             throw new TAFSeleniumException("Not a windows machine. Please start up the the driver in selenium server");
         }
@@ -143,8 +144,8 @@ public class TAFSelenium {
      */
     private static void setIEBrowser() throws TAFSeleniumException {
         if (OSDetection.isWindows()) {
-            final File file = new File("C:\\drivers\\IEDriverServer.exe");
-            System.setProperty("webdriver.ie.driver", file.getAbsolutePath());
+            final File file = new File(IE_DRIVER_WINDOWS_PATH);
+            System.setProperty(IE_DRIVER_SYSTEM_PROPERTY, file.getAbsolutePath());
         } else {
             throw new TAFSeleniumException("Not a windows machine. Please start up the the driver in selenium server");
         }

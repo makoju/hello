@@ -166,7 +166,7 @@ public final class SettingsConstants {
     /**
      * Customers
      */
-    public static final int[] CUSTOMERS = {PRODUCT_CUST, FRONTIER_CUST, COPA_CUST, PAL_CUST, CHINA_CUST,
+    protected static final int[] CUSTOMERS = {PRODUCT_CUST, FRONTIER_CUST, COPA_CUST, PAL_CUST, CHINA_CUST,
             SPAIN_CUST, STA_GLOBAL_CUST, MALTA_CUST, SITA_CUST, MAS_CUST, WJA_CUST,
             FJI_CUST, GIA_CUST, SAA_CUST, OMA_CUST, MPH_CUST, AIC_CUST, VAU_CUST,
             HPT_CUST, ABS_CUST, VIR_CUST, BEL_CUST, JBU_CUST, PCI_SYSTEM_TEST,
@@ -306,4 +306,10 @@ public final class SettingsConstants {
      * BlackOut Calendar
      */
     public static final String BLACKOUT_CALENDAR = "B";
+
+    /**
+     * Private constructor
+     */
+    private SettingsConstants() {
+    }
 }
