@@ -16,8 +16,7 @@ import org.testng.annotations.AfterMethod;
 import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
 
-import static com.datalex.taf.ui.data.DataHelper.convertDataToObject;
-import static com.datalex.taf.ui.data.DataHelper.readDataFromCSVFile;
+import static com.datalex.taf.ui.data.DataHelper.mapDataFromCSVToObject;
 
 /**
  * BRU PageObject POC Test class
@@ -36,7 +35,7 @@ public class BEL_PO_POC {
 
     @DataProvider(name = "Data", parallel = false)
     public Object[][] data() throws Exception {
-        return convertDataToObject(readDataFromCSVFile("Smoke"));
+        return mapDataFromCSVToObject("Smoke");
     }
 
     @Test(dataProvider = "Data", description = "POC Test example")

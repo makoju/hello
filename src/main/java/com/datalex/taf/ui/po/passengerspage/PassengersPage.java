@@ -72,20 +72,24 @@ public class PassengersPage implements IPassengersPage {
     public void setFrequentFlierProgram(TestData testData, int passengerNumber) {
         WebElement loyalty = driver.findElement(By.id("travellersInfo[" + passengerNumber + "].loyaltyMemberships[0]"));
         WebElement loyaltyNumber = driver.findElement(By.id("travellersInfo[" + passengerNumber + "].loyaltyNumbers[0]"));
-        switch (testData.getFrequentFlierProgram()) {
-            case "Agean":
-                new ElementHelper().selectOptionByValue(loyalty, "A3");
-                loyaltyNumber.sendKeys("992003004357384");
-                break;
-            case "Miles and More":
-                new ElementHelper().selectOptionByValue(loyalty, "LH");
-                loyaltyNumber.sendKeys("992003004357384");
-                break;
-            case "LOOP":
-                new ElementHelper().selectOptionByValue(loyalty, "SN");
-                break;
-            default:
-                TAFLogger.info("invalid frequent flier program");
+        if (testData.getFrequentFlierProgram() == null) {
+            log.warn("FrequentFlierProgram is null");
+        } else {
+            switch (testData.getFrequentFlierProgram()) {
+                case "Agean":
+                    new ElementHelper().selectOptionByValue(loyalty, "A3");
+                    loyaltyNumber.sendKeys("992003004357384");
+                    break;
+                case "Miles and More":
+                    new ElementHelper().selectOptionByValue(loyalty, "LH");
+                    loyaltyNumber.sendKeys("992003004357384");
+                    break;
+                case "LOOP":
+                    new ElementHelper().selectOptionByValue(loyalty, "SN");
+                    break;
+                default:
+                    TAFLogger.info("invalid frequent flier program");
+            }
         }
     }
 

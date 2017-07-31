@@ -211,7 +211,7 @@ public class SearchPage implements ISearchPage {
 
     public void setPromotion(TestData testData) {
         log.info("Setting Promotion Code");
-        if (!testData.getPromotion().isEmpty()) {
+        if (testData.getPromotion() != null) {
             elementHelper.waitForElementToBeClickable(promotionLink);
             promotionLink.click();
             elementHelper.waitForElementToBeClickable(promotionInput);
