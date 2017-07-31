@@ -30,7 +30,7 @@ public class ElementHelper {
      * @param driver WebDriver
      */
     public ElementHelper(WebDriver driver) {
-        this.wait = new WebDriverWait(driver, 30);
+        this.wait = new WebDriverWait(driver, 120);
     }
 
     /**
