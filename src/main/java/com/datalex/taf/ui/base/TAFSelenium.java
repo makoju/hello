@@ -32,8 +32,7 @@ import static com.datalex.taf.ui.base.constants.DriverConstants.*;
  */
 @Log4j2
 public class TAFSelenium {
-    private static ThreadLocal<RemoteWebDriver> remoteDriver = new ThreadLocal<>();
-    private static WebDriver localDriver;
+    private static ThreadLocal<WebDriver> driver = new ThreadLocal<>();
     private static DesiredCapabilities capability;
     private static final String RUN_MODE_LOCAL = "local";
 
@@ -73,15 +72,12 @@ public class TAFSelenium {
                 throw new TAFSeleniumException("Choose browserType in taf.properties file!");
         }
 
-        if (RUN_MODE_LOCAL.equalsIgnoreCase(TAFProperties.getSeleniumRunModeValue())) {
-            localDriver.manage().deleteAllCookies();
-            //localDriver.manage().window().maximize();
-        } else {
-            RemoteWebDriver driver = new RemoteWebDriver(driverURL, capability);
-            remoteDriver.set(driver);
-            remoteDriver.get().manage().deleteAllCookies();
-            remoteDriver.get().manage().window().maximize();
+        if (!RUN_MODE_LOCAL.equalsIgnoreCase(TAFProperties.getSeleniumRunModeValue())) {
+            TAFSelenium.driver.set(new RemoteWebDriver(driverURL, capability));
         }
+        driver.get().manage().deleteAllCookies();
+        //FIXME: to be enabled after fix of FF driver issue
+        //driver.manage().window().maximize();
         log.info("TAFSelenium initialized!");
     }
 
@@ -93,9 +89,9 @@ public class TAFSelenium {
      */
     public static WebDriver getDriver() {
         if (RUN_MODE_LOCAL.equalsIgnoreCase(TAFProperties.getSeleniumRunModeValue())) {
-            return localDriver;
+            return driver.get();
         }
-        return remoteDriver.get();
+        return driver.get();
     }
 
     /**
@@ -116,7 +112,7 @@ public class TAFSelenium {
         capability.setJavascriptEnabled(true);
 
         if (RUN_MODE_LOCAL.equalsIgnoreCase(TAFProperties.getSeleniumRunModeValue())) {
-            localDriver = new FirefoxDriver(capability);
+            driver.set(new FirefoxDriver(capability));
         }
     }
 
@@ -140,7 +136,7 @@ public class TAFSelenium {
         capability.setCapability(ChromeOptions.CAPABILITY, options);
 
         if (RUN_MODE_LOCAL.equalsIgnoreCase(TAFProperties.getSeleniumRunModeValue())) {
-            localDriver = new ChromeDriver(capability);
+            driver.set(new ChromeDriver(capability));
         }
     }
 
@@ -160,7 +156,7 @@ public class TAFSelenium {
         capability.setJavascriptEnabled(true);
 
         if (RUN_MODE_LOCAL.equalsIgnoreCase(TAFProperties.getSeleniumRunModeValue())) {
-            localDriver = new EdgeDriver(capability);
+            driver.set(new EdgeDriver(capability));
         }
     }
 
@@ -181,7 +177,7 @@ public class TAFSelenium {
         capability.setCapability(InternetExplorerDriver.INTRODUCE_FLAKINESS_BY_IGNORING_SECURITY_DOMAINS, true);
 
         if (RUN_MODE_LOCAL.equalsIgnoreCase(TAFProperties.getSeleniumRunModeValue())) {
-            localDriver = new InternetExplorerDriver(capability);
+            driver.set(new InternetExplorerDriver(capability));
         }
     }
 }
