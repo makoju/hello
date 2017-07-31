@@ -1,7 +1,10 @@
 package com.datalex.taf.ui.helpers;
 
 import lombok.extern.log4j.Log4j2;
-import org.openqa.selenium.*;
+import org.openqa.selenium.By;
+import org.openqa.selenium.JavascriptExecutor;
+import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.Select;
 import org.openqa.selenium.support.ui.WebDriverWait;
@@ -31,6 +34,16 @@ public class ElementHelper {
      */
     public ElementHelper(WebDriver driver) {
         this.wait = new WebDriverWait(driver, 120);
+    }
+
+    /**
+     * Constructor for methods that are using WebDriverWait with dynamic wait time
+     *
+     * @param driver   WebDriver
+     * @param waitTime wait time in seconds
+     */
+    public ElementHelper(WebDriver driver, int waitTime) {
+        this.wait = new WebDriverWait(driver, waitTime);
     }
 
     /**
@@ -283,7 +296,7 @@ public class ElementHelper {
      * driver.executeScript("window.scrollBy(0,150)");
      * driver.executeScript("document.getElementById('" + elementId + "').value").toString();
      *
-     * @param  driver Webdriver
+     * @param driver      Webdriver
      * @param scriptToRun script
      * @return JavaScript object
      */
