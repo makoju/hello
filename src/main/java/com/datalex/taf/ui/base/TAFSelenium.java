@@ -77,7 +77,8 @@ public class TAFSelenium {
         }
         driver.get().manage().deleteAllCookies();
         //FIXME: to be enabled after fix of FF driver issue
-        //driver.manage().window().maximize();
+        if (!"FIREFOX".equals(browserName))
+            driver.get().manage().window().maximize();
         log.info("TAFSelenium initialized!");
     }
 
@@ -88,9 +89,6 @@ public class TAFSelenium {
      * @return WebDriver
      */
     public static WebDriver getDriver() {
-        if (RUN_MODE_LOCAL.equalsIgnoreCase(TAFProperties.getSeleniumRunModeValue())) {
-            return driver.get();
-        }
         return driver.get();
     }
 
