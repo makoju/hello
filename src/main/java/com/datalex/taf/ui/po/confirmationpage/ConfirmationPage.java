@@ -35,7 +35,7 @@ public class ConfirmationPage implements IConfirmationPage {
 
     public String getPNR() throws IOException {
         elementHelper.waitForElementDisplayed(confirmationNumber);
-        String pnr = confirmationNumber.getText();
+        String pnr = confirmationNumber.getText().trim();
         new Utils().savePNRinCSV(pnr);
         return pnr;
     }
