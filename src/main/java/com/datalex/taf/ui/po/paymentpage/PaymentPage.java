@@ -2,6 +2,8 @@ package com.datalex.taf.ui.po.paymentpage;
 
 import com.datalex.taf.ui.data.TestData;
 import com.datalex.taf.ui.helpers.ElementHelper;
+import com.datalex.taf.ui.helpers.Utils;
+import com.datalex.taf.ui.po.confirmationpage.ConfirmationPage;
 import com.datalex.taf.ui.po.exceptions.PaymentPageException;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
@@ -50,6 +52,10 @@ public class PaymentPage {
     public void payWithPayPal(TestData testData) {
         elementHelper.waitForElementToBeClickable(payPal);
         payPal.click();
+        acceptTermsAndConditionsAndPay();
+        new Utils().waitTime(10000);
+        elementHelper.waitForPresenceOfElementLocated(By.id("btn_Accept"));
+        driver.findElement(By.id("btn_Accept")).click();
     }
 
     public void payWithOnlineBanking(TestData testData) {
@@ -65,7 +71,7 @@ public class PaymentPage {
     public void payWithDebitCards(TestData testData) {
     }
 
-    public void populatePaymentPage(TestData testData) throws PaymentPageException {
+    public ConfirmationPage populatePaymentPage(TestData testData) throws PaymentPageException {
         switch (testData.getPaymentType()) {
             case "VISA":
             case "MASTERCARD":
@@ -87,6 +93,10 @@ public class PaymentPage {
             default:
                 throw new PaymentPageException("Payment method not specified!");
         }
+        return new ConfirmationPage(driver);
+    }
+
+    public void acceptTermsAndConditionsAndPay() {
         elementHelper.waitForElementToBeClickable(acceptTermsAndConditionsCheckBox);
         acceptTermsAndConditionsCheckBox.click();
         elementHelper.waitForElementToBeClickable(confirmAndPay);

@@ -1,6 +1,10 @@
 package com.datalex.taf.ui.helpers;
 
 import lombok.extern.log4j.Log4j2;
+import org.apache.commons.io.FileUtils;
+
+import java.io.File;
+import java.io.IOException;
 
 /**
  * Utils Class
@@ -32,6 +36,22 @@ public class Utils {
     }
 
     public int randBetween(int start, int end) {
-        return start + (int)Math.round(Math.random() * (end - start));
+        return start + (int) Math.round(Math.random() * (end - start));
+    }
+
+    /**
+     * Append PNR number in CSV file
+     *
+     * @param pnr PNR
+     * @throws IOException if error occurs
+     */
+    public void savePNRinCSV(String pnr) throws IOException {
+        File file = new File("./work/reservationNumbers.csv");
+        try {
+            FileUtils.writeStringToFile(file, "\n" + pnr, true);
+        } catch (IOException e) {
+            log.error(e);
+            throw new IOException(e);
+        }
     }
 }

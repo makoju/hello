@@ -3,6 +3,7 @@ package com.datalex.taf.ui.smoke;
 import com.datalex.taf.ui.base.TAFSelenium;
 import com.datalex.taf.ui.data.TestData;
 import com.datalex.taf.ui.helpers.ScreenshotHelper;
+import com.datalex.taf.ui.po.confirmationpage.ConfirmationPage;
 import com.datalex.taf.ui.po.loginpage.LoginPage;
 import com.datalex.taf.ui.po.passengerspage.PassengersPage;
 import com.datalex.taf.ui.po.paymentpage.PaymentPage;
@@ -11,6 +12,7 @@ import com.datalex.taf.ui.po.seatspage.SeatsPage;
 import com.datalex.taf.ui.po.selectionpage.SelectionPage;
 import com.datalex.taf.ui.po.summarypage.SummaryPage;
 import org.openqa.selenium.WebDriver;
+import org.testng.Assert;
 import org.testng.ITestResult;
 import org.testng.annotations.AfterMethod;
 import org.testng.annotations.DataProvider;
@@ -61,6 +63,7 @@ public class BEL_PO_POC {
         SeatsPage seatsPage = passengersPage.goToSeatSelect();
         PaymentPage paymentPage = seatsPage.skipSeatSelection(testData);
         //Payment page actions
-        paymentPage.populatePaymentPage(testData);
+        ConfirmationPage confirmationPage = paymentPage.populatePaymentPage(testData);
+        Assert.assertNotNull(confirmationPage.getPNR());
     }
 }
