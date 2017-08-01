@@ -5,6 +5,8 @@ import com.datalex.taf.ui.helpers.ElementHelper;
 import com.datalex.taf.ui.helpers.Utils;
 import com.datalex.taf.ui.po.confirmationpage.ConfirmationPage;
 import com.datalex.taf.ui.po.exceptions.PaymentPageException;
+import lombok.extern.java.Log;
+import lombok.extern.log4j.Log4j2;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
@@ -16,6 +18,7 @@ import org.openqa.selenium.support.PageFactory;
  *
  * @author Aleksandar Vulovic
  */
+@Log4j2
 public class PaymentPage {
     private WebDriver driver;
     private ElementHelper elementHelper;
@@ -42,6 +45,7 @@ public class PaymentPage {
     public WebElement onlineBankDropDown;
 
     public PaymentPage(WebDriver driver) {
+        log.info("Initiating Payment page...");
         this.driver = driver;
         elementHelper = new ElementHelper(driver);
         elementHelper.waitForPresenceOfElementLocated(By.id("pgPayment"));
@@ -93,6 +97,7 @@ public class PaymentPage {
             default:
                 throw new PaymentPageException("Payment method not specified!");
         }
+        log.info("Payment done! Going to confirmation page...");
         return new ConfirmationPage(driver);
     }
 
