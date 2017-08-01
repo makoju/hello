@@ -95,14 +95,13 @@ public class PassengersPage implements IPassengersPage {
 
 
     public void populateContactDetails(TestData testData) {
-        //Faker faker = new Faker(new Locale("{en-US}"));
-        Faker faker = new Faker();
+        //Faker faker = new Faker(new Locale("en"));
         elementHelper.waitForElementDisplayed(travellerEmailAddress);
         travellerEmailAddress.sendKeys(testData.getEmail());
         elementHelper.waitForElementDisplayed(travellerConfirmEmail);
         travellerConfirmEmail.sendKeys(testData.getEmail());
         elementHelper.waitForElementDisplayed(travellerPhoneNumber);
-        travellerPhoneNumber.sendKeys(faker.phoneNumber().cellPhone());
+        travellerPhoneNumber.sendKeys("4564564564");
         new ElementHelper().selectOptionByValue(travellerCountryCode, "US");
     }
 
