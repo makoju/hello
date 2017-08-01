@@ -5,7 +5,6 @@ import com.datalex.taf.ui.helpers.ElementHelper;
 import com.datalex.taf.ui.helpers.Utils;
 import com.datalex.taf.ui.po.confirmationpage.ConfirmationPage;
 import com.datalex.taf.ui.po.exceptions.PaymentPageException;
-import lombok.extern.java.Log;
 import lombok.extern.log4j.Log4j2;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
@@ -53,7 +52,7 @@ public class PaymentPage {
         PageFactory.initElements(driver, this);
     }
 
-    public void payWithPayPal(TestData testData) {
+    public void payWithPayPal() {
         elementHelper.waitForElementToBeClickable(payPal);
         payPal.click();
         acceptTermsAndConditionsAndPay();
@@ -65,7 +64,7 @@ public class PaymentPage {
     public void payWithOnlineBanking(TestData testData) {
         elementHelper.waitForElementToBeClickable(onlineBank);
         onlineBank.click();
-        new ElementHelper().selectOptionByValue(onlineBankDropDown, testData.getPaymentType());
+        elementHelper.selectOptionByValue(onlineBankDropDown, testData.getPaymentType());
     }
 
     public void payWithCreditCards(TestData testData) {
@@ -85,7 +84,7 @@ public class PaymentPage {
             case "MAESTRO":
             case "UATP":
             case "PAYPAL":
-                payWithPayPal(testData);
+                payWithPayPal();
                 break;
             case "BANCONTACT":
             case "SOFORT":

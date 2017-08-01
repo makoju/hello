@@ -35,13 +35,13 @@ public class BEL_PO_POC {
         TAFSelenium.getDriver().quit();
     }
 
-    @DataProvider(name = "Data", parallel = false)
+    @DataProvider(name = "Data", parallel = true)
     public Object[][] data() throws Exception {
         return mapDataFromCSVToObject("Smoke");
     }
 
-    @Test(dataProvider = "Data", description = "POC Test example")
-    public void searchPageTest(TestData testData) throws Exception {
+    @Test(dataProvider = "Data", description = "Basic End to End booking flow")
+    public void basicEndToEndBookingFlow(TestData testData) throws Exception {
         TAFSelenium.initDriver();
         WebDriver driver = TAFSelenium.getDriver();
         //Login page actions
@@ -51,9 +51,7 @@ public class BEL_PO_POC {
         //Search page actions
         SelectionPage selectionPage = searchPage.doFlightSearch(testData);
         //Selection page actions
-        selectionPage.selectOutboundFareFamily(testData.getFareFamily());
-        if (("RT").equalsIgnoreCase(testData.getTripType()))
-            selectionPage.selectInboundFareFamily(testData.getFareFamily());
+        selectionPage.selectFareFamily(testData);
         //Summary page actions
         SummaryPage summaryPage = selectionPage.doSelection();
         //Passengers page actions
@@ -64,6 +62,7 @@ public class BEL_PO_POC {
         PaymentPage paymentPage = seatsPage.skipSeatSelection(testData);
         //Payment page actions
         ConfirmationPage confirmationPage = paymentPage.populatePaymentPage(testData);
+        //Assert PNR is present
         Assert.assertNotNull(confirmationPage.getPNR());
     }
 }

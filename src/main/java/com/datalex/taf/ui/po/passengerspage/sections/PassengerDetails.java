@@ -1,5 +1,6 @@
 package com.datalex.taf.ui.po.passengerspage.sections;
 
+import com.datalex.taf.ui.po.exceptions.PassengerPageException;
 import com.datalex.taf.ui.travellers.Adult;
 import com.datalex.taf.ui.travellers.Child;
 import com.datalex.taf.ui.travellers.Infant;
@@ -32,7 +33,7 @@ public class PassengerDetails {
                 break;
             default:
                 log.error("PaxType is Empty or not Recognized. PaxType{" + paxType + "}");
-                throw new Exception();
+                throw new PassengerPageException("Pax type not recognized!");
         }
     }
 }

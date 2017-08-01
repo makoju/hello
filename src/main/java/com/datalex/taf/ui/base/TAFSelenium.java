@@ -79,7 +79,7 @@ public class TAFSelenium {
         //FIXME: to be enabled after fix of FF driver issue
         if (!"FIREFOX".equals(browserName))
             driver.get().manage().window().maximize();
-        log.info("TAFSelenium initialized!");
+        log.info("TAFSelenium initialized! Browser: " + browserName);
     }
 
     /**
