@@ -2,6 +2,7 @@ package com.datalex.taf.ui.po.seatspage;
 
 import com.datalex.taf.ui.data.TestData;
 import com.datalex.taf.ui.helpers.ElementHelper;
+import com.datalex.taf.ui.helpers.Utils;
 import com.datalex.taf.ui.po.paymentpage.PaymentPage;
 import lombok.extern.log4j.Log4j2;
 import org.openqa.selenium.By;
@@ -54,7 +55,8 @@ public class SeatsPage {
             nextFlightBtn.click();
         }
         elementHelper.waitForElementDisplayed(seatSelectionImg);
-        elementHelper.waitForElementDisplayed(continueBtn);
+        new Utils().waitTime(3000);
+        elementHelper.waitForElementToBeClickable(continueBtn);
         continueBtn.click();
         return new PaymentPage(driver);
     }
