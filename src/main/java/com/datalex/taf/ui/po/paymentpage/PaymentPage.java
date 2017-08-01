@@ -50,7 +50,6 @@ public class PaymentPage {
     public void payWithPayPal(TestData testData) {
         elementHelper.waitForElementToBeClickable(payPal);
         payPal.click();
-        confirmAndPay.click();
     }
 
     public void payWithOnlineBanking(TestData testData) {
@@ -90,5 +89,7 @@ public class PaymentPage {
         }
         elementHelper.waitForElementToBeClickable(acceptTermsAndConditionsCheckBox);
         acceptTermsAndConditionsCheckBox.click();
+        elementHelper.waitForElementToBeClickable(confirmAndPay);
+        confirmAndPay.click();
     }
 }
