@@ -13,6 +13,8 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
 
+import java.util.List;
+
 /**
  * Passengers page class
  *
@@ -22,6 +24,8 @@ import org.openqa.selenium.support.PageFactory;
 public class PassengersPage implements IPassengersPage {
     private WebDriver driver;
     private ElementHelper elementHelper;
+    private PassengerDetails passengerDetails;
+    private ContactDetails contactDetails;
 
     @FindBy(id = "pgButtonProceed")
     public WebElement buttonProceed;
@@ -32,20 +36,26 @@ public class PassengersPage implements IPassengersPage {
         elementHelper = new ElementHelper(driver);
         elementHelper.waitForPresenceOfElementLocated(By.id("pgTravellers"));
         elementHelper.waitForElementToBeClickable(By.id("pgButtonProceed"));
+        passengerDetails = new PassengerDetails(driver);
+        contactDetails = new ContactDetails(driver);
         PageFactory.initElements(driver, this);
     }
 
     public void fillPassengersPage(TestData testData) throws Exception {
         log.info("Filling All Passengers Information");
-        PassengerDetails passengerDetails = new PassengerDetails(driver);
+
         for (int i = 0; i <= (getHowManyPassengerSelected() - 1); i++) {
             passengerDetails.fillTravellerInformation(determinePassengerType(i), i);
-            if (driver.findElements(By.id("travellersInfo[" + i + "].loyaltyMemberships[0]")).size() > 0)
+            if (isLoyalty(i))
                 setFrequentFlierProgram(testData, i);
-
         }
         //new EmergencyContactDetails(driver).fillTravellerEmergencyContactInformation(testData);
-        new ContactDetails(driver).populateContactDetails(testData);
+        contactDetails.populateContactDetails(testData);
+    }
+
+    public boolean isLoyalty(int paxNumber) {
+        List<WebElement> loyaltyMemberships = driver.findElements(By.id("travellersInfo[" + paxNumber + "].loyaltyMemberships[0]"));
+        return loyaltyMemberships.size() > 0;
     }
 
     public void setFrequentFlierProgram(TestData testData, int passengerNumber) {
@@ -73,13 +83,15 @@ public class PassengersPage implements IPassengersPage {
     }
 
     public String determinePassengerType(int passengerNumber) {
-        log.debug("Traveller Type is: " + driver.findElement(By.xpath("//input[@id='travellersInfo[" + passengerNumber + "].travellerType']")).getAttribute("value"));
-        return driver.findElement(By.xpath("//input[@id='travellersInfo[" + passengerNumber + "].travellerType']")).getAttribute("value");
+        WebElement travelersInfo = driver.findElement(By.xpath("//input[@id='travellersInfo[" + passengerNumber + "].travellerType']"));
+        log.debug("Traveller Type is: " + travelersInfo.getAttribute("value"));
+        return travelersInfo.getAttribute("value");
     }
 
     public int getHowManyPassengerSelected() {
-        log.debug("Number of Passengers" + driver.findElements(By.xpath("//div[contains(@class,'passengerBlock')]")).size());
-        return driver.findElements(By.xpath("//div[contains(@class,'passengerBlock')]")).size();
+        List<WebElement> passengerBlock = driver.findElements(By.xpath("//div[contains(@class,'passengerBlock')]"));
+        log.debug("Number of Passengers" + passengerBlock.size());
+        return passengerBlock.size();
     }
 
     public SeatsPage goToSeatSelect() {

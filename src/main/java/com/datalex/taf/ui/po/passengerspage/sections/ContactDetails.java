@@ -39,6 +39,6 @@ public class ContactDetails {
         travellerConfirmEmail.sendKeys(testData.getEmail());
         elementHelper.waitForElementDisplayed(travellerPhoneNumber);
         travellerPhoneNumber.sendKeys("4564564564");
-        new ElementHelper().selectOptionByValue(travellerCountryCode, "US");
+        elementHelper.selectOptionByValue(travellerCountryCode, "US");
     }
 }
