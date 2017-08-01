@@ -1,7 +1,10 @@
 package com.datalex.taf.ui.po.seatspage;
 
+import com.datalex.taf.ui.data.TestData;
 import com.datalex.taf.ui.helpers.ElementHelper;
+import com.datalex.taf.ui.helpers.Utils;
 import com.datalex.taf.ui.po.paymentpage.PaymentPage;
+import lombok.extern.log4j.Log4j2;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
@@ -13,12 +16,13 @@ import org.openqa.selenium.support.PageFactory;
  *
  * @author Aleksandar Vulovic
  */
+@Log4j2
 public class SeatsPage {
     private WebDriver driver;
     private ElementHelper elementHelper;
 
-    @FindBy(id = "pgSeatSelection")
-    public WebElement pgSeatSelect;
+    @FindBy(id = "idSeatMapPlaceHolderInner")
+    public WebElement seatSelectionImg;
 
     @FindBy(id = "pgButtonContinue")
     public WebElement nextFlightBtn;
@@ -35,13 +39,8 @@ public class SeatsPage {
     public SeatsPage(WebDriver driver) {
         this.driver = driver;
         elementHelper = new ElementHelper(driver);
-        elementHelper.waitForPresenceOfElementLocated(By.id("pgSeatSelect"));
-        //elementHelper.waitForElementToBeClickable(By.id("pgButtonContinue"));
+        elementHelper.waitForPresenceOfElementLocated(By.id("pgSeatSelection"));
         PageFactory.initElements(driver, this);
-    }
-
-    public void goToNextFlight(){
-        nextFlightBtn.click();
     }
 
     public PaymentPage goToPayment() {
@@ -49,8 +48,16 @@ public class SeatsPage {
         return new PaymentPage(driver);
     }
 
-    public PaymentPage skipSeatSelection() {
-        skipSeatSelectionButton.click();
+    public PaymentPage skipSeatSelection(TestData testData) {
+        if ("RT".equalsIgnoreCase(testData.getTripType())) {
+            elementHelper.waitForElementDisplayed(seatSelectionImg);
+            elementHelper.waitForElementToBeClickable(nextFlightBtn);
+            nextFlightBtn.click();
+        }
+        elementHelper.waitForElementDisplayed(seatSelectionImg);
+        new Utils().waitTime(3000);
+        elementHelper.waitForElementToBeClickable(continueBtn);
+        continueBtn.click();
         return new PaymentPage(driver);
     }
 }
