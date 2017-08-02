@@ -227,7 +227,8 @@ public class SearchPage implements ISearchPage {
     }
 
     public void setPromotion(TestData testData) {
-        if (testData.getPromotion() != null || "MC".equalsIgnoreCase(testData.getTripType())) {
+        if (!"MC".equalsIgnoreCase(testData.getTripType()))
+        if (testData.getPromotion() != null) {
             log.info("Setting Promotion Code");
             elementHelper.waitForElementToBeClickable(promotionLink);
             promotionLink.click();
