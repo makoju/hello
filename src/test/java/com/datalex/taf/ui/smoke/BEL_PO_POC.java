@@ -35,7 +35,7 @@ public class BEL_PO_POC {
         TAFSelenium.getDriver().quit();
     }
 
-    @DataProvider(name = "Data", parallel = true)
+    @DataProvider(name = "Data", parallel = false)
     public Object[][] data() throws Exception {
         return mapDataFromCSVToObject("Smoke");
     }
