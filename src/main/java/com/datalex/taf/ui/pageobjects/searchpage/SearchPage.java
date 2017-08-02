@@ -8,6 +8,7 @@ import com.datalex.taf.ui.pageobjects.exceptions.SearchPageException;
 import com.datalex.taf.ui.pageobjects.loginpage.LoginPage;
 import com.datalex.taf.ui.pageobjects.selectionpage.SelectionPage;
 import lombok.extern.log4j.Log4j2;
+import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
@@ -98,25 +99,25 @@ public class SearchPage implements ISearchPage {
     @FindBy(id = "multiCityOptions[1].originLocationName")
     public WebElement inputFromMC2;
 
-    @FindBy(id = "multiCityOptions[1].originLocationCode:multiCityOptions[0].originLocationName")
+    @FindBy(id = "multiCityOptions[1].originLocationCode:multiCityOptions[1].originLocationName")
     public WebElement inputFromMC2CodeHidden;
 
     @FindBy(id = "multiCityOptions[1].destinationLocationName")
     public WebElement inputToMC2;
 
-    @FindBy(id = "multiCityOptions[1].destinationLocationCode:multiCityOptions[0].destinationLocationName")
+    @FindBy(id = "multiCityOptions[1].destinationLocationCode:multiCityOptions[1].destinationLocationName")
     public WebElement inputToMC2CodeHidden;
 
     @FindBy(id = "multiCityOptions[2].originLocationName")
     public WebElement inputFromMC3;
 
-    @FindBy(id = "multiCityOptions[2].originLocationCode:multiCityOptions[0].originLocationName")
+    @FindBy(id = "multiCityOptions[2].originLocationCode:multiCityOptions[2].originLocationName")
     public WebElement inputFromMC3CodeHidden;
 
     @FindBy(id = "multiCityOptions[2].destinationLocationName")
     public WebElement inputToMC3;
 
-    @FindBy(id = "multiCityOptions[2].destinationLocationCode:multiCityOptions[0].destinationLocationName")
+    @FindBy(id = "multiCityOptions[2].destinationLocationCode:multiCityOptions[2].destinationLocationName")
     public WebElement inputToMC3CodeHidden;
 
     public SearchPage(WebDriver driver) {
@@ -155,6 +156,13 @@ public class SearchPage implements ISearchPage {
         new General().inputDateByCalendar(driver, inputReturnOn, daysFromToday);
     }
 
+    public void inputDepartureDateMC(String daysFromToday, int flightNumber) throws Exception {
+        log.info("Selecting Departure Date for MC");
+        int flightNumberLocator = flightNumber - 1;
+        WebElement mcDepartOn = driver.findElement(By.name("multiCityOptions[" + flightNumberLocator + "].departureDate"));
+        new General().inputDateByCalendar(driver, mcDepartOn, daysFromToday);
+    }
+
     public void chooseLoopPrice(TestData testData) {
         log.info("Choosing Loop Price");
         if ("Signed in".equalsIgnoreCase(testData.getLoopProfile()) && ("Loops".equalsIgnoreCase(testData.getFrequentFlierProgram()))) {
@@ -168,14 +176,17 @@ public class SearchPage implements ISearchPage {
         if (!(testData.getFromMC1().isEmpty() || "null".equals(testData.getFromMC1()))) {
             new General().typeFlight(driver, inputFromMC1CodeHidden, inputFromMC1, testData.getFromMC1(), "");
             new General().typeFlight(driver, inputToMC1CodeHidden, inputToMC1, testData.getToMC1(), "");
+            inputDepartureDateMC(testData.getDepartOn(), 1);
         }
         if (!(testData.getFromMC2().isEmpty() || "null".equals(testData.getFromMC2()))) {
             new General().typeFlight(driver, inputFromMC2CodeHidden, inputFromMC2, testData.getFromMC2(), "");
             new General().typeFlight(driver, inputToMC2CodeHidden, inputToMC2, testData.getToMC2(), "");
+            inputDepartureDateMC(testData.getReturnOn(), 2);
         }
         if (!(testData.getFromMC3().isEmpty() || "null".equals(testData.getFromMC3()))) {
             new General().typeFlight(driver, inputFromMC3CodeHidden, inputFromMC3, testData.getFromMC3(), "");
             new General().typeFlight(driver, inputToMC3CodeHidden, inputToMC3, testData.getToMC3(), "");
+            inputDepartureDateMC(testData.getDepartOnMC3(), 3);
         }
     }
 
@@ -204,18 +215,20 @@ public class SearchPage implements ISearchPage {
     }
 
     public void setFlightSearchTypes(TestData testData) {
-        log.info("Setting Flight Search Type");
-        if ("flexibleDates".equals(testData.getFlightDates())) {
-            flexibleDates.click();
-        }
-        if ("fixedDates".equals(testData.getFlightDates())) {
-            fixedDates.click();
+        if (!"MC".equalsIgnoreCase(testData.getTripType())) {
+            log.info("Setting Flight Search Type");
+            if ("flexibleDates".equals(testData.getFlightDates())) {
+                flexibleDates.click();
+            }
+            if ("fixedDates".equals(testData.getFlightDates())) {
+                fixedDates.click();
+            }
         }
     }
 
     public void setPromotion(TestData testData) {
         log.info("Setting Promotion Code");
-        if (testData.getPromotion() != null) {
+        if (testData.getPromotion() != null || !"MC".equalsIgnoreCase(testData.getTripType())) {
             elementHelper.waitForElementToBeClickable(promotionLink);
             promotionLink.click();
             elementHelper.waitForElementToBeClickable(promotionInput);
@@ -256,7 +269,7 @@ public class SearchPage implements ISearchPage {
         setFlightSearchTypes(testData);
         setPassengers(testData);
         setPromotion(testData);
-        new ElementHelper().selectOptionByText(cabinClass, testData.getCabinClass().trim());
+        elementHelper.selectOptionByText(cabinClass, testData.getCabinClass().trim());
         chooseLoopPrice(testData);
         return doSearch();
     }

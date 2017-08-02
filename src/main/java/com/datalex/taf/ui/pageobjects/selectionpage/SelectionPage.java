@@ -59,15 +59,16 @@ public class SelectionPage implements ISelectionPage {
             case "ECONOMY":
                 return "CODESHAREECONOMY";
             case "BUSINESS":
-                return "CODESHAREBUSINESS";
+            case "BIZZ&CLASS":
+                return "BUSINESS";
             case "CHECK&GO":
             case "BUDGET":
                 return "BUDGET";
             case "COMFORT":
-            case "LIGHTRELAX":
+            case "LIGHT&RELAX":
                 return "COMFORT";
             case "BEST":
-            case "FLEXFAST":
+            case "FLEX&FAST":
                 return "BEST";
             default:
                 return "";

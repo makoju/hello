@@ -1,49 +1,49 @@
-tripType,outboundPOS,inputFrom,inputTo,departOn,returnon,fromMC1,toMC1,fromMC2,toMC2,fromMC3,toMC3,departOnMC3,ADT,CHD,INF,cabinClass,fareFamily,insuranceSummaryPage,baggage,delayedPayment,meals,seats,pwd,paymentType,Loop Profile,frequentFlierProgram,age,insurancEconomynfirmationPage,baggagEconomynfirmationPage,
-OW,BEL,BRU,TLV,62,67,1,,,,,,,1,0,0,Economy,Check&Go,no,no,no,no,Yes,11111,VISA,Signed in,Miles and More,0,Yes,Yes,
-OW,BEL,BRU,NCE,64,69,4,,,,,,,2,1,0,Economy,Light&Relax,Yes,no,no,no,no,11111,VISA,Signed in,Miles and More,3,no,Yes,
-OW,BEL,BRU,YUL,32,76,10,,,,,,,1,1,1,Economy,Economy,no,no,no,LFML,no,11111,ING,Signed out,Miles and More,7,Yes,Yes,
-OW,noN-BEL,LHR,TLV,45,78,11,,,,,,,2,1,0,Economy,Light&Relax,Yes,Yes,no,no,no,11111,DINERS,Signed out,Agean,8,no,no,
-OW,BEL,BRU,TLV,42,80,15,,,,,,,1,0,0,Business,Bizz&Class,Yes,no,no,no,Yes,11111,CBC,Signed out,Miles and More,11,no,Yes,
-OW,BEL,BRU,SFO,79,84,18,,,,,,,3,1,1,Business,Business,Yes,no,no,STML,no,11111,MAESTRO,Signed out,Agean,12,no,no,
-OW,BEL,BRU,YUL,81,85,20,,,,,,,2,1,1,Business,Business,Yes,no,no,no,no,11111,PAYPAL,Signed in,Agean,14,no,no,
-OW,BEL,BRU,TLV,46,66,,,,,,,,1,1,0,Economy,Check&Go,no,no,no,VGML,Yes,11111,VISA,Signed in,Miles and More,16,Yes,Yes,
-OW,BEL,BRU,TLV,41,46,,,,,,,,1,1,0,Economy,Flex&Fast,no,no,no,no,Yes,11111,SOFORT,Signed in,Agean,17,Yes,Yes,
-OW,BEL,BRU,LHR,41,46,,,,,,,,1,0,0,Economy,Check&Go,no,no,no,no,Yes,11111,ING,Signed in,LOOP,18,Yes,Yes,
-OW,BEL,BRU,YVR,41,46,,,,,,,,3,1,1,Economy,Economy,Yes,no,no,no,no,11111,KBC,Signed in,Miles and More,20,no,Yes,
-OW,BEL,BRU,YVR,41,46,,,,,,,,2,1,1,Business,Business,no,Yes,no,no,no,11111,KBC,Signed in,Miles and More,21,Yes,no,
-OW,BEL,BRU,YVR,41,46,,,,,,,,3,1,1,Economy,Economy,no,Yes,no,no,no,11111,CBC,Signed in,LOOP,23,no,no,
-OW,BEL,BRU,DME,41,46,,,,,,,,1,1,1,Economy,Light&Relax,Yes,Yes,no,GFML,no,11111,ING,Signed in,LOOP,29,no,no,
-OW,BEL,BRU,LHR,41,46,,,,,,,,2,1,0,Economy,Flex&Fast,no,Yes,no,no,Yes,11111,PAYPAL,Signed out,Agean,31,Yes,no,
-OW,BEL,BRU,LHR,41,46,,,,,,,,1,1,1,Economy,Flex&Fast,Yes,no,no,no,Yes,11111,SOFORT,Signed out,Miles and More,33,no,Yes,
-OW,BEL,BRU,FCO,41,46,,,,,,,,1,1,0,Economy,Light&Relax,no,no,no,no,no,11111,PAYPAL,Signed in,Miles and More,34,no,no,
-OW,BEL,BRU,DME,41,46,,,,,,,,2,1,1,Economy,Check&Go,no,Yes,no,no,Yes,11111,VISA,Signed in,Agean,39,Yes,no,
-OW,BEL,BRU,NCE,41,46,,,,,,,,1,0,0,Economy,Flex&Fast,no,no,no,no,no,11111,CBC,Signed in,Miles and More,40,Yes,no,
-OW,BEL,BRU,TLV,41,46,,,,,,,,2,1,0,Economy,Light&Relax,no,Yes,no,MOML,Yes,11111,BANCONTACT,Signed in,Miles and More,41,no,no,
-OW,BEL,BRU,SFO,41,46,,,,,,,,2,1,0,Business,Business,no,no,no,NLML,no,11111,KBC,Signed out,Agean,42,no,Yes,
-OW,BEL,BRU,LIS,41,46,,,,,,,,3,1,1,Economy,Check&Go,Yes,Yes,no,no,no,11111,CBC,Signed in,LOOP,43,no,no,
-RT,BEL,BRU,NCE,63,68,3,,,,,,,1,1,1,Economy,Check&Go,no,no,no,no,no,11111,VISA,Signed out,LOOP,2,no,no,
-RT,BEL,BRU,AGP,66,71,6,,,,,,,2,1,1,Economy,Flex&Fast,no,Yes,no,KSML,Yes,11111,VISA,Signed out,LOOP,4,Yes,no,
-RT,noN-BEL,LHR,TLV,58,60,8,,,,,,,1,0,0,Economy,Check&Go,Yes,no,no,no,no,11111,MASTERCARD,Signed in,Agean,6,no,no,
-RT,noN-BEL,LHR,TLV,48,50,12,,,,,,,2,1,1,Economy,Light&Relax,no,no,no,MOML,no,11111,DISCOVER,Signed in,Miles and More,9,no,Yes,
-RT,BEL,BRU,YUL,90,95,22,,,,,,,1,1,1,Economy,Economy,no,Yes,no,no,no,11111,CBC,Signed in,Agean,15,Yes,no,
-RT,BEL,BRU,LHR,41,46,,,,,,,,1,0,0,Economy,Check&Go,no,no,no,no,Yes,11111,PAYPAL,Signed out,LOOP,24,no,Yes,
-RT,BEL,BRU,LHR,41,46,,,,,,,,1,0,0,Economy,Light&Relax,no,Yes,no,DBML,no,11111,MASTERCARD,Signed in,LOOP,25,no,no,
-RT,BEL,BRU,LHR,41,46,,,,,,,,1,0,0,Business,Bizz&Class,Yes,no,no,no,no,11111,KBC,Signed out,LOOP,27,no,no,
-RT,BEL,BRU,TLV,41,46,,,,,,,,2,1,1,Economy,Check&Go,Yes,no,no,no,no,11111,CBC,Signed in,Miles and More,28,no,no,
-RT,BEL,BRU,GVA,41,46,,,,,,,,2,1,0,Business,Bizz&Class,no,no,no,no,no,11111,IDEAL,Signed in,Agean,35,no,no,
-RT,BEL,BRU,BCN,41,46,,,,,,,,1,1,1,Business,Bizz&Class,no,no,no,LCML,Yes,11111,PAYPAL,Signed in,Agean,36,no,no,
-RT,noN-BEL,LHR,TLV,41,46,,,,,,,,1,1,1,Economy,Flex&Fast,no,no,no,no,no,11111,SOFORT,Signed in,Agean,37,no,no,
-RT,noN-BEL,AGP,BRU,41,46,,,,,,,,1,1,1,Economy,Check&Go,no,no,no,no,Yes,11111,DINERS,Signed in,Miles and More,47,Yes,no,
-MC,noN-BEL,LHR,2,62,67,LHR,LAX,LAX,JFK,JFK,BRU,71,1,1,0,Business,Business,Yes,Yes,no,DBML,no,11111,VISA,Signed out,Agean,1,no,no,
-MC,BEL,BRU,7,68,75,BRU,LHR,LHR,FRA,FRA,BRU,81,3,1,1,Business,Business,no,no,no,no,no,11111,MASTERCARD,Signed in,Agean,5,no,Yes,
-MC,noN-BEL,LHR,14,79,86,LHR,BRU,BRU,TLV,TLV,LHR,88,1,0,0,Economy,Economy,no,no,no,no,no,11111,MASTERCARD,Signed out,Miles and More,10,no,no,
-MC,BEL,BRU,19,79,84,BRU,LHR,LHR,FRA,FRA,BRU,91,2,1,0,Economy,Economy,Yes,no,no,VOML,no,11111,KBC,Signed in,LOOP,13,no,no,
-MC,BEL,BRU,LHR,41,46,BRU,LHR,LHR,FRA,FRA,BRU,51,1,1,0,Economy,Economy,Yes,Yes,no,VLML,no,11111,KBC,Signed out,LOOP,19,no,no,
-MC,BEL,BRU,LHR,41,46,BRU,LHR,LHR,FRA,FRA,BRU,51,1,0,0,Economy,Economy,no,Yes,no,no,no,11111,AMEX,Signed in,LOOP,22,Yes,no,
-MC,BEL,BRU,LHR,41,46,BRU,LHR,LHR,FRA,FRA,BRU,51,1,0,0,Economy,Economy,no,no,no,VGML,no,11111,ING,Signed in,Agean,26,no,no,
-MC,BEL,BRU,YVR,41,46,BRU,YVR,YVR,YUL,YUL,BRU,51,1,1,0,Economy,Economy,no,no,no,no,no,11111,BANCONTACT,Signed in,Miles and More,30,no,no,
-MC,BEL,BRU,LHR,41,46,BRU,LHR,LHR,FRA,FRA,BRU,51,1,1,0,Economy,Economy,no,no,no,LCML,no,11111,DISCOVER,Signed in,Agean,32,no,Yes,
-MC,BEL,BRU,FIH,41,46,BRU,FIH,FIH,BRU,BRU,DKR,51,2,1,0,Economy,Economy,no,no,no,LFML,no,11111,PAYPAL,Signed out,Agean,38,Yes,no,
-MC,BEL,BRU,VIE,41,46,BRU,LHR,LHR,FRA,FRA,BRU,51,2,1,1,Economy,Economy,no,Yes,no,no,no,11111,KBC,Signed in,Miles and More,44,Yes,no,
-MC,BEL,BRU,BMA,41,46,BRU,LHR,LHR,FRA,FRA,BRU,51,3,1,1,Economy,Economy,no,no,no,no,no,11111,MAESTRO,Signed in,Miles and More,45,no,no,
-MC,BEL,BRU,SFO,41,46,BRU,LAX,LAX,JFK,JFK,BRU,51,1,1,1,Economy,Economy,no,no,no,no,no,11111,DINERS,Signed in,LOOP,46,Yes,no,
+testCaseName,tripType,flightDates,promotion,outboundPOS,inputFrom,inputTo,departOn,returnOn,fromMC1,toMC1,fromMC2,toMC2,fromMC3,toMC3,departOnMC3,ADT,CHD,INF,cabinClass,fareFamily,insuranceSummaryPage,baggage,delayedPayment,meals,seats,pwd,paymentType,Loop Profile,frequentFlierProgram,age,insurancEconomyConfirmationPage,baggageEconomyConfirmationPage,email,password
+1,OW,fixedDates,,BEL,BRU,TLV,62,67,,,,,,,,1,0,0,Economy,Check&Go,no,no,no,no,Yes,11111,VISA,Signed in,Miles and More,0,Yes,Yes,alan.peck@datalex.com,Datalex123!
+2,OW,fixedDates,,BEL,BRU,NCE,64,69,,,,,,,,2,1,0,Economy,Light&Relax,Yes,no,no,no,no,11111,VISA,Signed in,Miles and More,3,no,Yes,alan.peck@datalex.com,Datalex123!
+3,OW,fixedDates,,BEL,BRU,YUL,32,76,,,,,,,,1,1,1,Economy,Economy,no,no,no,LFML,no,11111,ING,Signed out,Miles and More,7,Yes,Yes,alan.peck@datalex.com,Datalex123!
+4,OW,fixedDates,,BEL,LHR,TLV,45,78,,,,,,,,2,1,0,Economy,Light&Relax,Yes,Yes,no,no,no,11111,DINERS,Signed out,Agean,8,no,no,alan.peck@datalex.com,Datalex123!
+5,OW,fixedDates,,BEL,BRU,TLV,42,80,,,,,,,,1,0,0,Business,Bizz&Class,Yes,no,no,no,Yes,11111,CBC,Signed out,Miles and More,11,no,Yes,alan.peck@datalex.com,Datalex123!
+6,OW,fixedDates,,BEL,BRU,SFO,79,84,,,,,,,,3,1,1,Business,Business,Yes,no,no,STML,no,11111,MAESTRO,Signed out,Agean,12,no,no,alan.peck@datalex.com,Datalex123!
+7,OW,fixedDates,,BEL,BRU,YUL,81,85,,,,,,,,2,1,1,Business,Business,Yes,no,no,no,no,11111,PAYPAL,Signed in,Agean,14,no,no,alan.peck@datalex.com,Datalex123!
+8,OW,fixedDates,,BEL,BRU,TLV,46,66,,,,,,,,1,1,0,Economy,Check&Go,no,no,no,VGML,Yes,11111,VISA,Signed in,Miles and More,16,Yes,Yes,alan.peck@datalex.com,Datalex123!
+9,OW,fixedDates,,BEL,BRU,TLV,41,46,,,,,,,,1,1,0,Economy,Flex&Fast,no,no,no,no,Yes,11111,SOFORT,Signed in,Agean,17,Yes,Yes,alan.peck@datalex.com,Datalex123!
+10,OW,fixedDates,,BEL,BRU,LHR,41,46,,,,,,,,1,0,0,Economy,Check&Go,no,no,no,no,Yes,11111,ING,Signed in,LOOP,18,Yes,Yes,alan.peck@datalex.com,Datalex123!
+11,OW,fixedDates,,BEL,BRU,YVR,41,46,,,,,,,,3,1,1,Economy,Economy,Yes,no,no,no,no,11111,KBC,Signed in,Miles and More,20,no,Yes,alan.peck@datalex.com,Datalex123!
+12,OW,fixedDates,,BEL,BRU,YVR,41,46,,,,,,,,2,1,1,Business,Business,no,Yes,no,no,no,11111,KBC,Signed in,Miles and More,21,Yes,no,alan.peck@datalex.com,Datalex123!
+13,OW,fixedDates,,BEL,BRU,YVR,41,46,,,,,,,,3,1,1,Economy,Economy,no,Yes,no,no,no,11111,CBC,Signed in,LOOP,23,no,no,alan.peck@datalex.com,Datalex123!
+14,OW,fixedDates,,BEL,BRU,DME,41,46,,,,,,,,1,1,1,Economy,Light&Relax,Yes,Yes,no,GFML,no,11111,ING,Signed in,LOOP,29,no,no,alan.peck@datalex.com,Datalex123!
+15,OW,fixedDates,,BEL,BRU,LHR,41,46,,,,,,,,2,1,0,Economy,Flex&Fast,no,Yes,no,no,Yes,11111,PAYPAL,Signed out,Agean,31,Yes,no,alan.peck@datalex.com,Datalex123!
+16,OW,fixedDates,,BEL,BRU,LHR,41,46,,,,,,,,1,1,1,Economy,Flex&Fast,Yes,no,no,no,Yes,11111,SOFORT,Signed out,Miles and More,33,no,Yes,alan.peck@datalex.com,Datalex123!
+17,OW,fixedDates,,BEL,BRU,FCO,41,46,,,,,,,,1,1,0,Economy,Light&Relax,no,no,no,no,no,11111,PAYPAL,Signed in,Miles and More,34,no,no,alan.peck@datalex.com,Datalex123!
+18,OW,fixedDates,,BEL,BRU,DME,41,46,,,,,,,,2,1,1,Economy,Check&Go,no,Yes,no,no,Yes,11111,VISA,Signed in,Agean,39,Yes,no,alan.peck@datalex.com,Datalex123!
+19,OW,fixedDates,,BEL,BRU,NCE,41,46,,,,,,,,1,0,0,Economy,Flex&Fast,no,no,no,no,no,11111,CBC,Signed in,Miles and More,40,Yes,no,alan.peck@datalex.com,Datalex123!
+20,OW,fixedDates,,BEL,BRU,TLV,41,46,,,,,,,,2,1,0,Economy,Light&Relax,no,Yes,no,MOML,Yes,11111,BANCONTACT,Signed in,Miles and More,41,no,no,alan.peck@datalex.com,Datalex123!
+21,OW,fixedDates,,BEL,BRU,SFO,41,46,,,,,,,,2,1,0,Business,Business,no,no,no,NLML,no,11111,KBC,Signed out,Agean,42,no,Yes,alan.peck@datalex.com,Datalex123!
+22,OW,fixedDates,,BEL,BRU,LIS,41,46,,,,,,,,3,1,1,Economy,Check&Go,Yes,Yes,no,no,no,11111,CBC,Signed in,LOOP,43,no,no,alan.peck@datalex.com,Datalex123!
+23,RT,fixedDates,,BEL,BRU,NCE,63,68,,,,,,,,1,1,1,Economy,Check&Go,no,no,no,no,no,11111,VISA,Signed out,LOOP,2,no,no,alan.peck@datalex.com,Datalex123!
+24,RT,fixedDates,,BEL,BRU,AGP,66,71,,,,,,,,2,1,1,Economy,Flex&Fast,no,Yes,no,KSML,Yes,11111,VISA,Signed out,LOOP,4,Yes,no,alan.peck@datalex.com,Datalex123!
+25,RT,fixedDates,,BEL,LHR,TLV,58,60,,,,,,,,1,0,0,Economy,Check&Go,Yes,no,no,no,no,11111,MASTERCARD,Signed in,Agean,6,no,no,alan.peck@datalex.com,Datalex123!
+26,RT,fixedDates,,BEL,LHR,TLV,48,50,,,,,,,,2,1,1,Economy,Light&Relax,no,no,no,MOML,no,11111,DISCOVER,Signed in,Miles and More,9,no,Yes,alan.peck@datalex.com,Datalex123!
+27,RT,fixedDates,,BEL,BRU,YUL,90,95,,,,,,,,1,1,1,Economy,Economy,no,Yes,no,no,no,11111,CBC,Signed in,Agean,15,Yes,no,alan.peck@datalex.com,Datalex123!
+28,RT,fixedDates,,BEL,BRU,LHR,41,46,,,,,,,,1,0,0,Economy,Check&Go,no,no,no,no,Yes,11111,PAYPAL,Signed out,LOOP,24,no,Yes,alan.peck@datalex.com,Datalex123!
+29,RT,fixedDates,,BEL,BRU,LHR,41,46,,,,,,,,1,0,0,Economy,Light&Relax,no,Yes,no,DBML,no,11111,MASTERCARD,Signed in,LOOP,25,no,no,alan.peck@datalex.com,Datalex123!
+30,RT,fixedDates,,BEL,BRU,LHR,41,46,,,,,,,,1,0,0,Business,Bizz&Class,Yes,no,no,no,no,11111,KBC,Signed out,LOOP,27,no,no,alan.peck@datalex.com,Datalex123!
+31,RT,fixedDates,,BEL,BRU,TLV,41,46,,,,,,,,2,1,1,Economy,Check&Go,Yes,no,no,no,no,11111,CBC,Signed in,Miles and More,28,no,no,alan.peck@datalex.com,Datalex123!
+32,RT,fixedDates,,BEL,BRU,GVA,41,46,,,,,,,,2,1,0,Business,Bizz&Class,no,no,no,no,no,11111,IDEAL,Signed in,Agean,35,no,no,alan.peck@datalex.com,Datalex123!
+33,RT,fixedDates,,BEL,BRU,BCN,41,46,,,,,,,,1,1,1,Business,Bizz&Class,no,no,no,LCML,Yes,11111,PAYPAL,Signed in,Agean,36,no,no,alan.peck@datalex.com,Datalex123!
+34,RT,fixedDates,,BEL,LHR,TLV,41,46,,,,,,,,1,1,1,Economy,Flex&Fast,no,no,no,no,no,11111,SOFORT,Signed in,Agean,37,no,no,alan.peck@datalex.com,Datalex123!
+35,RT,fixedDates,,BEL,AGP,BRU,41,46,,,,,,,,1,1,1,Economy,Check&Go,no,no,no,no,Yes,11111,DINERS,Signed in,Miles and More,47,Yes,no,alan.peck@datalex.com,Datalex123!
+36,MC,,,BEL,LHR,2,62,67,LHR,LAX,LAX,JFK,JFK,BRU,71,1,1,0,Business,Business,Yes,Yes,no,DBML,no,11111,VISA,Signed out,Agean,1,no,no,alan.peck@datalex.com,Datalex123!
+37,MC,,,BEL,BRU,7,68,75,BRU,LHR,LHR,FRA,FRA,BRU,81,3,1,1,Business,Business,no,no,no,no,no,11111,MASTERCARD,Signed in,Agean,5,no,Yes,alan.peck@datalex.com,Datalex123!
+38,MC,,,BEL,LHR,14,79,86,LHR,BRU,BRU,TLV,TLV,LHR,88,1,0,0,Economy,Economy,no,no,no,no,no,11111,MASTERCARD,Signed out,Miles and More,10,no,no,alan.peck@datalex.com,Datalex123!
+39,MC,,,BEL,BRU,19,79,84,BRU,LHR,LHR,FRA,FRA,BRU,91,2,1,0,Economy,Economy,Yes,no,no,VOML,no,11111,KBC,Signed in,LOOP,13,no,no,alan.peck@datalex.com,Datalex123!
+40,MC,,,BEL,BRU,LHR,41,46,BRU,LHR,LHR,FRA,FRA,BRU,51,1,1,0,Economy,Economy,Yes,Yes,no,VLML,no,11111,KBC,Signed out,LOOP,19,no,no,alan.peck@datalex.com,Datalex123!
+41,MC,,,BEL,BRU,LHR,41,46,BRU,LHR,LHR,FRA,FRA,BRU,51,1,0,0,Economy,Economy,no,Yes,no,no,no,11111,AMEX,Signed in,LOOP,22,Yes,no,alan.peck@datalex.com,Datalex123!
+42,MC,,,BEL,BRU,LHR,41,46,BRU,LHR,LHR,FRA,FRA,BRU,51,1,0,0,Economy,Economy,no,no,no,VGML,no,11111,ING,Signed in,Agean,26,no,no,alan.peck@datalex.com,Datalex123!
+43,MC,,,BEL,BRU,YVR,41,46,BRU,YVR,YVR,YUL,YUL,BRU,51,1,1,0,Economy,Economy,no,no,no,no,no,11111,BANCONTACT,Signed in,Miles and More,30,no,no,alan.peck@datalex.com,Datalex123!
+44,MC,,,BEL,BRU,LHR,41,46,BRU,LHR,LHR,FRA,FRA,BRU,51,1,1,0,Economy,Economy,no,no,no,LCML,no,11111,DISCOVER,Signed in,Agean,32,no,Yes,alan.peck@datalex.com,Datalex123!
+45,MC,,,BEL,BRU,FIH,41,46,BRU,FIH,FIH,BRU,BRU,DKR,51,2,1,0,Economy,Economy,no,no,no,LFML,no,11111,PAYPAL,Signed out,Agean,38,Yes,no,alan.peck@datalex.com,Datalex123!
+46,MC,,,BEL,BRU,VIE,41,46,BRU,LHR,LHR,FRA,FRA,BRU,51,2,1,1,Economy,Economy,no,Yes,no,no,no,11111,KBC,Signed in,Miles and More,44,Yes,no,alan.peck@datalex.com,Datalex123!
+47,MC,,,BEL,BRU,BMA,41,46,BRU,LHR,LHR,FRA,FRA,BRU,51,3,1,1,Economy,Economy,no,no,no,no,no,11111,MAESTRO,Signed in,Miles and More,45,no,no,alan.peck@datalex.com,Datalex123!
+48,MC,,,BEL,BRU,SFO,41,46,BRU,LAX,LAX,JFK,JFK,BRU,51,1,1,1,Economy,Economy,no,no,no,no,no,11111,DINERS,Signed in,LOOP,46,Yes,no,alan.peck@datalex.com,Datalex123!
