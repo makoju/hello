@@ -76,10 +76,12 @@ public class SelectionPage implements ISelectionPage {
     }
 
     public void selectFareFamily(TestData testData) {
-        log.info("Select fare family: " + testData.getFareFamily());
-        selectOutboundFareFamily(testData.getFareFamily());
-        if (("RT").equalsIgnoreCase(testData.getTripType()))
-            selectInboundFareFamily(testData.getFareFamily());
+        if (!"MC".equalsIgnoreCase(testData.getTripType())) {
+            log.info("Select fare family: " + testData.getFareFamily());
+            selectOutboundFareFamily(testData.getFareFamily());
+            if (("RT").equalsIgnoreCase(testData.getTripType()))
+                selectInboundFareFamily(testData.getFareFamily());
+        }
     }
 
     public SummaryPage doSelection() {
