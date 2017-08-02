@@ -9,11 +9,13 @@ import com.datalex.taf.ui.po.confirmationpage.ConfirmationPage;
 import com.datalex.taf.ui.po.exceptions.PaymentPageException;
 import lombok.extern.log4j.Log4j2;
 import org.openqa.selenium.By;
+import org.openqa.selenium.NotFoundException;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
 
+import javax.validation.constraints.Null;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -91,6 +93,9 @@ public class PaymentPage {
         PageFactory.initElements(driver, this);
     }
 
+    /**
+     * This method in this pageObject is design to handle payment with Paypal.
+     */
     public void payWithPayPal() {
         elementHelper.waitForElementToBeClickable(payPal);
         payPal.click();
@@ -108,27 +113,68 @@ public class PaymentPage {
     }
 
     public void payWithCreditCards(TestData testData) throws ParseException, Exception {
-        CreditCard cc = new CreditCard()
-                            .setType("VISA")
-                            .setCardHolder("John Wayne")
-                            .setNumber("4111111111111111")
-                            .setSecurityCode("111")
-                            .setExpiryDate(new SimpleDateFormat("dd/MM/yyyy").parse("01/01/2025"));
-
+        CreditCard cc = buildCreditCardObject(testData.getPaymentType());
         log.info(cc.toString());
         fillInCreditCardDetails(cc);
         fillInBillingAddressDetails(cc.retrieveRandomBillingInformation());
         elementHelper.waitForElementToBeClickable(acceptTermsAndConditionsCheckBox);
         acceptTermsAndConditionsCheckBox.click();
         confirmAndPay.click();
-        new Utils().waitTime(10000);
+
     }
+
+    protected CreditCard buildCreditCardObject(String ccType) throws ParseException {
+            String optionValue = "VI";
+            String ccNumber = "41111111111111";
+            String securiyCode = "111";
+
+        switch(ccType.toUpperCase()) {
+            case "VISA":
+                optionValue = "VI";
+                ccNumber = "4111111111111111";
+                break;
+            case "MASTERCARD":
+                optionValue = "MC";
+                ccNumber = "5399999999999999";
+                break;
+            case "DINERS":
+                optionValue = "DN";
+                ccNumber = "36255695580017";
+                break;
+            case "DISCOVER":
+                optionValue = "DI";
+                ccNumber = "6011111111111117";
+                break;
+            case "UATP":
+                optionValue = "TP";
+                ccNumber = "108112000000004";
+                break;
+            case "AMEX":
+                optionValue = "AM";
+                ccNumber = "374111111111111";
+                break;
+            case "AMERICANEXPRESS":
+                optionValue = "AM";
+                ccNumber = "";
+                break;
+            default:
+                log.error("CREDIT CARD TYPE NOT FOUND");
+                throw new NotFoundException("INVALID CREDITCARD TYPE");
+        }
+        return new CreditCard()
+                .setTypeByOptionValue(optionValue)
+                .setCardHolder("John Wayne")
+                .setNumber(ccNumber)
+                .setSecurityCode(securiyCode)
+                .setExpiryDate(new SimpleDateFormat("dd/MM/yyyy").parse("01/01/2025"));
+    }
+
 
     public void fillInCreditCardDetails(CreditCard cc) throws Exception{
         elementHelper.waitForElementToBeClickable(creditCard);
         creditCard.click();
         elementHelper.waitForElementToBeClickable(creditCardTypeSelection);
-        elementHelper.selectOptionByValue(creditCardTypeSelection, cc.optionValueOfCreditCardType(cc.type.toString()));
+        elementHelper.selectOptionByValue(creditCardTypeSelection, cc.typeByOptionValue);
         elementHelper.waitForPresenceOfElementLocated(By.xpath("//input[@id='creditCard.number:creditCard.numberDisplay']/..//iframe"));
         elementHelper.waitForElementDisplayed(creditCardExpiryMonthForm);
         log.debug(cc.expiryDate.toString());
@@ -150,18 +196,23 @@ public class PaymentPage {
         billingZipCodeForm.sendKeys(cc.postalCode);
     }
 
-    public void payWithDebitCards(TestData testData) {
-    }
-
-    public ConfirmationPage populatePaymentPage(TestData testData) throws PaymentPageException {
+    public ConfirmationPage populatePaymentPage(TestData testData) throws PaymentPageException, Exception {
         switch (testData.getPaymentType()) {
             case "VISA":
+                payWithCreditCards(testData);
+                break;
             case "MASTERCARD":
                 payWithCreditCards(testData);
                 break;
             case "AMEX":
+                payWithCreditCards(testData);
+                break;
             case "DISCOVER":
+                payWithCreditCards(testData);
+                break;
             case "DINERS":
+                payWithCreditCards(testData);
+                break;
             case "MAESTRO":
             case "UATP":
             case "PAYPAL":

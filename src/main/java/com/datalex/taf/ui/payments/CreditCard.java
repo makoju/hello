@@ -12,6 +12,7 @@ import java.util.Date;
 public class CreditCard implements ICreditCard {
 
     public String type;
+    public String typeByOptionValue;
     public String cardHolder;
     public String number;
     public String securityCode;
@@ -42,6 +43,11 @@ public class CreditCard implements ICreditCard {
         return this;
     }
 
+    public CreditCard setTypeByOptionValue(String m_type) {
+        typeByOptionValue = m_type.toUpperCase();
+        return this;
+    }
+
     @Override
     public CreditCard setCardHolder(String m_cardholder) {
         cardHolder = m_cardholder;
@@ -56,7 +62,7 @@ public class CreditCard implements ICreditCard {
 
     @Override
     public CreditCard setSecurityCode(String m_securityCode) {
-        number = m_securityCode;
+        securityCode = m_securityCode;
         return this;
     }
 
@@ -88,35 +94,4 @@ public class CreditCard implements ICreditCard {
         return this;
     }
 
-    public String optionValueOfCreditCardType(String type){
-        String optionValue = "";
-        switch(type.toUpperCase()){
-            case "VISA":
-                optionValue = "VI";
-                break;
-            case "MASTERCARD":
-                optionValue = "MC";
-                break;
-            case "DINERS":
-                optionValue = "DN";
-                break;
-            case "DISCOVER":
-                optionValue = "DI";
-                break;
-            case "UATP":
-                optionValue = "TP";
-                break;
-            case "AMEX":
-                optionValue = "AM";
-                break;
-            case "AMERICANEXPRESS":
-                optionValue = "AM";
-                break;
-            default:
-                log.error("CREDIT CARD TYPE NOT FOUND");
-                return "NOT FOUND";
-        }
-        return optionValue;
-    }
-    
 }
