@@ -255,15 +255,6 @@ public class ElementHelper {
     }
 
     /**
-     * Wait for visibility of element
-     *
-     * @param element WebElement
-     */
-    public void waitForElementPresent(WebElement element) {
-        wait.until(ExpectedConditions.visibilityOf(element));
-    }
-
-    /**
      * Wait for presence of element located on page
      *
      * @param element WebElement
