@@ -57,8 +57,9 @@ public class PaymentPage {
         payPal.click();
         acceptTermsAndConditionsAndPay();
         new Utils().waitTime(10000);
-        elementHelper.waitForPresenceOfElementLocated(By.id("btn_Accept"));
-        driver.findElement(By.id("btn_Accept")).click();
+        By acceptButton = By.id("btn_Accept");
+        elementHelper.waitForPresenceOfElementLocated(acceptButton);
+        driver.findElement(acceptButton).click();
     }
 
     public void payWithOnlineBanking(TestData testData) {
