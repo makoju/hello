@@ -33,7 +33,7 @@ public class ElementHelper {
      * @param driver WebDriver
      */
     public ElementHelper(WebDriver driver) {
-        this.wait = new WebDriverWait(driver, 120);
+        this.wait = new WebDriverWait(driver, 30);
     }
 
     /**
@@ -52,16 +52,8 @@ public class ElementHelper {
      * @param element WebElement
      */
     public void waitForElementDisplayed(WebElement element) {
-        final int timeMs = 15000;
-        for (int i = 500; i < timeMs; i += 100) {
-            log.debug("Waiting for element displayed (ms): " + i + " Element: " + element.toString());
-            new Utils().waitTime500ms();
-            if (isElementDisplayed(element)) {
-                //og.debug(String.format("ElementHelper is displayed after %d ms", i));
-                return;
-            }
-        }
-        log.error(String.format("ElementHelper is not displayed after %d seconds", timeMs / 1000));
+        log.debug("Waiting for element displayed - Element: " + element.toString());
+        wait.until(ExpectedConditions.visibilityOf(element));
     }
 
     /**
