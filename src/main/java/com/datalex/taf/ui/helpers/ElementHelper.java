@@ -33,7 +33,7 @@ public class ElementHelper {
      * @param driver WebDriver
      */
     public ElementHelper(WebDriver driver) {
-        this.wait = new WebDriverWait(driver, 30);
+        this.wait = new WebDriverWait(driver, 120);
     }
 
     /**
@@ -54,6 +54,23 @@ public class ElementHelper {
     public void waitForElementDisplayed(WebElement element) {
         log.debug("Waiting for element displayed - Element: " + element.toString());
         wait.until(ExpectedConditions.visibilityOf(element));
+    }
+
+    /**
+     * Wait for element to be displayed on page
+     *
+     * @param element WebElement
+     */
+    public void waitForElementDisplayedIterative(WebElement element) {
+        final int timeMs = 15000;
+        for (int i = 200; i < timeMs; i += 100) {
+            log.debug("Waiting for element displayed (ms): " + i + " Element: " + element.toString());
+            new Utils().waitTime(200);
+            if (isElementDisplayed(element)) {
+                return;
+            }
+        }
+        log.error(String.format("ElementHelper is not displayed after %d seconds", timeMs / 1000));
     }
 
     /**
