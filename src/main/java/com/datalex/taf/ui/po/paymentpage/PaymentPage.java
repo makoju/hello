@@ -38,7 +38,7 @@ public class PaymentPage {
     @FindBy(id = "formOfPayment(CREDITCARD_POS).selected")
     public WebElement creditCard;
 
-    @FindBy(id = "creditCard.number:creditCard.numberDisplay")
+    @FindBy(xpath = "//input[@id='creditCard.number:creditCard.numberDisplay']/..//iframe")
     public WebElement creditCardNumberForm;
 
     @FindBy(id = "creditCard.expirationMonth")
@@ -47,7 +47,7 @@ public class PaymentPage {
     @FindBy(id = "creditCard.expirationYear")
     public WebElement creditCardExpiryYearForm;
 
-    @FindBy(id = "creditCard.securityCode:creditCard.securityCodeDisplay")
+    @FindBy(xpath = "//input[@id='creditCard.securityCode:creditCard.securityCodeDisplay']/..//iframe")
     public WebElement creditCardSecurityCodeForm;
 
     @FindBy(id = "creditCard.cardHolderName")
@@ -105,8 +105,8 @@ public class PaymentPage {
                             .setType("VISA")
                             .setCardHolder("John Wayne")
                             .setNumber("4111111111111111")
-                            .setSecurityCode("")
-                            .setIssueDate(new SimpleDateFormat("dd/MM/yyyy").parse("01/01/2025"));
+                            .setSecurityCode("111")
+                            .setExpiryDate(new SimpleDateFormat("dd/MM/yyyy").parse("01/01/2025"));
 
         log.info(cc.toString());
         fillInCreditCardDetails(cc);
@@ -114,6 +114,7 @@ public class PaymentPage {
         elementHelper.waitForElementToBeClickable(acceptTermsAndConditionsCheckBox);
         acceptTermsAndConditionsCheckBox.click();
         confirmAndPay.click();
+        new Utils().waitTime(10000);
     }
 
     public void fillInCreditCardDetails(CreditCard cc) throws Exception{
@@ -121,15 +122,16 @@ public class PaymentPage {
         creditCard.click();
         elementHelper.waitForElementToBeClickable(creditCardTypeSelection);
         elementHelper.selectOptionByValue(creditCardTypeSelection, cc.optionValueOfCreditCardType(cc.type.toString()));
-        elementHelper.waitForElementDisplayed(creditCardNumberForm);
-        creditCardNumberForm.sendKeys(cc.number);
+        elementHelper.waitForPresenceOfElementLocated(By.xpath("//input[@id='creditCard.number:creditCard.numberDisplay']/..//iframe"));
         elementHelper.waitForElementDisplayed(creditCardExpiryMonthForm);
-        elementHelper.selectOptionByValue(creditCardExpiryMonthForm, String.valueOf(new Utils().getDateAttribute("MONTH",cc.expiryDate)));
-        elementHelper.selectOptionByValue(creditCardExpiryYearForm, String.valueOf(new Utils().getDateAttribute("YEAR",cc.expiryDate)));
+        log.debug(cc.expiryDate.toString());
+        elementHelper.selectOptionByValue(creditCardExpiryMonthForm,
+                String.format("%02d", new Utils().getDateAttribute("MONTH", cc.expiryDate) + 1));
+        elementHelper.selectOptionByText(creditCardExpiryYearForm, String.valueOf(new Utils().getDateAttribute("YEAR",cc.expiryDate)));
         elementHelper.waitForElementDisplayed(creditCardSecurityCodeForm);
+        creditCardNumberForm.sendKeys(cc.number);
         creditCardSecurityCodeForm.sendKeys(cc.securityCode);
-        elementHelper.waitForElementDisplayed(creditCardHolderNameForm);
-        creditCardNumberForm.sendKeys(cc.cardHolder);
+        creditCardHolderNameForm.sendKeys(cc.cardHolder);
     }
 
     public void fillInBillingAddressDetails(CreditCard cc){

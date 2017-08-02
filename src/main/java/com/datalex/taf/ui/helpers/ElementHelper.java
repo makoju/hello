@@ -54,10 +54,10 @@ public class ElementHelper {
     public void waitForElementDisplayed(WebElement element) {
         final int timeMs = 15000;
         for (int i = 500; i < timeMs; i += 100) {
-            log.debug("Waiting for element displayed (ms): " + i);
+            log.debug("Waiting for element displayed (ms): " + i + " Element: " + element.toString());
             new Utils().waitTime500ms();
             if (isElementDisplayed(element)) {
-                log.debug(String.format("ElementHelper is displayed after %d ms", i));
+                //og.debug(String.format("ElementHelper is displayed after %d ms", i));
                 return;
             }
         }
@@ -195,6 +195,7 @@ public class ElementHelper {
      * @param value   value to select
      */
     public void selectOptionByValue(WebElement element, String value) {
+        log.debug("Selecting Option :" +value+ " in:" + element.toString());
         if (value == null) {
             return;
         }
