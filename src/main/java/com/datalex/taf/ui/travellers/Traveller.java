@@ -58,6 +58,7 @@ public class Traveller {
                 log.error("PaxType is Empty or not Recognized. PaxType{"+paxType+"}");
                 throw new Exception();
         }
+
     }
 
     public void fillTravellerEmergencyContactInformation(TestData testData) throws Exception{

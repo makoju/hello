@@ -2,6 +2,9 @@ package com.datalex.taf.ui.helpers;
 
 import lombok.extern.log4j.Log4j2;
 
+import java.util.Calendar;
+import java.util.Date;
+
 /**
  * Utils Class
  *
@@ -33,5 +36,32 @@ public class Utils {
 
     public int randBetween(int start, int end) {
         return start + (int)Math.round(Math.random() * (end - start));
+    }
+
+    /**
+     * Get Date Attribute on either DAY, MONTH or YEAR of the date provided. Which will return a integer or Index for the month.
+     * @param attribute - Choices DAY, MONTH, YEAR
+     * @param date - Date Specified
+     * @return int - attributeIndex
+     */
+    public int getDateAttribute(String attribute, Date date) throws Exception{
+        Calendar cal = Calendar.getInstance();
+        cal.setTime(date);
+        int attributeIndex = 0;
+        switch (attribute){
+            case "DAY":
+                attributeIndex = cal.get(Calendar.DAY_OF_MONTH);
+                break;
+            case "MONTH":
+                attributeIndex = cal.get(Calendar.MONTH);
+                break;
+            case "YEAR":
+                attributeIndex = cal.get(Calendar.YEAR);
+                break;
+            default:
+                log.error("INVALID DATE ATTRIBUTE");
+                throw new Exception();
+        }
+        return attributeIndex;
     }
 }

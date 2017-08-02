@@ -2,18 +2,26 @@ package com.datalex.taf.ui.po.paymentpage;
 
 import com.datalex.taf.ui.data.TestData;
 import com.datalex.taf.ui.helpers.ElementHelper;
+import com.datalex.taf.ui.helpers.Utils;
+import com.datalex.taf.ui.payments.CreditCard;
 import com.datalex.taf.ui.po.exceptions.PaymentPageException;
+import lombok.extern.log4j.Log4j2;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+
 /**
  * PaymentPage class
  *
  * @author Aleksandar Vulovic
  */
+@Log4j2
 public class PaymentPage {
     private WebDriver driver;
     private ElementHelper elementHelper;
@@ -29,6 +37,39 @@ public class PaymentPage {
 
     @FindBy(id = "formOfPayment(CREDITCARD_POS).selected")
     public WebElement creditCard;
+
+    @FindBy(id = "creditCard.number:creditCard.numberDisplay")
+    public WebElement creditCardNumberForm;
+
+    @FindBy(id = "creditCard.expirationMonth")
+    public WebElement creditCardExpiryMonthForm;
+
+    @FindBy(id = "creditCard.expirationYear")
+    public WebElement creditCardExpiryYearForm;
+
+    @FindBy(id = "creditCard.securityCode:creditCard.securityCodeDisplay")
+    public WebElement creditCardSecurityCodeForm;
+
+    @FindBy(id = "creditCard.cardHolderName")
+    public WebElement creditCardHolderNameForm;
+
+    @FindBy(id = "creditCard.type")
+    public WebElement creditCardTypeSelection;
+
+    @FindBy(id = "billingAddress.addressLine1")
+    public WebElement billingAddressLine1Form;
+
+    @FindBy(id = "billingAddress.addressLine2")
+    public WebElement billingAddressLine2Form;
+
+    @FindBy(id = "billingAddress.city")
+    public WebElement billingCityForm;
+
+    @FindBy(id = "billingAddress.country")
+    public WebElement billingCountryForm;
+
+    @FindBy(id = "billingAddress.postalCode")
+    public WebElement billingZipCodeForm;
 
     @FindBy(id = "formOfPayment(PAYPAL).selected")
     public WebElement payPal;
@@ -59,16 +100,55 @@ public class PaymentPage {
         new ElementHelper().selectOptionByValue(onlineBankDropDown, testData.getPaymentType());
     }
 
-    public void payWithCreditCards(TestData testData) {
+    public void payWithCreditCards(TestData testData) throws ParseException, Exception {
+        CreditCard cc = new CreditCard()
+                            .setType("VISA")
+                            .setCardHolder("John Wayne")
+                            .setNumber("4111111111111111")
+                            .setSecurityCode("")
+                            .setIssueDate(new SimpleDateFormat("dd/MM/yyyy").parse("01/01/2025"));
 
+        log.info(cc.toString());
+        fillInCreditCardDetails(cc);
+        fillInBillingAddressDetails(cc.retrieveRandomBillingInformation());
+        elementHelper.waitForElementToBeClickable(acceptTermsAndConditionsCheckBox);
+        acceptTermsAndConditionsCheckBox.click();
+        confirmAndPay.click();
+    }
+
+    public void fillInCreditCardDetails(CreditCard cc) throws Exception{
+        elementHelper.waitForElementToBeClickable(creditCard);
+        creditCard.click();
+        elementHelper.waitForElementToBeClickable(creditCardTypeSelection);
+        elementHelper.selectOptionByValue(creditCardTypeSelection, cc.optionValueOfCreditCardType(cc.type.toString()));
+        elementHelper.waitForElementDisplayed(creditCardNumberForm);
+        creditCardNumberForm.sendKeys(cc.number);
+        elementHelper.waitForElementDisplayed(creditCardExpiryMonthForm);
+        elementHelper.selectOptionByValue(creditCardExpiryMonthForm, String.valueOf(new Utils().getDateAttribute("MONTH",cc.expiryDate)));
+        elementHelper.selectOptionByValue(creditCardExpiryYearForm, String.valueOf(new Utils().getDateAttribute("YEAR",cc.expiryDate)));
+        elementHelper.waitForElementDisplayed(creditCardSecurityCodeForm);
+        creditCardSecurityCodeForm.sendKeys(cc.securityCode);
+        elementHelper.waitForElementDisplayed(creditCardHolderNameForm);
+        creditCardNumberForm.sendKeys(cc.cardHolder);
+    }
+
+    public void fillInBillingAddressDetails(CreditCard cc){
+        elementHelper.waitForElementDisplayed(billingAddressLine1Form);
+        billingAddressLine1Form.sendKeys(cc.addressLine1);
+        billingAddressLine2Form.sendKeys(cc.addressLine2);
+        billingCityForm.sendKeys(cc.city);
+        elementHelper.selectOptionByValue(billingCountryForm, cc.country);
+        billingZipCodeForm.sendKeys(cc.postalCode);
     }
 
     public void payWithDebitCards(TestData testData) {
     }
 
-    public void populatePaymentPage(TestData testData) throws PaymentPageException {
+    public void populatePaymentPage(TestData testData) throws PaymentPageException, Exception {
         switch (testData.getPaymentType()) {
             case "VISA":
+                payWithCreditCards(testData);
+                break;
             case "MASTERCARD":
             case "AMEX":
             case "DISCOVER":
@@ -86,7 +166,7 @@ public class PaymentPage {
             case "BELFIUS":
             case "IDEAL":
             default:
-                throw new PaymentPageException("Payment method not specified!");
+                throw new PaymentPageException("PaymentData method not specified!");
         }
         elementHelper.waitForElementToBeClickable(acceptTermsAndConditionsCheckBox);
         acceptTermsAndConditionsCheckBox.click();
