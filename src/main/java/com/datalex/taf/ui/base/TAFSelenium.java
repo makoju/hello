@@ -73,13 +73,13 @@ public class TAFSelenium {
         }
 
         if (!RUN_MODE_LOCAL.equalsIgnoreCase(TAFProperties.getSeleniumRunModeValue())) {
-            TAFSelenium.driver.set(new RemoteWebDriver(driverURL, capability));
+            driver.set(new RemoteWebDriver(driverURL, capability));
         }
         driver.get().manage().deleteAllCookies();
         //FIXME: to be enabled after fix of FF driver issue
         if (!"FIREFOX".equals(browserName))
             driver.get().manage().window().maximize();
-        log.info("TAFSelenium initialized!");
+        log.info("TAFSelenium initialized! Browser: " + browserName);
     }
 
     /**

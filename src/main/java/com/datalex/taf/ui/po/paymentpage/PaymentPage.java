@@ -2,7 +2,10 @@ package com.datalex.taf.ui.po.paymentpage;
 
 import com.datalex.taf.ui.data.TestData;
 import com.datalex.taf.ui.helpers.ElementHelper;
+import com.datalex.taf.ui.helpers.Utils;
+import com.datalex.taf.ui.po.confirmationpage.ConfirmationPage;
 import com.datalex.taf.ui.po.exceptions.PaymentPageException;
+import lombok.extern.log4j.Log4j2;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
@@ -14,6 +17,7 @@ import org.openqa.selenium.support.PageFactory;
  *
  * @author Aleksandar Vulovic
  */
+@Log4j2
 public class PaymentPage {
     private WebDriver driver;
     private ElementHelper elementHelper;
@@ -40,6 +44,7 @@ public class PaymentPage {
     public WebElement onlineBankDropDown;
 
     public PaymentPage(WebDriver driver) {
+        log.info("Initiating Payment page...");
         this.driver = driver;
         elementHelper = new ElementHelper(driver);
         elementHelper.waitForPresenceOfElementLocated(By.id("pgPayment"));
@@ -47,16 +52,20 @@ public class PaymentPage {
         PageFactory.initElements(driver, this);
     }
 
-    public void payWithPayPal(TestData testData) {
+    public void payWithPayPal() {
         elementHelper.waitForElementToBeClickable(payPal);
         payPal.click();
-        confirmAndPay.click();
+        acceptTermsAndConditionsAndPay();
+        new Utils().waitTime(10000);
+        By acceptButton = By.id("btn_Accept");
+        elementHelper.waitForPresenceOfElementLocated(acceptButton);
+        driver.findElement(acceptButton).click();
     }
 
     public void payWithOnlineBanking(TestData testData) {
         elementHelper.waitForElementToBeClickable(onlineBank);
         onlineBank.click();
-        new ElementHelper().selectOptionByValue(onlineBankDropDown, testData.getPaymentType());
+        elementHelper.selectOptionByValue(onlineBankDropDown, testData.getPaymentType());
     }
 
     public void payWithCreditCards(TestData testData) {
@@ -66,7 +75,7 @@ public class PaymentPage {
     public void payWithDebitCards(TestData testData) {
     }
 
-    public void populatePaymentPage(TestData testData) throws PaymentPageException {
+    public ConfirmationPage populatePaymentPage(TestData testData) throws PaymentPageException {
         switch (testData.getPaymentType()) {
             case "VISA":
             case "MASTERCARD":
@@ -76,7 +85,7 @@ public class PaymentPage {
             case "MAESTRO":
             case "UATP":
             case "PAYPAL":
-                payWithPayPal(testData);
+                payWithPayPal();
                 break;
             case "BANCONTACT":
             case "SOFORT":
@@ -88,7 +97,14 @@ public class PaymentPage {
             default:
                 throw new PaymentPageException("Payment method not specified!");
         }
+        log.info("Payment done! Going to confirmation page...");
+        return new ConfirmationPage(driver);
+    }
+
+    public void acceptTermsAndConditionsAndPay() {
         elementHelper.waitForElementToBeClickable(acceptTermsAndConditionsCheckBox);
         acceptTermsAndConditionsCheckBox.click();
+        elementHelper.waitForElementToBeClickable(confirmAndPay);
+        confirmAndPay.click();
     }
 }

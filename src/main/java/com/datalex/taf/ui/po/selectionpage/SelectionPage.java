@@ -1,5 +1,6 @@
 package com.datalex.taf.ui.po.selectionpage;
 
+import com.datalex.taf.ui.data.TestData;
 import com.datalex.taf.ui.helpers.ElementHelper;
 import com.datalex.taf.ui.po.summarypage.SummaryPage;
 import lombok.extern.log4j.Log4j2;
@@ -70,6 +71,13 @@ public class SelectionPage implements ISelectionPage {
             default:
                 return "";
         }
+    }
+
+    public void selectFareFamily(TestData testData) {
+        log.info("Select fare family: " + testData.getFareFamily());
+        selectOutboundFareFamily(testData.getFareFamily());
+        if (("RT").equalsIgnoreCase(testData.getTripType()))
+            selectInboundFareFamily(testData.getFareFamily());
     }
 
     public SummaryPage doSelection() {

@@ -1,7 +1,9 @@
 package com.datalex.taf.ui.travellers;
 
 /**
- * Created by jossie.saul on 28/07/2017.
+ * Detail pax interface
+ *
+ * @author Jossie Soul
  */
 public interface IDetail {
 }
