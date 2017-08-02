@@ -65,7 +65,7 @@ public class Adult extends Detail {
 
     public void selectTitle(String titleSel) {
         WebElement title = driver.findElement(By.id("travellersInfo[" + this.paxNumber + "].title"));
-        elementHelper.waitForElementDisplayed(title);
+        elementHelper.waitForElementDisplayedIterative(title);
         elementHelper.selectOptionByValue(title, titleSel);
     }
 
@@ -83,14 +83,14 @@ public class Adult extends Detail {
 
     public void selectCitizenship() {
         WebElement citizenSelectionElement = driver.findElement(By.id("travellersInfo[" + this.paxNumber + "].citizenCountry"));
-        elementHelper.waitForElementDisplayed(citizenSelectionElement);
+        elementHelper.waitForElementDisplayedIterative(citizenSelectionElement);
         elementHelper.selectOptionByValue(citizenSelectionElement, citizenship);
         new Utils().waitTime(1500);
     }
 
     public void selectFormOfID(String foidType) {
         WebElement foidTypeElement = driver.findElement(By.id("travellersInfo[" + this.paxNumber + "].advancedPassengerDetails(foid)"));
-        elementHelper.waitForElementDisplayed(foidTypeElement);
+        elementHelper.waitForElementDisplayedIterative(foidTypeElement);
         elementHelper.selectOptionByValue(foidTypeElement, foidType);
     }
 
@@ -102,21 +102,21 @@ public class Adult extends Detail {
 
     public void inputFormOfIDExpiryDate() {
         WebElement foidExpireDayElement = driver.findElement(By.id("travellersInfo[" + this.paxNumber + "].advancedPassengerDetails(foidExpireDay)"));
-        elementHelper.waitForElementDisplayed(foidExpireDayElement);
+        elementHelper.waitForElementDisplayedIterative(foidExpireDayElement);
         elementHelper.selectOptionByValue(foidExpireDayElement, "1");
 
         WebElement foidExpireMonthElement = driver.findElement(By.id("travellersInfo[" + this.paxNumber + "].advancedPassengerDetails(foidExpireMonth)"));
-        elementHelper.waitForElementDisplayed(foidExpireMonthElement);
+        elementHelper.waitForElementDisplayedIterative(foidExpireMonthElement);
         elementHelper.selectOptionByValue(foidExpireMonthElement, "1");
 
         WebElement foidExpireYearElement = driver.findElement(By.id("travellersInfo[" + this.paxNumber + "].advancedPassengerDetails(foidExpireYear)"));
-        elementHelper.waitForElementDisplayed(foidExpireYearElement);
+        elementHelper.waitForElementDisplayedIterative(foidExpireYearElement);
         elementHelper.selectOptionByValue(foidExpireYearElement, "2027");
     }
 
     public void inputIssuingCountry() {
         WebElement issuingCountryElement = driver.findElement(By.id("travellersInfo[" + this.paxNumber + "].advancedPassengerDetails(foidCountry)"));
-        elementHelper.waitForElementDisplayed(issuingCountryElement);
+        elementHelper.waitForElementDisplayedIterative(issuingCountryElement);
         elementHelper.selectOptionByValue(issuingCountryElement, issuingCountry);
     }
 

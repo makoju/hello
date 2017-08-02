@@ -66,15 +66,15 @@ public class PassengersPage implements IPassengersPage {
         } else {
             switch (testData.getFrequentFlierProgram()) {
                 case "Agean":
-                    new ElementHelper().selectOptionByValue(loyalty, "A3");
+                    elementHelper.selectOptionByValue(loyalty, "A3");
                     loyaltyNumber.sendKeys("992003004357384");
                     break;
                 case "Miles and More":
-                    new ElementHelper().selectOptionByValue(loyalty, "LH");
+                    elementHelper.selectOptionByValue(loyalty, "LH");
                     loyaltyNumber.sendKeys("992003004357384");
                     break;
                 case "LOOP":
-                    new ElementHelper().selectOptionByValue(loyalty, "SN");
+                    elementHelper.selectOptionByValue(loyalty, "SN");
                     break;
                 default:
                     TAFLogger.info("invalid frequent flier program");
