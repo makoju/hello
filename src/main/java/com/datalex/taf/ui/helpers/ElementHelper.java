@@ -187,7 +187,7 @@ public class ElementHelper {
      * @param value   value to select
      */
     public void selectOptionByValue(WebElement element, String value) {
-        log.debug("Selecting Option :" +value+ " in:" + element.toString());
+        log.debug("Selecting Option :" + value + " in:" + element.toString());
         if (value == null) {
             return;
         }

@@ -65,5 +65,4 @@ public class BEL_PO_POC {
         //Assert PNR is present
         Assert.assertNotNull(confirmationPage.getPNR());
     }
-
 }
