@@ -33,11 +33,11 @@ public class ContactDetails {
     }
 
     public void populateContactDetails(TestData testData) {
-        elementHelper.waitForElementDisplayed(travellerEmailAddress);
+        elementHelper.waitForElementDisplayedIterative(travellerEmailAddress);
         travellerEmailAddress.sendKeys(testData.getEmail());
-        elementHelper.waitForElementDisplayed(travellerConfirmEmail);
+        elementHelper.waitForElementDisplayedIterative(travellerConfirmEmail);
         travellerConfirmEmail.sendKeys(testData.getEmail());
-        elementHelper.waitForElementDisplayed(travellerPhoneNumber);
+        elementHelper.waitForElementDisplayedIterative(travellerPhoneNumber);
         travellerPhoneNumber.sendKeys("4564564564");
         elementHelper.selectOptionByValue(travellerCountryCode, "US");
     }

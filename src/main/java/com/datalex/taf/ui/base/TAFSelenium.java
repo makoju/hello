@@ -37,20 +37,20 @@ public class TAFSelenium {
     private static final String RUN_MODE_LOCAL = "local";
 
     /**
-     * Empty private constructor
+     * Empty public constructor
      */
-    private TAFSelenium() {
+    public TAFSelenium() {
     }
 
     /**
      * TAFSelenium init method
-     * Example of usage: TAFSelenium.initDriver();
+     * Example of usage: new TAFSelenium().initDriver();
      * NOTE: It is important to use getDriver() because of parallel runs
      *
      * @throws TAFSeleniumException if taf.properties browserType field is empty
      * @throws IOException          if reading from taf.properties fails
      */
-    public static void initDriver() throws IOException {
+    public void initDriver() throws IOException {
         LoadProperties.propertyLoader();
         String browserName = TAFProperties.getBrowserType().toUpperCase();
         URL driverURL = new URL(TAFProperties.getGridHost() + ":" + TAFProperties.getGridPort() + "/wd/hub");

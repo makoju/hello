@@ -2,6 +2,7 @@ package com.datalex.taf.ui.po.selectionpage;
 
 import com.datalex.taf.ui.data.TestData;
 import com.datalex.taf.ui.helpers.ElementHelper;
+import com.datalex.taf.ui.helpers.Utils;
 import com.datalex.taf.ui.po.summarypage.SummaryPage;
 import lombok.extern.log4j.Log4j2;
 import org.openqa.selenium.By;
@@ -82,6 +83,7 @@ public class SelectionPage implements ISelectionPage {
 
     public SummaryPage doSelection() {
         log.info("Flight Selection activity completed. Proceeding onwards...");
+        new Utils().waitTime(2000);
         elementHelper.waitForElementToBeClickable(buttonSelection);
         buttonSelection.click();
         return new SummaryPage(driver);

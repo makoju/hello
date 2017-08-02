@@ -278,7 +278,7 @@ public class General {
                             "year:" + yearDep + "'][onclick*='month:" + month + "'][onclick*='day:" + day + "']")))) {
 
                         WebElement nextMonth = driver.findElement(By.cssSelector("div#calendar1Dialog a[onclick*='nextMonth']"));
-                        new ElementHelper(driver).waitForElementPresent(nextMonth);
+                        new ElementHelper(driver).waitForElementDisplayed(nextMonth);
                         clickElementJS(driver, nextMonth);
                         new Utils().waitTime(1000);
                         i++;

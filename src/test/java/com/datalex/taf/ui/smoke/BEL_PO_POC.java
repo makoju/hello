@@ -42,7 +42,7 @@ public class BEL_PO_POC {
 
     @Test(dataProvider = "Data", description = "Basic End to End booking flow")
     public void basicEndToEndBookingFlow(TestData testData) throws Exception {
-        TAFSelenium.initDriver();
+        new TAFSelenium().initDriver();
         WebDriver driver = TAFSelenium.getDriver();
         //Login page actions
         SearchPage searchPage = new SearchPage(driver);

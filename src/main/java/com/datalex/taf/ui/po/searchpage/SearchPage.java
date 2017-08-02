@@ -156,6 +156,7 @@ public class SearchPage implements ISearchPage {
     }
 
     public void chooseLoopPrice(TestData testData) {
+        log.info("Choosing Loop Price");
         if ("Signed in".equalsIgnoreCase(testData.getLoopProfile()) && ("Loops".equalsIgnoreCase(testData.getFrequentFlierProgram()))) {
             loopPrice.click();
         }
@@ -188,6 +189,7 @@ public class SearchPage implements ISearchPage {
     }
 
     public void setOW(TestData testData) throws Exception {
+        log.info("Trip is Oneway Flight");
         tripTypeOW.click();
         setOriginLocation(testData.getInputFrom());
         setDestinationLocation(testData.getInputTo());
@@ -195,12 +197,14 @@ public class SearchPage implements ISearchPage {
     }
 
     public void setPassengers(TestData testData) {
-        new ElementHelper().selectOptionByText(adultNo, testData.getAdt());
-        new ElementHelper().selectOptionByText(childNo, testData.getChd());
-        new ElementHelper().selectOptionByText(infantNo, testData.getInf());
+        log.info("Selecting PAX");
+        elementHelper.selectOptionByText(adultNo, testData.getAdt());
+        elementHelper.selectOptionByText(childNo, testData.getChd());
+        elementHelper.selectOptionByText(infantNo, testData.getInf());
     }
 
-    public void setFlightDateTypes(TestData testData) {
+    public void setFlightSearchTypes(TestData testData) {
+        log.info("Setting Flight Search Type");
         if ("flexibleDates".equals(testData.getFlightDates())) {
             flexibleDates.click();
         }
@@ -235,6 +239,7 @@ public class SearchPage implements ISearchPage {
     }
 
     public SelectionPage doFlightSearch(TestData testData) throws Exception {
+        log.info("Initiating Flight Search Process.");
         switch (testData.getTripType().trim()) {
             case "OW":
                 setOW(testData);
@@ -248,7 +253,7 @@ public class SearchPage implements ISearchPage {
             default:
                 throw new SearchPageException("TripType not specified!");
         }
-        setFlightDateTypes(testData);
+        setFlightSearchTypes(testData);
         setPassengers(testData);
         setPromotion(testData);
         new ElementHelper().selectOptionByText(cabinClass, testData.getCabinClass().trim());
