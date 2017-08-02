@@ -3,22 +3,17 @@ package com.datalex.taf.ui.po.paymentpage;
 import com.datalex.taf.ui.data.TestData;
 import com.datalex.taf.ui.helpers.ElementHelper;
 import com.datalex.taf.ui.helpers.Utils;
-import com.datalex.taf.ui.payments.CreditCard;
-import com.datalex.taf.ui.helpers.Utils;
+import com.datalex.taf.ui.po.paymentpage.data.CreditCard;
 import com.datalex.taf.ui.po.confirmationpage.ConfirmationPage;
 import com.datalex.taf.ui.po.exceptions.PaymentPageException;
 import lombok.extern.log4j.Log4j2;
 import org.openqa.selenium.By;
-import org.openqa.selenium.NotFoundException;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
 
-import javax.validation.constraints.Null;
 import java.text.ParseException;
-import java.text.SimpleDateFormat;
-import java.util.Date;
 
 /**
  * PaymentPage class
@@ -113,7 +108,7 @@ public class PaymentPage {
     }
 
     public void payWithCreditCards(TestData testData) throws ParseException, Exception {
-        CreditCard cc = buildCreditCardObject(testData.getPaymentType());
+        CreditCard cc = new CreditCard().buildCreditCardObjectByCreditCardType(testData.getPaymentType());
         log.info(cc.toString());
         fillInCreditCardDetails(cc);
         fillInBillingAddressDetails(cc.retrieveRandomBillingInformation());
@@ -121,52 +116,6 @@ public class PaymentPage {
         acceptTermsAndConditionsCheckBox.click();
         confirmAndPay.click();
 
-    }
-
-    protected CreditCard buildCreditCardObject(String ccType) throws ParseException {
-            String optionValue = "VI";
-            String ccNumber = "41111111111111";
-            String securiyCode = "111";
-
-        switch(ccType.toUpperCase()) {
-            case "VISA":
-                optionValue = "VI";
-                ccNumber = "4111111111111111";
-                break;
-            case "MASTERCARD":
-                optionValue = "MC";
-                ccNumber = "5399999999999999";
-                break;
-            case "DINERS":
-                optionValue = "DN";
-                ccNumber = "36255695580017";
-                break;
-            case "DISCOVER":
-                optionValue = "DI";
-                ccNumber = "6011111111111117";
-                break;
-            case "UATP":
-                optionValue = "TP";
-                ccNumber = "108112000000004";
-                break;
-            case "AMEX":
-                optionValue = "AM";
-                ccNumber = "374111111111111";
-                break;
-            case "AMERICANEXPRESS":
-                optionValue = "AM";
-                ccNumber = "";
-                break;
-            default:
-                log.error("CREDIT CARD TYPE NOT FOUND");
-                throw new NotFoundException("INVALID CREDITCARD TYPE");
-        }
-        return new CreditCard()
-                .setTypeByOptionValue(optionValue)
-                .setCardHolder("John Wayne")
-                .setNumber(ccNumber)
-                .setSecurityCode(securiyCode)
-                .setExpiryDate(new SimpleDateFormat("dd/MM/yyyy").parse("01/01/2025"));
     }
 
 
@@ -198,23 +147,18 @@ public class PaymentPage {
 
     public ConfirmationPage populatePaymentPage(TestData testData) throws PaymentPageException, Exception {
         switch (testData.getPaymentType()) {
+            //NOTE: CREDITCARD GROUP
             case "VISA":
-                payWithCreditCards(testData);
-                break;
             case "MASTERCARD":
-                payWithCreditCards(testData);
-                break;
             case "AMEX":
-                payWithCreditCards(testData);
-                break;
             case "DISCOVER":
-                payWithCreditCards(testData);
-                break;
             case "DINERS":
                 payWithCreditCards(testData);
                 break;
+            //CREDITCARD GROUP ENDS!
             case "MAESTRO":
             case "UATP":
+                break;
             case "PAYPAL":
                 payWithPayPal();
                 break;

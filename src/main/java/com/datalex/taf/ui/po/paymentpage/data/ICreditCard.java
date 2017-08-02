@@ -1,4 +1,4 @@
-package com.datalex.taf.ui.payments;
+package com.datalex.taf.ui.po.paymentpage.data;
 
 import java.util.Date;
 

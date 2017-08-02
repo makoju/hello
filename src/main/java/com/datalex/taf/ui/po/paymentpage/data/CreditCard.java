@@ -1,15 +1,16 @@
-package com.datalex.taf.ui.payments;
+package com.datalex.taf.ui.po.paymentpage.data;
 
 import com.github.javafaker.Faker;
 import lombok.extern.log4j.Log4j2;
 
+import java.text.ParseException;
 import java.util.Date;
 
 /**
  * Created by jossie.saul on 01/08/2017.
  */
 @Log4j2
-public class CreditCard implements ICreditCard {
+public class CreditCard extends CreditCardData implements ICreditCard {
 
     public String type;
     public String typeByOptionValue;
@@ -30,7 +31,6 @@ public class CreditCard implements ICreditCard {
     public CreditCard(){
 
     }
-
 
     @Override
     public ICreditCard name() {
