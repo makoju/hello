@@ -66,22 +66,13 @@ gradle task regression -DprojectIp="http://10.160.7.108"
 * Change `gridPort=4444`
 
 # Running UI Tests locally:
-* Download JAR [selenium-server-standalone-3.4.0.jar](http://selenium-release.storage.googleapis.com/3.4/selenium-server-standalone-3.4.0.jar)
 * Download geckodriver 32-bit [geckodriver 32-bit](https://github.com/mozilla/geckodriver/releases/download/v0.16.1/geckodriver-v0.16.1-win32.zip)
 * OR
 * Download geckodriver 64-bit [geckodriver 64-bit](https://github.com/mozilla/geckodriver/releases/download/v0.16.1/geckodriver-v0.16.1-win64.zip)
 * geckodriver.exe should be located in 'C:\drivers\geckodriver.exe'
 * OR if you are using Linux should be located in '/home/user_name/drivers/geckodriver'
-* Run following command in command line to start Selenium hub:
-```bash
-java -jar selenium-server-standalone-3.4.0.jar -role hub
-```
-* Run following command in command line to start Selenium node on windows:
-```bash
-java -Dwebdriver.gecko.driver="C:\drivers\geckodriver.exe" -Dwebdriver.firefox.marionette=true -jar selenium-server-standalone-3.4.0.jar -role webdriver
-```
-* OR on Linux:
-```bash
-java -Dwebdriver.gecko.driver="/home/user_name/drivers/geckodriver" -Dwebdriver.firefox.marionette=true -jar selenium-server-standalone-3.4.0.jar -role webdriver
-```
+* 
+* Open taf.properties file and set `runMode=local` and run test simple as right click and Run.
+*
 * NOTE: If you have problems running tests. Please download latest geckodriver and update browser to latest!
+* NOTE: If you want to run tests against Chrome, download latest chrome drivers, put them in 'C:\drivers\chromedriver.exe'
