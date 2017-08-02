@@ -3,3 +3,4 @@ testCaseName,tripType,flightDates,promotion,outboundPOS,inputFrom,inputTo,depart
 2,OW,fixedDates,,BEL,BRU,LHR,10,16,,,,,,,,1,0,0,Economy,Check&Go,no,no,no,no,Yes,11111,VISA,Signed out,,18,Yes,Yes,alan.peck@datalex.com,Datalex123!
 3,RT,fixedDates,,BEL,BRU,LHR,9,15,,,,,,,,1,0,0,Economy,Check&Go,no,no,no,no,Yes,11111,PAYPAL,Signed out,,18,Yes,Yes,alan.peck@datalex.com,Datalex123!
 4,RT,fixedDates,,BEL,BRU,LHR,9,15,,,,,,,,1,0,0,Economy,Check&Go,no,no,no,no,Yes,11111,VISA,Signed out,,18,Yes,Yes,alan.peck@datalex.com,Datalex123!
+5,MC,,,BEL,BRU,SFO,11,20,BRU,LAX,LAX,JFK,JFK,BRU,25,1,1,1,Economy,Economy,no,no,no,no,no,11111,DINERS,Signed in,LOOP,46,Yes,no,alan.peck@datalex.com,Datalex123!
