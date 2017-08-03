@@ -3,14 +3,14 @@ package com.datalex.taf.ui.smoke;
 import com.datalex.taf.ui.base.TAFSelenium;
 import com.datalex.taf.ui.data.TestData;
 import com.datalex.taf.ui.helpers.ScreenshotHelper;
-import com.datalex.taf.ui.po.confirmationpage.ConfirmationPage;
-import com.datalex.taf.ui.po.loginpage.LoginPage;
-import com.datalex.taf.ui.po.passengerspage.PassengersPage;
-import com.datalex.taf.ui.po.paymentpage.PaymentPage;
-import com.datalex.taf.ui.po.searchpage.SearchPage;
-import com.datalex.taf.ui.po.seatspage.SeatsPage;
-import com.datalex.taf.ui.po.selectionpage.SelectionPage;
-import com.datalex.taf.ui.po.summarypage.SummaryPage;
+import com.datalex.taf.ui.pageobjects.confirmationpage.ConfirmationPage;
+import com.datalex.taf.ui.pageobjects.loginpage.LoginPage;
+import com.datalex.taf.ui.pageobjects.passengerspage.PassengersPage;
+import com.datalex.taf.ui.pageobjects.paymentpage.PaymentPage;
+import com.datalex.taf.ui.pageobjects.searchpage.SearchPage;
+import com.datalex.taf.ui.pageobjects.seatspage.SeatsPage;
+import com.datalex.taf.ui.pageobjects.selectionpage.SelectionPage;
+import com.datalex.taf.ui.pageobjects.summarypage.SummaryPage;
 import org.openqa.selenium.WebDriver;
 import org.testng.Assert;
 import org.testng.ITestResult;
@@ -35,7 +35,7 @@ public class BEL_PO_POC {
         TAFSelenium.getDriver().quit();
     }
 
-    @DataProvider(name = "Data", parallel = true)
+    @DataProvider(name = "Data", parallel = false)
     public Object[][] data() throws Exception {
         return mapDataFromCSVToObject("Smoke");
     }
