@@ -1,4 +1,4 @@
-# TAF UI 2.0 - Page Object Model Framework - TestNG - POC
+# Page Object Model Framework - TestNG + TAF UI 2.0
 
 # FRAMEWORK SETUP
 ## Lombok plugin
