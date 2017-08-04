@@ -29,6 +29,7 @@ task regression(type: Test) {
     testLogging.showStandardStreams = true
     testLogging.displayGranularity 1
     testLogging.minGranularity 1
+    ignoreFailures = true
     useTestNG() {
         suites 'src/test/resources/suites/regression.xml'
         parallel 'tests'
