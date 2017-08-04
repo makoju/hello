@@ -33,7 +33,7 @@ public class PassengersPage implements IPassengersPage {
     /**
      * Passengers Page constructor
      *
-     * @param driver
+     * @param driver WebDriver
      */
     public PassengersPage(WebDriver driver) {
         log.info("Initiating Passenger Page");

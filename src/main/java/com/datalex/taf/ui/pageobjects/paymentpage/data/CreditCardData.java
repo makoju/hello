@@ -21,7 +21,7 @@ public class CreditCardData {
      *
      * @param ccType - available option {VISA,MASTERCARD,DINERS,DISCOVER,UATP,AMEX,AMERICANEXPRESS}
      * @return - CreditCard Object
-     * @throws ParseException
+     * @throws ParseException if parse error occurs
      */
     public CreditCard buildCreditCardObjectByCreditCardType(String ccType) throws ParseException {
         String optionValue = "VI";
