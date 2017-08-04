@@ -36,6 +36,7 @@ public class Adult extends Detail {
      *
      * @param driver          WebDriver
      * @param passengerNumber int Number of passenger
+     * @throws Exception if error occurs
      */
     public Adult(WebDriver driver, int passengerNumber) throws Exception {
         log.info("Filling Adult PAX Information " + (passengerNumber + 1));
@@ -59,28 +60,50 @@ public class Adult extends Detail {
 
     }
 
+    /**
+     * Set passenger number for current passenger
+     *
+     * @param passengerNumber int pax number
+     */
     public void setPassengerNumber(int passengerNumber) {
         this.paxNumber = passengerNumber;
     }
 
+    /**
+     * Select pax title on passenger page
+     *
+     * @param titleSel title to select
+     */
     public void selectTitle(String titleSel) {
         WebElement title = driver.findElement(By.id("travellersInfo[" + this.paxNumber + "].title"));
         elementHelper.waitForElementDisplayedIterative(title);
         elementHelper.selectOptionByValue(title, titleSel);
     }
 
+    /**
+     * Input first name on passenger page
+     */
     public void inputFirstName() {
         driver.findElement(By.id("travellersInfo[" + this.paxNumber + "].firstName")).sendKeys(firstName);
     }
 
+    /**
+     * Input middle name on passenger page
+     */
     public void inputMiddleName() {
         driver.findElement(By.id("travellersInfo[" + this.paxNumber + "].middleName")).sendKeys(middleName);
     }
 
+    /**
+     * Input last name on passenger page
+     */
     public void inputLastName() {
         driver.findElement(By.id("travellersInfo[" + this.paxNumber + "].lastName")).sendKeys(lastName);
     }
 
+    /**
+     * Select citizenship on passenger page
+     */
     public void selectCitizenship() {
         WebElement citizenSelectionElement = driver.findElement(By.id("travellersInfo[" + this.paxNumber + "].citizenCountry"));
         elementHelper.waitForElementDisplayedIterative(citizenSelectionElement);
@@ -88,18 +111,29 @@ public class Adult extends Detail {
         new Utils().waitTime(1500);
     }
 
+    /**
+     * Select form of id on passenger page
+     *
+     * @param foidType type of foid
+     */
     public void selectFormOfID(String foidType) {
         WebElement foidTypeElement = driver.findElement(By.id("travellersInfo[" + this.paxNumber + "].advancedPassengerDetails(foid)"));
         elementHelper.waitForElementDisplayedIterative(foidTypeElement);
         elementHelper.selectOptionByValue(foidTypeElement, foidType);
     }
 
+    /**
+     * Input form of id number to passenger page
+     */
     public void inputFormOfIDNumber() {
         WebElement foidNumberElement = driver.findElement(By.id("travellersInfo[" + this.paxNumber + "].advancedPassengerDetails(foidNumber)"));
         elementHelper.waitForElementDisplayed(foidNumberElement);
         foidNumberElement.sendKeys(foidNumber);
     }
 
+    /**
+     * Input form of id expiry date
+     */
     public void inputFormOfIDExpiryDate() {
         WebElement foidExpireDayElement = driver.findElement(By.id("travellersInfo[" + this.paxNumber + "].advancedPassengerDetails(foidExpireDay)"));
         elementHelper.waitForElementDisplayedIterative(foidExpireDayElement);
@@ -114,6 +148,9 @@ public class Adult extends Detail {
         elementHelper.selectOptionByValue(foidExpireYearElement, "2027");
     }
 
+    /**
+     * Input issuing country
+     */
     public void inputIssuingCountry() {
         WebElement issuingCountryElement = driver.findElement(By.id("travellersInfo[" + this.paxNumber + "].advancedPassengerDetails(foidCountry)"));
         elementHelper.waitForElementDisplayedIterative(issuingCountryElement);
@@ -130,6 +167,12 @@ public class Adult extends Detail {
         return elementHelper.isElementDisplayed(retrieveCorrectDoBLocator(isAPD));
     }
 
+    /**
+     * Get correct date of birth locator
+     *
+     * @param isAPD boolean
+     * @return WebElement
+     */
     public WebElement retrieveCorrectDoBLocator(boolean isAPD) {
         WebElement dob;
         if (isAPD) {
@@ -140,6 +183,12 @@ public class Adult extends Detail {
         return dob;
     }
 
+    /**
+     * Fill date of birth by calendar on passenger page
+     *
+     * @param isAPD boolean
+     * @throws Exception if error occurs
+     */
     public void fillDateOfBirthByCalendar(boolean isAPD) throws Exception {
         new General().handleDatePickerCalender(driver, retrieveCorrectDoBLocator(isAPD), renderYearFromToday("ADT"));
     }

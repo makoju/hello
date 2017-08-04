@@ -39,6 +39,9 @@ public class Detail {
     protected Date foidExpiryDate;
     protected Date dateOfBirth;
 
+    /**
+     * Default constructor for Detail class
+     */
     public Detail() {
         Faker faker = new Faker();
         this.title = getRandom(titleChoice);
@@ -53,11 +56,23 @@ public class Detail {
         this.issuingCountry = "US";
     }
 
+    /**
+     * Method to get random string from array of strings
+     *
+     * @param array string array
+     * @return String
+     */
     private String getRandom(String[] array) {
         int rnd = new Random().nextInt(array.length);
         return array[rnd];
     }
 
+    /**
+     * Render year from today
+     *
+     * @param paxType pax type
+     * @return Date object
+     */
     protected Date renderYearFromToday(String paxType) {
         int yearBegin = 0;
         int yearEnd = 0;

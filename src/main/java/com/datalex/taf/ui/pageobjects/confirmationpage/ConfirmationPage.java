@@ -24,6 +24,11 @@ public class ConfirmationPage implements IConfirmationPage {
     @FindBy(className = "colConfirmNum")
     public WebElement confirmationNumber;
 
+    /**
+     * Confirmation page constructor
+     *
+     * @param driver WebDriver
+     */
     public ConfirmationPage(WebDriver driver) {
         log.info("Initiating Confirmation page...");
         this.driver = driver;
@@ -32,6 +37,12 @@ public class ConfirmationPage implements IConfirmationPage {
         PageFactory.initElements(driver, this);
     }
 
+    /**
+     * This method will get text from PNR locator and save it to reservationNumber.csv file
+     *
+     * @return String PNR number
+     * @throws IOException if error occurs while creating file
+     */
     public String getPNR() throws IOException {
         elementHelper.waitForElementDisplayed(confirmationNumber);
         String pnr = confirmationNumber.getText().trim();
