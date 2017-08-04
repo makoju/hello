@@ -1,6 +1,6 @@
 group = 'taf'
 version = '0.0.1'
-description = "BRU_PageObject-POC"
+description = "taf-testng-ui"
 
 apply plugin: 'java'
 apply plugin: 'maven'
