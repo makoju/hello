@@ -24,6 +24,11 @@ public class SelectionPage implements ISelectionPage {
     @FindBy(id = "pgButtonNext")
     public WebElement buttonSelection;
 
+    /**
+     * SelectionPage instance
+     *
+     * @param driver WebDriver
+     */
     public SelectionPage(WebDriver driver) {
         log.info("Initiating Selection Page");
         this.driver = driver;
@@ -33,6 +38,11 @@ public class SelectionPage implements ISelectionPage {
         PageFactory.initElements(driver, this);
     }
 
+    /**
+     * Select fare family for outbound flight
+     *
+     * @param fareFamily fare family
+     */
     public void selectOutboundFareFamily(String fareFamily) {
         log.info("Selecting Outbound Fare Family");
         elementHelper.waitForElementDisplayed(getSelectFlightRadioLocator(getFFAlias(fareFamily), 0));
@@ -40,6 +50,11 @@ public class SelectionPage implements ISelectionPage {
         getSelectFlightRadioLocator(getFFAlias(fareFamily), 0).click();
     }
 
+    /**
+     * Select fare family for inbound flight
+     *
+     * @param fareFamily fare family
+     */
     public void selectInboundFareFamily(String fareFamily) {
         log.info("Selecting Inbound Fare Family");
         elementHelper.waitForElementDisplayed(getSelectFlightRadioLocator(getFFAlias(fareFamily), 1));
@@ -47,6 +62,13 @@ public class SelectionPage implements ISelectionPage {
         getSelectFlightRadioLocator(getFFAlias(fareFamily), 1).click();
     }
 
+    /**
+     * Method to get fare family locator
+     *
+     * @param fareFamilyAlias fare family alias
+     * @param blockNumber     block number for fare family
+     * @return WebElement
+     */
     public WebElement getSelectFlightRadioLocator(String fareFamilyAlias, int blockNumber) {
         return driver.findElement(By.xpath("//input[contains(@name, 'flightItineraryGroupId[" + blockNumber + "]')" +
                 " or contains(@name, 'flightItineraryId[" + blockNumber + "]')]" +
@@ -54,6 +76,12 @@ public class SelectionPage implements ISelectionPage {
                 "[not(@type='hidden')]"));
     }
 
+    /**
+     * Method to get fare family alias
+     *
+     * @param fareFamilyName fare family
+     * @return String alias
+     */
     public String getFFAlias(String fareFamilyName) {
         switch (fareFamilyName.toUpperCase()) {
             case "ECONOMY":
@@ -75,6 +103,11 @@ public class SelectionPage implements ISelectionPage {
         }
     }
 
+    /**
+     * Method to select fare family
+     *
+     * @param testData TestData class
+     */
     public void selectFareFamily(TestData testData) {
         if (!"MC".equalsIgnoreCase(testData.getTripType())) {
             log.info("Select fare family: " + testData.getFareFamily());
@@ -84,6 +117,11 @@ public class SelectionPage implements ISelectionPage {
         }
     }
 
+    /**
+     * Method to confirm selection and go to summary page
+     *
+     * @return SummaryPage instance
+     */
     public SummaryPage doSelection() {
         log.info("Flight Selection activity completed. Proceeding onwards...");
         new Utils().waitTime(2000);

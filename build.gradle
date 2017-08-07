@@ -50,6 +50,11 @@ task smoke(type: Test) {
     }
 }
 
+task javadocJar(type: Jar, dependsOn: javadoc) {
+    classifier = 'javadoc'
+    from javadoc.destinationDir
+}
+
 private void setRpTagsForTestType(String testType) {
     Properties rpProps = new Properties()
     File rpPropsFile = new File("src/test/resources/reportportal.properties")

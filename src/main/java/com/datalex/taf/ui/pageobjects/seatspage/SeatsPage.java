@@ -36,6 +36,11 @@ public class SeatsPage {
     @FindBy(xpath = "//*[@id='pgButtonClear']/span/span")
     public WebElement clearSeatSelection;
 
+    /**
+     * SeatsPage constructor
+     *
+     * @param driver WebDriver
+     */
     public SeatsPage(WebDriver driver) {
         this.driver = driver;
         elementHelper = new ElementHelper(driver);
@@ -43,11 +48,22 @@ public class SeatsPage {
         PageFactory.initElements(driver, this);
     }
 
+    /**
+     * Method to go to payment page
+     *
+     * @return PaymentPage instance
+     */
     public PaymentPage goToPayment() {
         continueBtn.click();
         return new PaymentPage(driver);
     }
 
+    /**
+     * Method to skip seat selection on SeatsPage
+     *
+     * @param testData TestData class
+     * @return PaymentPage instance
+     */
     public PaymentPage skipSeatSelection(TestData testData) {
         if ("RT".equalsIgnoreCase(testData.getTripType())) {
             elementHelper.waitForElementDisplayed(seatSelectionImg);

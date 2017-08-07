@@ -120,6 +120,11 @@ public class SearchPage implements ISearchPage {
     @FindBy(id = "multiCityOptions[2].destinationLocationCode:multiCityOptions[2].destinationLocationName")
     public WebElement inputToMC3CodeHidden;
 
+    /**
+     * Search page constructor
+     *
+     * @param driver WebDriver
+     */
     public SearchPage(WebDriver driver) {
         log.info("Initiating Flight Search Page");
         this.driver = driver;
@@ -128,6 +133,12 @@ public class SearchPage implements ISearchPage {
         driver.get(TAFProperties.getPROJECTIP() + "/BEL/ApplicationStartAction.do?" + TAFProperties.getPOS());
     }
 
+    /**
+     * Method to set origin on search page
+     *
+     * @param code airport code
+     * @throws SearchPageException if error occurs on Search page
+     */
     public void setOriginLocation(String code) throws SearchPageException {
         log.info("Setting Origin Location");
         try {
@@ -137,6 +148,12 @@ public class SearchPage implements ISearchPage {
         }
     }
 
+    /**
+     * Method to set destination on search page
+     *
+     * @param code airport code
+     * @throws SearchPageException if error occurs on Search page
+     */
     public void setDestinationLocation(String code) throws SearchPageException {
         log.info("Setting Destination Location");
         try {
@@ -146,16 +163,35 @@ public class SearchPage implements ISearchPage {
         }
     }
 
+    /**
+     * Method to input departure date on search page
+     *
+     * @param daysFromToday string days from today
+     * @throws Exception if error occurs
+     */
     public void inputDepartureDate(String daysFromToday) throws Exception {
         log.info("Selecting Departure Date");
         new General().inputDateByCalendar(driver, inputDepartOn, daysFromToday);
     }
 
+    /**
+     * Method to input return date on search page
+     *
+     * @param daysFromToday string days from today
+     * @throws Exception if error occurs
+     */
     public void inputReturnDate(String daysFromToday) throws Exception {
         log.info("Selecting Return Date");
         new General().inputDateByCalendar(driver, inputReturnOn, daysFromToday);
     }
 
+    /**
+     * Method to input departure date for MC flights
+     *
+     * @param daysFromToday string days from today
+     * @param flightNumber  flight number for MC
+     * @throws Exception if error occurs
+     */
     public void inputDepartureDateMC(String daysFromToday, int flightNumber) throws Exception {
         log.info("Selecting Departure Date for MC");
         int flightNumberLocator = flightNumber - 1;
@@ -163,6 +199,11 @@ public class SearchPage implements ISearchPage {
         new General().inputDateByCalendar(driver, mcDepartOn, daysFromToday);
     }
 
+    /**
+     * Show price in loops on search page
+     *
+     * @param testData TestData class
+     */
     public void chooseLoopPrice(TestData testData) {
         log.info("Choosing Loop Price");
         if ("Signed in".equalsIgnoreCase(testData.getLoopProfile()) && ("Loops".equalsIgnoreCase(testData.getFrequentFlierProgram()))) {
@@ -170,6 +211,12 @@ public class SearchPage implements ISearchPage {
         }
     }
 
+    /**
+     * Method to set MC flights on Search page
+     *
+     * @param testData TestData class
+     * @throws Exception if error occurs
+     */
     public void setMC(TestData testData) throws Exception {
         log.info("Trip is OpenJaw");
         tripTypeMC.click();
@@ -190,6 +237,12 @@ public class SearchPage implements ISearchPage {
         }
     }
 
+    /**
+     * Method to set RT type of flight on search page
+     *
+     * @param testData TestData class
+     * @throws Exception if error occurs
+     */
     public void setRT(TestData testData) throws Exception {
         log.info("Trip is Return Flight");
         tripTypeRT.click();
@@ -199,6 +252,12 @@ public class SearchPage implements ISearchPage {
         inputReturnDate(testData.getReturnOn());
     }
 
+    /**
+     * Method to set OW type of flight on search page
+     *
+     * @param testData TestData class
+     * @throws Exception if error occurs
+     */
     public void setOW(TestData testData) throws Exception {
         log.info("Trip is Oneway Flight");
         tripTypeOW.click();
@@ -207,6 +266,11 @@ public class SearchPage implements ISearchPage {
         inputDepartureDate(testData.getDepartOn());
     }
 
+    /**
+     * Method to set passengers on search page
+     *
+     * @param testData TestData class
+     */
     public void setPassengers(TestData testData) {
         log.info("Selecting PAX");
         elementHelper.selectOptionByText(adultNo, testData.getAdt());
@@ -214,6 +278,11 @@ public class SearchPage implements ISearchPage {
         elementHelper.selectOptionByText(infantNo, testData.getInf());
     }
 
+    /**
+     * Method to set flight search types on search page
+     *
+     * @param testData TestData class
+     */
     public void setFlightSearchTypes(TestData testData) {
         if (!"MC".equalsIgnoreCase(testData.getTripType())) {
             log.info("Setting Flight Search Type");
@@ -226,17 +295,27 @@ public class SearchPage implements ISearchPage {
         }
     }
 
+    /**
+     * Set promotion on search page
+     *
+     * @param testData TestData class
+     */
     public void setPromotion(TestData testData) {
         if (!"MC".equalsIgnoreCase(testData.getTripType()))
-        if (testData.getPromotion() != null) {
-            log.info("Setting Promotion Code");
-            elementHelper.waitForElementToBeClickable(promotionLink);
-            promotionLink.click();
-            elementHelper.waitForElementToBeClickable(promotionInput);
-            promotionInput.sendKeys(testData.getPromotion().trim());
-        }
+            if (testData.getPromotion() != null) {
+                log.info("Setting Promotion Code");
+                elementHelper.waitForElementToBeClickable(promotionLink);
+                promotionLink.click();
+                elementHelper.waitForElementToBeClickable(promotionInput);
+                promotionInput.sendKeys(testData.getPromotion().trim());
+            }
     }
 
+    /**
+     * Method to go to login page
+     *
+     * @return LoginPage instance
+     */
     public LoginPage goToLoginPage() {
         log.info("Going Into Login Page");
         elementHelper.waitForElementToBeClickable(loginButton);
@@ -245,6 +324,11 @@ public class SearchPage implements ISearchPage {
         return new LoginPage(driver);
     }
 
+    /**
+     * Method to click on search button on SearchPage
+     *
+     * @return return SelectionPage instance
+     */
     public SelectionPage doSearch() {
         log.info("Search Interaction Complete. Searching flight now...");
         elementHelper.waitForElementToBeClickable(buttonSearch);
@@ -252,6 +336,13 @@ public class SearchPage implements ISearchPage {
         return new SelectionPage(driver);
     }
 
+    /**
+     * Method to do flight search using test data
+     *
+     * @param testData TestData class
+     * @return SelectionPage instance
+     * @throws Exception if error occurs on Search Page
+     */
     public SelectionPage doFlightSearch(TestData testData) throws Exception {
         log.info("Initiating Flight Search Process.");
         switch (testData.getTripType().trim()) {

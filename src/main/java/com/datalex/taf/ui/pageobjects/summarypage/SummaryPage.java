@@ -31,6 +31,11 @@ public class SummaryPage {
     @FindBy(xpath = "//*[contains (@class, 'button2')]//*[contains(text(),'Add baggage')]")
     public WebElement addBaggageButton;
 
+    /**
+     * Summary page constructor
+     *
+     * @param driver WebDriver
+     */
     public SummaryPage(WebDriver driver) {
         log.info("Initiating Summary Page");
         this.driver = driver;
@@ -40,6 +45,11 @@ public class SummaryPage {
         PageFactory.initElements(driver, this);
     }
 
+    /**
+     * Method to  go to passengers page
+     *
+     * @return PassengersPage instance
+     */
     public PassengersPage goToPassengersPage() {
         log.info("Summary Page Interaction Completed. Proceeding onwards...");
         elementHelper.waitForElementToBeClickable(buttonNext);
