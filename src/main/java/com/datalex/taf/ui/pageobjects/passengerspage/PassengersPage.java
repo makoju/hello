@@ -30,6 +30,11 @@ public class PassengersPage implements IPassengersPage {
     @FindBy(id = "pgButtonProceed")
     public WebElement buttonProceed;
 
+    /**
+     * Passengers Page constructor
+     *
+     * @param driver WebDriver
+     */
     public PassengersPage(WebDriver driver) {
         log.info("Initiating Passenger Page");
         this.driver = driver;
@@ -41,6 +46,12 @@ public class PassengersPage implements IPassengersPage {
         PageFactory.initElements(driver, this);
     }
 
+    /**
+     * This method will fill Passengers Page using Test Data class
+     *
+     * @param testData TestData class
+     * @throws Exception if error occurs
+     */
     public void fillPassengersPage(TestData testData) throws Exception {
         log.info("Filling All Passengers Information");
 
@@ -53,11 +64,23 @@ public class PassengersPage implements IPassengersPage {
         contactDetails.populateContactDetails(testData);
     }
 
+    /**
+     * Method will check for loyalty membership
+     *
+     * @param paxNumber int number of pax
+     * @return boolean
+     */
     public boolean isLoyalty(int paxNumber) {
         List<WebElement> loyaltyMemberships = driver.findElements(By.id("travellersInfo[" + paxNumber + "].loyaltyMemberships[0]"));
         return loyaltyMemberships.size() > 0;
     }
 
+    /**
+     * This method will set frequent flier program on Passengers page
+     *
+     * @param testData        TestData class
+     * @param passengerNumber int number of pax
+     */
     public void setFrequentFlierProgram(TestData testData, int passengerNumber) {
         WebElement loyalty = driver.findElement(By.id("travellersInfo[" + passengerNumber + "].loyaltyMemberships[0]"));
         WebElement loyaltyNumber = driver.findElement(By.id("travellersInfo[" + passengerNumber + "].loyaltyNumbers[0]"));
@@ -82,18 +105,34 @@ public class PassengersPage implements IPassengersPage {
         }
     }
 
+    /**
+     * This method will determine pax type using locator
+     *
+     * @param passengerNumber int number of pax
+     * @return String with pax type
+     */
     public String determinePassengerType(int passengerNumber) {
         WebElement travelersInfo = driver.findElement(By.xpath("//input[@id='travellersInfo[" + passengerNumber + "].travellerType']"));
         log.debug("Traveller Type is: " + travelersInfo.getAttribute("value"));
         return travelersInfo.getAttribute("value");
     }
 
+    /**
+     * This method will return number of passengers selected
+     *
+     * @return int number of pax
+     */
     public int getHowManyPassengerSelected() {
         List<WebElement> passengerBlock = driver.findElements(By.xpath("//div[contains(@class,'passengerBlock')]"));
         log.debug("Number of Passengers" + passengerBlock.size());
         return passengerBlock.size();
     }
 
+    /**
+     * This page will go to SeatSelection Page
+     *
+     * @return SeatsPage instance
+     */
     public SeatsPage goToSeatSelect() {
         log.info("Passenger details filled. Going to Seat Selection page");
         elementHelper.waitForElementToBeClickable(buttonProceed);

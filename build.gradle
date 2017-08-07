@@ -1,6 +1,6 @@
 group = 'taf'
 version = '0.0.1'
-description = "BRU_PageObject-POC"
+description = "taf-testng-ui"
 
 apply plugin: 'java'
 apply plugin: 'maven'
@@ -49,6 +49,11 @@ task smoke(type: Test) {
         parallel 'tests'
         threadCount 10
     }
+}
+
+task javadocJar(type: Jar, dependsOn: javadoc) {
+    classifier = 'javadoc'
+    from javadoc.destinationDir
 }
 
 private void setRpTagsForTestType(String testType) {

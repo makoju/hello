@@ -3,9 +3,9 @@ package com.datalex.taf.ui.pageobjects.paymentpage;
 import com.datalex.taf.ui.data.TestData;
 import com.datalex.taf.ui.helpers.ElementHelper;
 import com.datalex.taf.ui.helpers.Utils;
-import com.datalex.taf.ui.pageobjects.paymentpage.data.CreditCard;
 import com.datalex.taf.ui.pageobjects.confirmationpage.ConfirmationPage;
 import com.datalex.taf.ui.pageobjects.exceptions.PaymentPageException;
+import com.datalex.taf.ui.pageobjects.paymentpage.data.CreditCard;
 import lombok.extern.log4j.Log4j2;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
@@ -79,6 +79,11 @@ public class PaymentPage {
     @FindBy(id = "onlineBank.bankId")
     public WebElement onlineBankDropDown;
 
+    /**
+     * Payment Page constructor
+     *
+     * @param driver WebDriver
+     */
     public PaymentPage(WebDriver driver) {
         log.info("Initiating Payment page...");
         this.driver = driver;
@@ -101,12 +106,24 @@ public class PaymentPage {
         driver.findElement(acceptButton).click();
     }
 
+    /**
+     * This method is to pat with online banking payment type
+     *
+     * @param testData TestData class
+     */
     public void payWithOnlineBanking(TestData testData) {
         elementHelper.waitForElementToBeClickable(onlineBank);
         onlineBank.click();
         elementHelper.selectOptionByValue(onlineBankDropDown, testData.getPaymentType());
     }
 
+    /**
+     * This method will fill payment page with Credit cards data
+     *
+     * @param testData TestData class
+     * @throws ParseException if parsing error occurs
+     * @throws Exception      if error occurs
+     */
     public void payWithCreditCards(TestData testData) throws ParseException, Exception {
         CreditCard cc = new CreditCard().buildCreditCardObjectByCreditCardType(testData.getPaymentType());
         log.info(cc.toString());
@@ -118,8 +135,13 @@ public class PaymentPage {
 
     }
 
-
-    public void fillInCreditCardDetails(CreditCard cc) throws Exception{
+    /**
+     * This method will populate credit card details on payment page
+     *
+     * @param cc CreditCard object
+     * @throws Exception if error occurs
+     */
+    public void fillInCreditCardDetails(CreditCard cc) throws Exception {
         elementHelper.waitForElementToBeClickable(creditCard);
         creditCard.click();
         elementHelper.waitForElementToBeClickable(creditCardTypeSelection);
@@ -129,14 +151,19 @@ public class PaymentPage {
         log.debug(cc.expiryDate.toString());
         elementHelper.selectOptionByValue(creditCardExpiryMonthForm,
                 String.format("%02d", new Utils().getDateAttribute("MONTH", cc.expiryDate) + 1));
-        elementHelper.selectOptionByText(creditCardExpiryYearForm, String.valueOf(new Utils().getDateAttribute("YEAR",cc.expiryDate)));
+        elementHelper.selectOptionByText(creditCardExpiryYearForm, String.valueOf(new Utils().getDateAttribute("YEAR", cc.expiryDate)));
         elementHelper.waitForElementDisplayed(creditCardSecurityCodeForm);
         creditCardNumberForm.sendKeys(cc.number);
         creditCardSecurityCodeForm.sendKeys(cc.securityCode);
         creditCardHolderNameForm.sendKeys(cc.cardHolder);
     }
 
-    public void fillInBillingAddressDetails(CreditCard cc){
+    /**
+     * This method will  fill billing address details on payment page
+     *
+     * @param cc CreditCard object
+     */
+    public void fillInBillingAddressDetails(CreditCard cc) {
         elementHelper.waitForElementDisplayed(billingAddressLine1Form);
         billingAddressLine1Form.sendKeys(cc.addressLine1);
         billingAddressLine2Form.sendKeys(cc.addressLine2);
@@ -145,6 +172,14 @@ public class PaymentPage {
         billingZipCodeForm.sendKeys(cc.postalCode);
     }
 
+    /**
+     * Main method to populate payment page based on type of payment
+     *
+     * @param testData TestData class
+     * @return Confirmation Page instance
+     * @throws PaymentPageException if payment is not supported
+     * @throws Exception            if error occurs
+     */
     public ConfirmationPage populatePaymentPage(TestData testData) throws PaymentPageException, Exception {
         switch (testData.getPaymentType()) {
             //NOTE: CREDITCARD GROUP
@@ -176,6 +211,9 @@ public class PaymentPage {
         return new ConfirmationPage(driver);
     }
 
+    /**
+     * This method will accept terms and conditions and pay
+     */
     public void acceptTermsAndConditionsAndPay() {
         elementHelper.waitForElementToBeClickable(acceptTermsAndConditionsCheckBox);
         acceptTermsAndConditionsCheckBox.click();
