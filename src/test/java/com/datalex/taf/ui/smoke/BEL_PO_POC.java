@@ -18,7 +18,7 @@ import org.testng.annotations.AfterMethod;
 import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
 
-import static com.datalex.taf.ui.data.DataHelper.mapDataFromCSVToObject;
+import static com.datalex.taf.core.data.DataHelper.mapDataFromCSVToObject;
 
 /**
  * BRU PageObject POC Test class
@@ -37,7 +37,7 @@ public class BEL_PO_POC {
 
     @DataProvider(name = "Data", parallel = false)
     public Object[][] data() throws Exception {
-        return mapDataFromCSVToObject("Smoke");
+        return mapDataFromCSVToObject(TestData.class, "Smoke");
     }
 
     @Test(dataProvider = "Data", description = "Basic End to End booking flow")
