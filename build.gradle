@@ -33,6 +33,7 @@ task regression(type: Test) {
         suites 'src/test/resources/suites/regression.xml'
         parallel 'tests'
         threadCount 10
+        ignoreFailures = true
     }
 }
 
@@ -47,6 +48,7 @@ task smoke(type: Test) {
         suites 'src/test/resources/suites/smoke.xml'
         parallel 'tests'
         threadCount 10
+        ignoreFailures = true
     }
 }
 
