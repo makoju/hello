@@ -29,13 +29,10 @@ task regression(type: Test) {
     testLogging.showStandardStreams = true
     testLogging.displayGranularity 1
     testLogging.minGranularity 1
-    ignoreFailures = true
     useTestNG() {
         suites 'src/test/resources/suites/regression.xml'
         parallel 'tests'
         threadCount 10
-    }
-    test{
         ignoreFailures = true
     }
 }
@@ -47,11 +44,13 @@ task smoke(type: Test) {
     testLogging.showStandardStreams = true
     testLogging.displayGranularity 1
     testLogging.minGranularity 1
-    useTestNG() {
-        suites 'src/test/resources/suites/smoke.xml'
-        parallel 'tests'
-        threadCount 10
+    test {
         ignoreFailures = true
+        useTestNG() {
+            suites 'src/test/resources/suites/smoke.xml'
+            parallel 'tests'
+            threadCount 10
+        }
     }
 }
 
