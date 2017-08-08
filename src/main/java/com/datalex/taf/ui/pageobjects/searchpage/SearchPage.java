@@ -1,6 +1,6 @@
 package com.datalex.taf.ui.pageobjects.searchpage;
 
-import com.datalex.taf.core.readers.property.TAFProperties;
+import com.datalex.taf.core.properties.FrameworkProperties;
 import com.datalex.taf.ui.data.TestData;
 import com.datalex.taf.ui.helpers.ElementHelper;
 import com.datalex.taf.ui.helpers.General;
@@ -130,7 +130,7 @@ public class SearchPage implements ISearchPage {
         this.driver = driver;
         elementHelper = new ElementHelper(driver);
         PageFactory.initElements(driver, this);
-        driver.get(TAFProperties.getPROJECTIP() + "/BEL/ApplicationStartAction.do?" + TAFProperties.getPOS());
+        driver.get(FrameworkProperties.projectIp + "/BEL/ApplicationStartAction.do?" + FrameworkProperties.pos);
     }
 
     /**
