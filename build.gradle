@@ -14,9 +14,9 @@ repositories {
 }
 
 dependencies {
-    compile group: 'taf', name: 'taf-ui', version: '2.0-BETA2'
-    compile group: 'taf', name: 'taf-ui', version: '2.0-BETA2', classifier: 'sources'
-    compile group: 'taf', name: 'taf-ui', version: '2.0-BETA2', classifier: 'javadoc'
+    compile group: 'taf', name: 'taf-ui', version: '2.0-BETA3'
+    compile group: 'taf', name: 'taf-ui', version: '2.0-BETA3', classifier: 'sources'
+    compile group: 'taf', name: 'taf-ui', version: '2.0-BETA3', classifier: 'javadoc'
     compile group: 'com.epam.reportportal', name: 'logger-java-log4j', version: '3.0.0'
     compile group: 'com.epam.reportportal', name: 'agent-java-testng', version: '3.0.4'
     testCompile group: 'org.testng', name: 'testng', version: '6.11'
