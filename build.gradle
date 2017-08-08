@@ -46,11 +46,10 @@ task smoke(type: Test) {
     testLogging.minGranularity 1
     test {
         ignoreFailures = true
-        useTestNG() {
-            suites 'src/test/resources/suites/smoke.xml'
-            parallel 'tests'
-            threadCount 10
-        }
+        useTestNG()
+        suites 'src/test/resources/suites/smoke.xml'
+        parallel 'tests'
+        threadCount 10
     }
 }
 
