@@ -94,7 +94,7 @@ private String getLocalBranch() {
 
 private String getLocalProjectIp() {
     Properties localProjectProps = new Properties()
-    localProjectProps.load(new File("./src/test/resources/config/taf.propertie").newDataInputStream())
+    localProjectProps.load(new File("./src/test/resources/config/taf.properties").newDataInputStream())
     String systProjectIp = System.properties['projectIp']
     String localProjectIp = systProjectIp != null ? systProjectIp : localProjectProps.getProperty("projectIp")
     localProjectIp
