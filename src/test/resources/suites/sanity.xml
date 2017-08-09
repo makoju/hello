@@ -4,7 +4,7 @@
 
     <groups>
         <run>
-            <include name="smoke"/>
+            <include name="sanity"/>
             <exclude name="quarantine"/>
         </run>
     </groups>
@@ -15,10 +15,7 @@
         <listener class-name="com.epam.reportportal.testng.ReportPortalTestNGListener"/>
     </listeners>
 
-    <test name="smoke">
-        <packages>
-            <package name="com.datalex.taf.testng.smoke"/>
-        </packages>
+    <test name="sanity">
         <classes>
             <class name="com.datalex.taf.ui.smoke.SanityTest"/>
         </classes>
