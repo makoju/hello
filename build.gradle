@@ -52,6 +52,19 @@ task smoke(type: Test) {
     }
 }
 
+task sanity(type: Test) {
+    systemProperty "projectIp", System.getProperty("projectIp")
+    setRpTagsForTestType("sanity")
+    testLogging.showStandardStreams = true
+    testLogging.displayGranularity 1
+    testLogging.minGranularity 1
+    useTestNG() {
+        suites 'src/test/resources/suites/sanity.xml'
+        parallel 'tests'
+        threadCount 10
+    }
+}
+
 task javadocJar(type: Jar, dependsOn: javadoc) {
     classifier = 'javadoc'
     from javadoc.destinationDir
@@ -81,7 +94,7 @@ private String getLocalBranch() {
 
 private String getLocalProjectIp() {
     Properties localProjectProps = new Properties()
-    localProjectProps.load(new File("Configurations/project.properties").newDataInputStream())
+    localProjectProps.load(new File("./src/test/resources/config/taf.properties").newDataInputStream())
     String systProjectIp = System.properties['projectIp']
     String localProjectIp = systProjectIp != null ? systProjectIp : localProjectProps.getProperty("projectIp")
     localProjectIp

@@ -27,6 +27,9 @@ public class SearchPage implements ISearchPage {
     @FindBy(id = "loginLinkFromLoginBlock")
     public WebElement loginButton;
 
+    @FindBy(id = "AirFlightSearchForm")
+    public WebElement airFlightSearchForm;
+
     @FindBy(id = "couponLinkBlock")
     public WebElement promotionLink;
 
@@ -131,6 +134,16 @@ public class SearchPage implements ISearchPage {
         elementHelper = new ElementHelper(driver);
         PageFactory.initElements(driver, this);
         driver.get(FrameworkProperties.projectIp + "/BEL/ApplicationStartAction.do?" + FrameworkProperties.pos);
+    }
+
+    /**
+     * Method to determine check if Flight Search page is visible
+     *
+     * @return boolean
+     */
+    public boolean isSearchPageVisible(){
+        log.info("Determining if searchPage is Displayed");
+        return elementHelper.isElementDisplayed(airFlightSearchForm);
     }
 
     /**
