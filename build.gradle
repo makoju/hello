@@ -14,9 +14,9 @@ repositories {
 }
 
 dependencies {
-    compile group: 'taf', name: 'taf-ui', version: '2.0-BETA4'
-    compile group: 'taf', name: 'taf-ui', version: '2.0-BETA4', classifier: 'sources'
-    compile group: 'taf', name: 'taf-ui', version: '2.0-BETA4', classifier: 'javadoc'
+    compile group: 'taf', name: 'taf-ui', version: '2.0-BETA3'
+    compile group: 'taf', name: 'taf-ui', version: '2.0-BETA3', classifier: 'sources'
+    compile group: 'taf', name: 'taf-ui', version: '2.0-BETA3', classifier: 'javadoc'
     compile group: 'com.epam.reportportal', name: 'logger-java-log4j', version: '3.0.0'
     compile group: 'com.epam.reportportal', name: 'agent-java-testng', version: '3.0.4'
     testCompile group: 'org.testng', name: 'testng', version: '6.11'
@@ -46,6 +46,20 @@ task smoke(type: Test) {
     testLogging.minGranularity 1
     useTestNG() {
         suites 'src/test/resources/suites/smoke.xml'
+        parallel 'tests'
+        threadCount 10
+        ignoreFailures = true
+    }
+}
+
+task sanity(type: Test){
+    systemProperty "projectIp", System.getProperty("projectIp")
+    setRpTagsForTestType("sanity")
+    testLogging.showStandardStreams = true
+    testLogging.displayGranularity 1
+    testLogging.minGranularity 1
+    useTestNG() {
+        suites 'src/test/resources/suites/sanity.xml'
         parallel 'tests'
         threadCount 10
         ignoreFailures = true
