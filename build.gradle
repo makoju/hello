@@ -99,3 +99,11 @@ private String getLocalProjectIp() {
     String localProjectIp = systProjectIp != null ? systProjectIp : localProjectProps.getProperty("projectIp")
     localProjectIp
 }
+
+task enableRP {
+    Properties rpProps = new Properties()
+    File rpPropsFile = new File("src/test/resources/reportportal.properties")
+    rpProps.load(rpPropsFile.newDataInputStream())
+    rpProps.setProperty('rp.enabled', "true")
+    rpProps.store(rpPropsFile.newWriter(), null)
+}
