@@ -104,6 +104,6 @@ task enableRP {
     Properties rpProps = new Properties()
     File rpPropsFile = new File("src/test/resources/reportportal.properties")
     rpProps.load(rpPropsFile.newDataInputStream())
-    rpProps.setProperty('rp.enabled', "true")
+    rpProps.setProperty('rp.enable', "true")
     rpProps.store(rpPropsFile.newWriter(), null)
 }
